@@ -30,9 +30,20 @@ public class MainScreenController {
     @FXML
     private MenuItem loginButton;
     @FXML
-    private Button loginButton2;
+    private MenuItem connectButton;
     @FXML
     ImageView phImageView;
+
+    public MainScreenController() {
+    }
+
+    @FXML
+    public void displayName(String username){
+        if(username.isEmpty()){
+            username = "user";
+        }
+        userNameLabel.setText("Hello "+ username);
+    }
 
     public void exit (ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -45,13 +56,6 @@ public class MainScreenController {
             stage.close();
         }
     }
-    @FXML
-    public void displayName(String username){
-        if(username.isEmpty()){
-            username = "user";
-        }
-        userNameLabel.setText("Hello "+ username);
-    }
 
     @FXML
     public void loginScreen(ActionEvent event) throws IOException{
@@ -63,6 +67,17 @@ public class MainScreenController {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    @FXML
+    public void connectScreen(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ConnectScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage = (Stage)scenePane.getScene().getWindow();
+        String css = this.getClass().getResource("ConnectScreen.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,16 +11,31 @@
 
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainScreenController">
    <children>
+      <MenuBar>
+         <menus>
+          <Menu mnemonicParsing="false" text="Account">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Account" />
+                  <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
+                  <MenuItem mnemonicParsing="false" text="Logout" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Connect">
+               <items>
+                  <MenuItem fx:id="connectButton" mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Exit">
+               <items>
+                <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
       <Label fx:id="userNameLabel" layoutX="-1.0" layoutY="18.0" prefHeight="17.0" prefWidth="600.0" text="Hello">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <MenuButton layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Menu">
-        <items>
-            <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" onMenuValidation="#loginScreen" text="Login" />
-          <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
-        </items>
-      </MenuButton>
       <Label fx:id="phImage" layoutX="71.0" layoutY="99.0" text="PH value">
          <font>
             <Font size="16.0" />
