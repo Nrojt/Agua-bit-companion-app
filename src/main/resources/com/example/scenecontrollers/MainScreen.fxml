@@ -4,27 +4,48 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainScreenController">
    <children>
-      <MenuBar>
+      <MenuBar prefHeight="25.0" prefWidth="600.0">
          <menus>
+            <Menu mnemonicParsing="false" text="Main">
+               <items>
+                  <MenuItem fx:id="mainScreenButton" mnemonicParsing="false" onAction="#mainScreen" text="Main" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Account">
                <items>
                   <MenuItem mnemonicParsing="false" text="Account" />
                   <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
-                  <MenuItem mnemonicParsing="false" text="Logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
                </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Measurements">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Measure" />
+                  <MenuItem mnemonicParsing="false" text="Saved measurements" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Connect">
                <items>
                   <MenuItem fx:id="connectButton" mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
+                  <MenuItem mnemonicParsing="false" text="Update" />
                </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Information">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Setup Guide" />
+                <MenuItem mnemonicParsing="false" text="PH-Sensor" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About us" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Exit">
                <items>
                 <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
@@ -32,18 +53,9 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Label fx:id="userNameLabel" layoutX="-1.0" layoutY="18.0" prefHeight="17.0" prefWidth="600.0" text="Hello">
+      <Label fx:id="userNameLabel" layoutX="-1.0" layoutY="25.0" prefHeight="17.0" prefWidth="600.0" text="Hello">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Label fx:id="phImage" layoutX="71.0" layoutY="99.0" text="PH value">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="phImageView" fitHeight="150.0" fitWidth="200.0" layoutX="22.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/ph_scale.png" />
-         </image></ImageView>
    </children>
 </AnchorPane>

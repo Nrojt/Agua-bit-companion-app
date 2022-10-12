@@ -21,17 +21,12 @@ public class LoginScreenController {
 
     public void onLoginButtonCLick(ActionEvent event) throws IOException {
         String username = userNameTextField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         root = loader.load();
-
-        MainScreenController test = (MainScreenController) loader.getController();
-        test.displayName(username);
-
-        //root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        MainScreenController main1 = (MainScreenController) loader.getController();
+        main1.displayName(username);
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        //scene.getStylesheets().add(getClass().getResource("MainScreen.css").toExternalForm());
         String css = this.getClass().getResource("MainScreen.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);

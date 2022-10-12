@@ -12,9 +12,9 @@ public class Main extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        MainScreenController test = (MainScreenController) fxmlLoader.getController();
-        test.displayName("user");
-        stage.setTitle("My very epic application");
+        MainScreenController main1 = (MainScreenController) fxmlLoader.getController();
+        main1.displayName("user");
+        stage.setTitle("Water Quality App by SSD");
         String css = this.getClass().getResource("MainScreen.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
