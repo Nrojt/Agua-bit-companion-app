@@ -1,5 +1,7 @@
 .root{
     -fx-background-color: rgba(14, 239, 199, 0.84);
+    -fx-background-size: contain;
+    -fx-background-position: center;
 }
 
 #userNameLabel{

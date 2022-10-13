@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -31,8 +32,11 @@ public class MainScreenController {
     private MenuItem loginButton;
     @FXML
     private MenuItem connectButton;
+    @FXML
+    public StackPane sceneStackPane = new StackPane();
 
     public MainScreenController() {
+
     }
 
     public void screenSwitcher(String fxmlFile, String cssFile) throws IOException{
@@ -71,7 +75,8 @@ public class MainScreenController {
     }
 
     public void loginScreen(ActionEvent event) throws IOException{
-        screenSwitcher("Login.fxml", "LoginScreen.css");
+        screenSwitcher("LoginScreen.fxml", "LoginScreen.css");
+        stage.setResizable(false);
     }
 
     public void connectScreen(ActionEvent event) throws IOException{
@@ -86,4 +91,21 @@ public class MainScreenController {
         displayName("user");
     }
 
+    public void accountScreen(ActionEvent event) throws IOException{
+        screenSwitcher("AccountScreen.fxml", "AccountScreen.css");
+    }
+
+    public void measureScreen(ActionEvent event) throws IOException{
+        screenSwitcher("MeasureScreen.fxml", "MeasureScreen.css");
+    }
+    public void updateScreen(ActionEvent event) throws IOException{
+        screenSwitcher("UpdateScreen.fxml", "UpdateScreen.css");
+    }
+    public void setupScreen(ActionEvent event) throws IOException{
+        screenSwitcher("SetupScreen.fxml", "SetupScreen.css");
+    }
+
+    public void aboutScreen(ActionEvent event) throws IOException{
+        screenSwitcher("AboutScreen.fxml", "AboutScreen.css");
+    }
 }

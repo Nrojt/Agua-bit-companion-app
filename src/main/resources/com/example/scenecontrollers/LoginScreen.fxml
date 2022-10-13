@@ -14,12 +14,13 @@
             <Font name="Broadway" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="loginButton" layoutX="274.0" layoutY="302.0" mnemonicParsing="false" onAction="#onLoginButtonCLick" text="Login" />
+      <Button fx:id="loginButton" layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#onLoginButtonCLick" text="Login" />
       <Label layoutX="14.0" layoutY="360.0" text="Copyrigth SSD 2022" />
       <TextField layoutX="226.0" layoutY="245.0" />
       <TextField fx:id="userNameTextField" layoutX="226.0" layoutY="200.0" />
       <Label layoutX="159.0" layoutY="204.0" text="Username" />
       <Label layoutX="161.0" layoutY="249.0" text="Password" />
-      <Hyperlink layoutX="236.0" layoutY="270.0" text="No account? Sign up!" />
+      <Hyperlink fx:id="signupURL" layoutX="236.0" layoutY="270.0" text="No account? Sign up!" textFill="RED" />
+      <Hyperlink fx:id="forgotURL" layoutX="201.0" layoutY="294.0" text="Forgot your username or password?" textFill="RED" />
    </children>
 </AnchorPane>
