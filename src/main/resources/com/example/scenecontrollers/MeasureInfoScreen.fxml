@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -8,15 +9,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.SetupScreenController">
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MeasureInfoScreenController">
    <children>
-      <Label fx:id="userNameLabel" alignment="CENTER" layoutY="37.0" prefHeight="36.0" prefWidth="609.0" text="Setup Guide">
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="9.0" layoutY="37.0" prefHeight="36.0" prefWidth="600.0" text="Information">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
       <Label layoutX="14.0" layoutY="368.0" text="Copyrigth SSD 2022" />
-      <TextArea layoutX="63.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0" text="Plug the product into the computer and go to the connect tab and select the connected sensors.&#10;Once the correct sensors are selected, press the &quot; send to product&quot; button.&#10;Then go to the measurements tab and press measure.&#10;&#10;To update the product go to the update tab, software updates will be downloaded automatically." />
+      <TextArea layoutX="24.0" layoutY="100.0" prefHeight="138.0" prefWidth="580.0" text="The PH value of water should be in the 6.5-8.5 range.&#10;If the PH value is outside of this range, it could mean the filtering and cleaning process was not properly done.&#10;To help this boil the water.&#10;&#10;Temperature should be xx to xx degrees. More bacteria in warm water." />
+      <Button layoutX="24.0" layoutY="273.0" mnemonicParsing="false" text="Open a saved measurement" />
+      <Button layoutX="449.0" layoutY="273.0" mnemonicParsing="false" text="Compare measurements" />
       <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="609.0">
          <menus>
             <Menu mnemonicParsing="false" text="Main">

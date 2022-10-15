@@ -54,6 +54,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Information">
               <items>
+                  <MenuItem fx:id="measureInfoScreenButton" mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
                   <MenuItem fx:id="setupScreenButton" mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
               </items>
             </Menu>

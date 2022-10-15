@@ -24,6 +24,8 @@ public class LoginScreenController {
     private Scene scene;
     private Parent root;
 
+
+
     public void onLoginButtonCLick(ActionEvent event) throws IOException {
         String username = userNameTextField.getText();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));

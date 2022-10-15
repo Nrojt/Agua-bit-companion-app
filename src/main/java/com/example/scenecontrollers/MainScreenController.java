@@ -33,7 +33,7 @@ public class MainScreenController {
     @FXML
     private MenuItem connectButton;
     @FXML
-    public StackPane sceneStackPane = new StackPane();
+    private MenuItem measureInfoScreenButton;
 
     public MainScreenController() {
 
@@ -107,5 +107,9 @@ public class MainScreenController {
 
     public void aboutScreen(ActionEvent event) throws IOException{
         screenSwitcher("AboutScreen.fxml", "AboutScreen.css");
+    }
+
+    public void measureInfoScreen(ActionEvent e) throws IOException{
+        screenSwitcher("MeasureInfoScreen.fxml", "MeasureInfoScreen.css");
     }
 }

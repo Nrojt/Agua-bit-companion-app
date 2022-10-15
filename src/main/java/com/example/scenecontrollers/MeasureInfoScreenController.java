@@ -12,13 +12,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AccountScreenController {
+public class MeasureInfoScreenController {
     private Stage stage;
     private Scene scene;
     private Parent root;
     @FXML
     private AnchorPane scenePane;
-
     public void screenSwitcher(String fxmlFile, String cssFile) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
         Scene scene = new Scene(fxmlLoader.load());
@@ -33,6 +32,7 @@ public class AccountScreenController {
             main1.displayName("user");
         }
     }
+
     public void loginScreen(ActionEvent event) throws IOException {
         screenSwitcher("LoginScreen.fxml", "LoginScreen.css");
         stage.setResizable(false);
@@ -47,6 +47,7 @@ public class AccountScreenController {
     }
 
     public void logout(ActionEvent event) throws IOException{
+        //displayName("user");
     }
 
     public void accountScreen(ActionEvent event) throws IOException{

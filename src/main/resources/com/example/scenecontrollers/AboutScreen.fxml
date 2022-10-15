@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.AboutScreenController">
-
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.AboutScreenController">
+   <children>
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="9.0" layoutY="37.0" prefHeight="36.0" prefWidth="600.0" text="About" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="8.0" layoutY="100.0" prefHeight="224.0" prefWidth="584.0" text="Hello,&#10;We are SSD, a startup focused on helping people get safe and drinkable water.&#10;We invision a future where everyone will be able to measure their water to ensure it is safe enough to digest.&#10;This company was founded by a couple of classmates in 2022.&#10;&#10;Our company info:&#10;Lipsum Street 0&#10;Lipsum Village&#10;0000AB&#10;The Netherlands&#10;Call us at +310001234567&#10;Email us at support@ssd.com" />
+      <Label layoutX="14.0" layoutY="368.0" text="Copyrigth SSD 2022" />
+      <MenuBar layoutX="3.0" layoutY="1.0" prefHeight="25.0" prefWidth="600.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Main">
+               <items>
+                  <MenuItem fx:id="mainScreenButton" mnemonicParsing="false" onAction="#mainScreen" text="Main" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Account">
+               <items>
+                  <MenuItem fx:id="accountScreenButton" mnemonicParsing="false" onAction="#accountScreen" text="Account" />
+                  <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Measurements">
+               <items>
+                  <MenuItem fx:id="measureScreenButton" mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Connect">
+               <items>
+                  <MenuItem fx:id="connectScreenButton" mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
+                  <MenuItem fx:id="updateScreenButton" mnemonicParsing="false" onAction="#updateScreen" text="Update" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Information">
+               <items>
+                  <MenuItem fx:id="measureInfoScreenButton" mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
+                  <MenuItem fx:id="setupScreenButton" mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+               <items>
+                  <MenuItem fx:id="aboutScreenButton" mnemonicParsing="false" onAction="#aboutScreen" text="About us" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Exit">
+               <items>
+                  <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
 </AnchorPane>
