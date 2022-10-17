@@ -64,7 +64,7 @@
       </GridPane>
       <Button fx:id="buttonSendToProduct" layoutX="251.0" layoutY="303.0" mnemonicParsing="false" onAction="#sendToProduct" text="Send to Product" AnchorPane.bottomAnchor="71.66666666666667" AnchorPane.leftAnchor="251.0" AnchorPane.rightAnchor="247.0" />
       <Label fx:id="informationLabel" alignment="CENTER" layoutY="271.0" prefHeight="17.0" prefWidth="600.0" AnchorPane.bottomAnchor="111.66666666666667" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <MenuBar layoutX="-3.0" layoutY="1.0" prefHeight="25.0" prefWidth="609.0">
+      <MenuBar layoutX="-1.0" prefHeight="25.0" prefWidth="600.0">
          <menus>
             <Menu mnemonicParsing="false" text="Main">
                <items>
