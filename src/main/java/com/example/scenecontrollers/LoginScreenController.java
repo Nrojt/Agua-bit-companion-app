@@ -28,10 +28,9 @@ public class LoginScreenController {
 
     public void onLoginButtonCLick(ActionEvent event) throws IOException {
         String username = userNameTextField.getText();
+        MainController.userName = username;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         root = loader.load();
-        MainScreenController main1 = (MainScreenController) loader.getController();
-        main1.displayName(username);
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         String css = this.getClass().getResource("MainScreen.css").toExternalForm();
