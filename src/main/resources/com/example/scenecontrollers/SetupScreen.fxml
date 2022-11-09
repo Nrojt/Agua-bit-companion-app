@@ -17,45 +17,45 @@
       </Label>
       <Label layoutX="14.0" layoutY="368.0" text="Copyrigth SSD 2022" />
       <TextArea layoutX="63.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0" text="Plug the product into the computer and go to the connect tab and select the connected sensors.&#10;Once the correct sensors are selected, press the &quot; send to product&quot; button.&#10;Then go to the measurements tab and press measure.&#10;&#10;To update the product go to the update tab, software updates will be downloaded automatically." />
-      <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="609.0">
+      <MenuBar layoutX="11.0" layoutY="11.0" prefHeight="25.0" prefWidth="609.0">
          <menus>
             <Menu mnemonicParsing="false" text="Main">
                <items>
-                  <MenuItem fx:id="mainScreenButton" mnemonicParsing="false" onAction="#mainScreen" text="Main" />
+                  <MenuItem mnemonicParsing="false" onAction="#mainScreen" text="Main" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Account">
                <items>
-                  <MenuItem fx:id="accountScreenButton" mnemonicParsing="false" onAction="#accountScreen" text="Account" />
-                  <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
-                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#accountScreen" text="Account" />
+                  <MenuItem mnemonicParsing="false" onAction="#loginScreen" text="Login" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Measurements">
                <items>
-                  <MenuItem fx:id="measureScreenButton" mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
+                  <MenuItem mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Connect">
                <items>
-                  <MenuItem fx:id="connectScreenButton" mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
-                  <MenuItem fx:id="updateScreenButton" mnemonicParsing="false" onAction="#updateScreen" text="Update" />
+                  <MenuItem mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
+                  <MenuItem mnemonicParsing="false" onAction="#updateScreen" text="Update" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Information">
                <items>
-                  <MenuItem fx:id="measureInfoScreenButton" mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
-                  <MenuItem fx:id="setupScreenButton" mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
+                  <MenuItem mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
+                  <MenuItem mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="About">
                <items>
-                  <MenuItem fx:id="aboutScreenButton" mnemonicParsing="false" onAction="#aboutScreen" text="About us" />
+                  <MenuItem mnemonicParsing="false" onAction="#aboutScreen" text="About us" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Exit">
                <items>
-                  <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
                </items>
             </Menu>
          </menus>

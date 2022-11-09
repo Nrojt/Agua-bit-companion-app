@@ -7,31 +7,30 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXRadioButton;
 
 public class MainController implements Initializable {
     static String userName = "user";
-    @FXML
-    private Label userNameLabel;
+    static boolean loginStatus = false;
+    static boolean menuBarSide = true;
+
+
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     @FXML
+    private Label userNameLabel;
+    @FXML
     private AnchorPane scenePane;
-    @FXML
-    private MenuItem exitButton;
-    @FXML
-    private MenuItem loginButton;
-    @FXML
-    private MenuItem connectButton;
-    @FXML
-    private MenuItem measureInfoScreenButton;
     @FXML
     public ChoiceBox<String> slot1Sensor = new ChoiceBox();
     @FXML
@@ -40,20 +39,35 @@ public class MainController implements Initializable {
     public ChoiceBox<String> slot3Sensor = new ChoiceBox();
     @FXML
     private Label informationLabel = new Label();
+    @FXML
+    private Button menuToggle = new Button();
+    @FXML
+    private AnchorPane sideMenuBar = new AnchorPane();
+    @FXML
+    private MFXButton loginButton = new MFXButton();
+    @FXML
+    private MenuBar topMenuBar = new MenuBar();
+    @FXML
+    private MFXRadioButton settingsTopMenuBarButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton settingsSideMenuBarButton = new MFXRadioButton();
+    @FXML
+    private ImageView menuToggleThreeLines = new ImageView();
 
     public MainController() {
+        System.out.println();
+        //okay so this gets run every time a screen loads
     }
 
     // Switching the screens
-    public void screenSwitcher(String fxmlFile, String cssFile) throws IOException{
+    public void screenSwitcher(String fxmlFile) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage = (Stage)scenePane.getScene().getWindow();
-        String css = this.getClass().getResource(cssFile).toExternalForm();
+        String css = this.getClass().getResource("MainScreen.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
-
     }
 
     //Main screen
@@ -66,12 +80,43 @@ public class MainController implements Initializable {
     //connect screen
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(menuBarSide){
+            topMenuBar.setVisible(false);
+            topMenuBar.setDisable(true);
+            sideMenuBar.setDisable(false);
+            menuToggle.setVisible(true);
+            menuToggleThreeLines.setVisible(true);
+            menuToggle.setDisable(false);
+            menuToggleThreeLines.setDisable(false);
+        }
+        else{
+            topMenuBar.setVisible(true);
+            topMenuBar.setDisable(false);
+            sideMenuBar.setDisable(true);
+            menuToggle.setVisible(false);
+            menuToggleThreeLines.setVisible(false);
+            menuToggle.setDisable(true);
+            menuToggleThreeLines.setDisable(true);
+        }
+
         slot1Sensor.getItems().addAll("PH-Sensor", "Temperature sensor", "sensor 3", "EMPTY");
         slot2Sensor.getItems().addAll("PH-Sensor", "Temperature sensor", "sensor 3", "EMPTY");
         slot3Sensor.getItems().addAll("PH-Sensor", "Temperature sensor", "sensor 3", "EMPTY");
-        if (scenePane.getChildren().contains(userNameLabel)){
+        if (scenePane.getChildren().contains(userNameLabel)) {
+            if (userName.isEmpty()) {
+                userName = "user";
+            }
             userNameLabel.setText(userName);
         }
+        if(loginStatus){
+                loginButton.setText("Logout");
+        }
+        else if (!loginStatus){
+                loginButton.setText("Login");
+        }
+
+
+
     }
     public void sendToProduct(ActionEvent action) {
         System.out.println(slot1Sensor.getValue()+"\n"+slot2Sensor.getValue()+"\n"+slot3Sensor.getValue());
@@ -94,6 +139,8 @@ public class MainController implements Initializable {
 
     //update screen
 
+    //settings screen
+
 
     //menubar
     public void exit (ActionEvent event){
@@ -108,42 +155,72 @@ public class MainController implements Initializable {
         }
     }
 
+    public void sideMenuToggle(ActionEvent event){
+        sideMenuBar.setVisible(!sideMenuBar.isVisible());
+    }
+
+    public void menuBarToggle (ActionEvent event){
+        if(settingsSideMenuBarButton.isSelected()){
+            menuBarSide = true;
+        } else if (settingsTopMenuBarButton.isSelected()){
+            menuBarSide = false;
+        }
+    }
+
+
+    public void loginStatusToggle(ActionEvent event) throws IOException{
+        if (loginStatus == false){
+            loginScreen(event);
+        }
+        else{logout(event);}
+    }
+
     public void loginScreen(ActionEvent event) throws IOException{
-        screenSwitcher("LoginScreen.fxml", "LoginScreen.css");
+        screenSwitcher("LoginScreen.fxml");
         stage.setResizable(false);
+        loginStatus = true;
     }
 
     public void connectScreen(ActionEvent event) throws IOException{
-        screenSwitcher("ConnectScreen.fxml", "ConnectScreen.css");
+        screenSwitcher("ConnectScreen.fxml");
     }
 
     public void mainScreen() throws IOException{
-        screenSwitcher("MainScreen.fxml", "MainScreen.css");
+        screenSwitcher("MainScreen.fxml");
     }
 
     public void logout(ActionEvent event) throws IOException{
+        loginStatus = false;
         userName = "user";
+        if (scenePane.getChildren().contains(userNameLabel)){
+            userNameLabel.setText(userName);
+        }
+        loginButton.setText("Login");
     }
 
     public void accountScreen(ActionEvent event) throws IOException{
-        screenSwitcher("AccountScreen.fxml", "AccountScreen.css");
+        screenSwitcher("AccountScreen.fxml");
     }
 
     public void measureScreen(ActionEvent event) throws IOException{
-        screenSwitcher("MeasureScreen.fxml", "MeasureScreen.css");
+        screenSwitcher("MeasureScreen.fxml");
     }
     public void updateScreen(ActionEvent event) throws IOException{
-        screenSwitcher("UpdateScreen.fxml", "UpdateScreen.css");
+        screenSwitcher("UpdateScreen.fxml");
     }
     public void setupScreen(ActionEvent event) throws IOException{
-        screenSwitcher("SetupScreen.fxml", "SetupScreen.css");
+        screenSwitcher("SetupScreen.fxml");
     }
 
     public void aboutScreen(ActionEvent event) throws IOException{
-        screenSwitcher("AboutScreen.fxml", "AboutScreen.css");
+        screenSwitcher("AboutScreen.fxml");
     }
 
     public void measureInfoScreen(ActionEvent e) throws IOException{
-        screenSwitcher("MeasureInfoScreen.fxml", "MeasureInfoScreen.css");
+        screenSwitcher("MeasureInfoScreen.fxml");
+    }
+
+    public void settingsScreen(ActionEvent e) throws IOException{
+        screenSwitcher("SettingsScreen.fxml");
     }
 }

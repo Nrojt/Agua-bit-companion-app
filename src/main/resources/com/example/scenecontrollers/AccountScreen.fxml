@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainController">
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainController">
    <children>
       <Label alignment="CENTER" layoutX="9.0" layoutY="37.0" prefHeight="36.0" prefWidth="600.0" text="Account">
          <font>
@@ -20,7 +20,7 @@
       </Label>
       <ImageView fitHeight="64.0" fitWidth="76.0" layoutX="277.0" layoutY="92.0" preserveRatio="true">
          <image>
-            <Image url="@../../../test%20images/userprofilepic.jpg" />
+            <Image url="@images/userprofilepic.jpg" />
          </image>
       </ImageView>
       <Label fx:id="userNameLabel" layoutX="276.0" layoutY="167.0" text="John Doe" />
@@ -35,41 +35,41 @@
          <menus>
             <Menu mnemonicParsing="false" text="Main">
                <items>
-                  <MenuItem fx:id="mainScreenButton" mnemonicParsing="false" onAction="#mainScreen" text="Main" />
+                  <MenuItem mnemonicParsing="false" onAction="#mainScreen" text="Main" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Account">
                <items>
-                  <MenuItem fx:id="accountScreenButton" mnemonicParsing="false" onAction="#accountScreen" text="Account" />
-                  <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
-                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#accountScreen" text="Account" />
+                  <MenuItem mnemonicParsing="false" onAction="#loginScreen" text="Login" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Measurements">
                <items>
-                  <MenuItem fx:id="measureScreenButton" mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
+                  <MenuItem mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Connect">
                <items>
-                  <MenuItem fx:id="connectScreenButton" mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
-                  <MenuItem fx:id="updateScreenButton" mnemonicParsing="false" onAction="#updateScreen" text="Update" />
+                  <MenuItem mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
+                  <MenuItem mnemonicParsing="false" onAction="#updateScreen" text="Update" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Information">
                <items>
-                  <MenuItem fx:id="measureInfoScreenButton" mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
-                  <MenuItem fx:id="setupScreenButton" mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
+                  <MenuItem mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
+                  <MenuItem mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="About">
                <items>
-                  <MenuItem fx:id="aboutScreenButton" mnemonicParsing="false" onAction="#aboutScreen" text="About us" />
+                  <MenuItem mnemonicParsing="false" onAction="#aboutScreen" text="About us" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Exit">
                <items>
-                  <MenuItem fx:id="ExitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
                </items>
             </Menu>
          </menus>

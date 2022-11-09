@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,22 +16,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainController">
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scenecontrollers.MainController">
    <children>
-      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="-1.0" layoutY="27.0" prefHeight="36.0" prefWidth="600.0" text="Hello" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0">
+      <Label alignment="CENTER" layoutY="37.0" prefHeight="36.0" prefWidth="609.0" text="Settings">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <ImageView fitHeight="264.0" fitWidth="577.0" layoutX="10.0" layoutY="92.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="9.666666666666629" AnchorPane.rightAnchor="13.0">
-         <image>
-            <Image url="@images/newstest.png" />
-         </image>
-         <viewport>
-            <Rectangle2D minX="577.0" minY="264.0" />
-         </viewport>
-      </ImageView>
-      <BorderPane prefHeight="400.0" prefWidth="600.0">
+      <BorderPane layoutX="-4.0" prefHeight="402.0" prefWidth="617.0">
          <left>
             <AnchorPane fx:id="sideMenuBar" prefHeight="400.0" prefWidth="145.0" visible="false" BorderPane.alignment="CENTER">
                <children>
@@ -96,7 +89,7 @@
          <top>
             <AnchorPane prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <MenuBar fx:id="topMenuBar" layoutY="-1.0" prefHeight="30.0" prefWidth="600.0">
+                  <MenuBar fx:id="topMenuBar" layoutY="-1.0" prefHeight="30.0" prefWidth="617.0">
                      <menus>
                         <Menu mnemonicParsing="false" text="Main">
                            <items>
@@ -133,9 +126,9 @@
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Settings">
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#settingsScreen" text="Settings" />
-                          </items>
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#settingsScreen" text="Settings" />
+                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exit">
                            <items>
@@ -154,5 +147,11 @@
             </AnchorPane>
          </top>
       </BorderPane>
+      <MFXRadioButton fx:id="settingsTopMenuBarButton" layoutX="110.0" layoutY="131.0" onAction="#menuBarToggle" text="Top Menu Bar">
+         <toggleGroup>
+            <ToggleGroup fx:id="menuBar" />
+         </toggleGroup>
+      </MFXRadioButton>
+      <MFXRadioButton fx:id="settingsSideMenuBarButton" layoutX="110.0" layoutY="161.0" onAction="#menuBarToggle" text="Side Menu Bar" toggleGroup="$menuBar" />
    </children>
 </AnchorPane>
