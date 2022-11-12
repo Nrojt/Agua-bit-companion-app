@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.AboutScreenController">
+   <children>
+      <Label alignment="CENTER" layoutX="9.0" layoutY="37.0" prefHeight="36.0" prefWidth="600.0" text="About" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextArea editable="false" layoutX="8.0" layoutY="100.0" prefHeight="224.0" prefWidth="584.0" text="Hello,&#10;We are SSD, a startup focused on helping people get safe and drinkable water.&#10;We invision a future where everyone will be able to measure their water to ensure it is safe enough to digest.&#10;This company was founded by a couple of classmates in 2022.&#10;&#10;Our company info:&#10;Lipsum Street 0&#10;Lipsum Village&#10;0000AB&#10;The Netherlands&#10;Call us at +310001234567&#10;Email us at support@ssd.com" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.MeasureInfoScreenController">
+   <children>
+      <Label alignment="CENTER" layoutX="9.0" layoutY="37.0" prefHeight="36.0" prefWidth="600.0" text="Information" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextArea editable="false" layoutX="200.0" layoutY="107.0" prefHeight="361.0" prefWidth="649.0" text="The PH value of water should be in the 6.5-8.5 range.&#10;If the PH value is outside of this range, it could mean the filtering and cleaning process was not properly done.&#10;To help this boil the water.&#10;&#10;Temperature should be xx to xx degrees. More bacteria in warm water." AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="110.0" />
+      <Button layoutX="150.0" layoutY="531.0" mnemonicParsing="false" text="Open a saved measurement" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="150.0" />
+      <Button layoutX="684.0" layoutY="529.0" mnemonicParsing="false" text="Compare measurements" AnchorPane.bottomAnchor="85.0" AnchorPane.rightAnchor="150.0" />
+   </children>
+</AnchorPane>

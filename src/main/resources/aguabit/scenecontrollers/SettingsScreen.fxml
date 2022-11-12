@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SettingsScreenController">
+   <children>
+      <MFXRadioButton fx:id="settingsTopMenuBarButton" layoutX="-1.0" layoutY="142.0" onAction="#menuBarToggle" text="On the top" AnchorPane.leftAnchor="0.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="menuBar" />
+         </toggleGroup>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </MFXRadioButton>
+      <MFXRadioButton fx:id="settingsSideMenuBarButton" layoutX="-1.0" layoutY="115.0" onAction="#menuBarToggle" text="On the side" toggleGroup="$menuBar" AnchorPane.leftAnchor="0.0">
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </MFXRadioButton>
+      <Label layoutY="89.0" text="The Menu Bar" AnchorPane.leftAnchor="0.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutY="37.0" prefHeight="36.0" prefWidth="609.0" text="Settings" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

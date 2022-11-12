@@ -8,6 +8,10 @@
     -fx-alignment: center;
 }
 
+.menu-bar{
+    -fx-background-color: #6BD6D6;
+}
+
 .MenuBarButtons{
     -fx-background-color: transparent;
 }

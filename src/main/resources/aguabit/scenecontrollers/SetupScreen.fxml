@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SetupScreenController">
+   <children>
+      <Label alignment="CENTER" layoutY="37.0" prefHeight="36.0" prefWidth="609.0" text="Setup Guide" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="63.0" layoutY="100.0" prefHeight="323.0" prefWidth="846.0" text="Plug the product into the computer and go to the connect tab and select the connected sensors.&#10;Once the correct sensors are selected, press the &quot; send to product&quot; button.&#10;Then go to the measurements tab and press measure.&#10;&#10;To update the product go to the update tab, software updates will be downloaded automatically." AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" />
+   </children>
+</AnchorPane>

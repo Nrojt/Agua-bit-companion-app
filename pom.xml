@@ -69,7 +69,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.scenecontrollers/com.example.scenecontrollers.Main
+                            <mainClass>com.example.scenecontrollers/aguabit.scenecontrollers.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.MainScreenController">
+   <children>
+      <ImageView fitHeight="498.0" fitWidth="920.0" layoutX="27.0" layoutY="120.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
+         <image>
+            <Image url="@images/newstest.png" />
+         </image>
+         <viewport>
+            <Rectangle2D minX="577.0" minY="264.0" />
+         </viewport>
+      </ImageView>
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="-3.0" layoutY="14.0" prefHeight="36.0" prefWidth="980.0" text="Hello" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
