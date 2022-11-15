@@ -1,8 +1,11 @@
 package aguabit.scenecontrollers;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +24,13 @@ public class Main extends Application {
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(event -> exit(stage));
+    }
+
+    public void exit (Stage stage){
+        MenuOverlayController.menuUpdateThread.stop();
+        stage.close();
     }
 
     //this actually runs the programm

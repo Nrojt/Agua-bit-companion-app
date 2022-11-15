@@ -21,19 +21,18 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 
 public class MenuOverlayController implements Initializable {
     //variables for the windows
-    private Stage stage;
+    private static Stage stage;
     @FXML
     private BorderPane menuPane;
     @FXML
     public AnchorPane fxmlPane;
-    public boolean isRunning = false;
-    private Thread menuUpdateThread;
+    public static Thread menuUpdateThread;
 
     //variables for text in the menubar
     public static String userName = "User";
     public static boolean loginStatus = false;
     @FXML
-    private Label userNameLabel;
+    public Label userNameLabel;
 
     //variables for the menubar
     public static boolean menuBarSide = true;
@@ -136,6 +135,7 @@ public class MenuOverlayController implements Initializable {
         alert.setContentText("Do you want to exit?");
 
         if(alert.showAndWait().get()== ButtonType.OK) {
+            menuUpdateThread.stop();
             stage = (Stage) menuPane.getScene().getWindow();
             stage.close();
         }
@@ -154,7 +154,7 @@ public class MenuOverlayController implements Initializable {
     }
 
     //updating the menu overlay, this is run on a separate thread
-    private void menuUpdate() {
+    public void menuUpdate() {
         while (true) {
             //platform.runlater makes the code in it run on the same thread as the menu, not on the newly made thread
             Platform.runLater(() -> {
@@ -180,6 +180,7 @@ public class MenuOverlayController implements Initializable {
                     userName = "user";
                 }
                 userNameLabel.setText(userName);
+
 
                 if (loginStatus) {
                     loginButton.setText("Logout");

@@ -36,59 +36,59 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <MFXButton alignment="BASELINE_LEFT" onAction="#mainScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="#e084df" styleClass="MenuBarButtons" text="Main">
+                  <MFXButton alignment="BASELINE_LEFT" onAction="#mainScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Main">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="loginButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" onAction="#loginStatusToggle" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Login">
+                  <MFXButton fx:id="loginButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" onAction="#loginStatusToggle" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Login">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="42.0" onAction="#accountScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Account">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="35.0" onAction="#measureScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Measure">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="42.0" onAction="#accountScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Account">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="TOP_LEFT" onAction="#measureInfoScreen" prefHeight="25.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Measurement Information">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="35.0" onAction="#measureScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measure">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="61.0" onAction="#connectScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Connect">
+                  <MFXButton alignment="TOP_LEFT" onAction="#measureInfoScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measurement Information">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="86.0" onAction="#setupScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Setup Guide">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="61.0" onAction="#connectScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Connect">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="137.0" onAction="#aboutScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="About Us">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="86.0" onAction="#setupScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Setup Guide">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="111.0" onAction="#settingsScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Settings">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="137.0" onAction="#aboutScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="About Us">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton id="MenuBarButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="187.0" onAction="#updateScreen" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Update">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="111.0" onAction="#settingsScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Settings">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="162.0" onAction="#exit" prefHeight="30.0" prefWidth="200.0" styleClass="MenuBarButtons" text="Exit">
+                  <MFXButton id="MenuBarButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="187.0" onAction="#updateScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Update">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="2.0" />
+                     </VBox.margin>
+                  </MFXButton>
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="162.0" onAction="#exit" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Exit">
+                     <VBox.margin>
+                        <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
                </children>
