@@ -31,7 +31,21 @@ public class LoginScreenController {
         }
     }
 
-    public void onForgetURL (ActionEvent even){
-        // still have to figure out a way to open a link in a browser
+
+    public void onForgetURL (ActionEvent event){
+            try {
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://stackoverflow.com/questions/19771836/adding-and-opening-links-on-a-jbutton"));
+            }
+            catch (java.io.IOException e) {
+                System.out.println(e.getMessage());
+            }
+    }
+    public void onCreateURL (ActionEvent event){
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create("www.dehaagsehogeschool.nl/"));
+        }
+        catch (java.io.IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -63,7 +63,7 @@
             </Label>
          </children>
       </GridPane>
-      <Button layoutX="37.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Measure" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="45.0" />
+      <Button layoutX="37.0" layoutY="309.0" mnemonicParsing="false" onAction="#printComms" prefHeight="25.0" prefWidth="62.0" text="Measure" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="45.0" />
       <Button layoutX="274.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Save" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
       <Button layoutX="450.0" layoutY="309.0" mnemonicParsing="false" text="Open measurement" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="45.0" />
    </children>
