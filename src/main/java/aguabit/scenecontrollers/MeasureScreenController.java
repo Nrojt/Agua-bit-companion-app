@@ -22,5 +22,4 @@ public class MeasureScreenController {
         } catch (Exception e) { e.printStackTrace(); }
         comPort.closePort();
     }
-
 }
