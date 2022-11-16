@@ -33,7 +33,7 @@ public class Main extends Application {
         stage.close();
     }
 
-    //this actually runs the programm
+    //this actually runs the program
     public static void main(String[] args) {
         launch();
     }
