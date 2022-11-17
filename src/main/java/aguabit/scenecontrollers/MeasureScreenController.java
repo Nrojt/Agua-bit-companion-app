@@ -15,20 +15,20 @@ public class MeasureScreenController {
     public static String port1 = "PH";
     public static String port2 = "TP";
     public static String port3 = "EM";
-    public static String okMessage = "";
 
     public void printComms(ActionEvent event) throws IOException {
-        //this chrashes the program somehow, idk why
+        int numberOfInput = 0;
+        String receivedFromMicrobit = "";
         SerialPort microBit = SerialPort.getCommPorts()[0];
-
-        microBit.setBaudRate(115200);
         microBit.openPort();
+        microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+        microBit.setBaudRate(115200);
+        OutputStream sendToMicroBit = microBit.getOutputStream();
+        InputStream readFromMicroBit = microBit.getInputStream();
 
         try {
-            OutputStream sendToMicroBit = microBit.getOutputStream();
             sendToMicroBit.write('M');
-            sendToMicroBit.flush();
-
+            java.util.concurrent.TimeUnit.SECONDS.sleep(2);
             for (int i = 0; i < port1.length(); i++) {
                 sendToMicroBit.write(port1.charAt(i));
             }
@@ -38,15 +38,18 @@ public class MeasureScreenController {
             for (int i = 0; i < port3.length(); i++) {
                 sendToMicroBit.write(port3.charAt(i));
             }
+
+            sendToMicroBit.flush();
             sendToMicroBit.close();
 
-            InputStream readFromMicroBit = microBit.getInputStream();
-            for (int j = 0; j < 250; j++) {
-                System.out.print((char)readFromMicroBit.read());
+            while(numberOfInput < 5){
+                System.out.println((char) readFromMicroBit.read());
+                numberOfInput++;
             }
             readFromMicroBit.close();
         } catch (Exception e) {e.printStackTrace();}
         microBit.closePort();
+        System.out.println("received: " + receivedFromMicrobit);
 
     }
 }
