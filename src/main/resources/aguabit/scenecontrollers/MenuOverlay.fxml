@@ -51,17 +51,17 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="61.0" onAction="#connectScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Connect">
+                     <VBox.margin>
+                        <Insets bottom="2.0" />
+                     </VBox.margin>
+                  </MFXButton>
                   <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="35.0" onAction="#measureScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measure">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="TOP_LEFT" onAction="#measureInfoScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measurement Information">
-                     <VBox.margin>
-                        <Insets bottom="2.0" />
-                     </VBox.margin>
-                  </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="61.0" onAction="#connectScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Connect">
+                  <MFXButton alignment="BASELINE_LEFT" onAction="#measureInfoScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measurement Information">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>

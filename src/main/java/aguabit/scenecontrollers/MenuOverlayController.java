@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import saveFile.SaveFile;
 
 
 public class MenuOverlayController implements Initializable {
@@ -35,7 +36,7 @@ public class MenuOverlayController implements Initializable {
     public Label userNameLabel;
 
     //variables for the menubar
-    public static boolean menuBarSide = true;
+    public static boolean menuBarSide = SaveFile.menuBarSide;
     @FXML
     private Button menuToggle = new Button();
     @FXML
@@ -48,7 +49,6 @@ public class MenuOverlayController implements Initializable {
     private ImageView menuToggleThreeLines = new ImageView();
 
     public MenuOverlayController() throws IOException {
-        System.out.println("Menu Overlay loaded");
         //this runs every time this controller gets loaded, which should only be once at startup.
     }
 
@@ -158,6 +158,7 @@ public class MenuOverlayController implements Initializable {
         while (true) {
             //platform.runlater makes the code in it run on the same thread as the menu, not on the newly made thread
             Platform.runLater(() -> {
+                menuBarSide = SaveFile.menuBarSide;
                 if (menuBarSide) {
                     topMenuBar.setVisible(false);
                     topMenuBar.setDisable(true);

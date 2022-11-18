@@ -43,16 +43,16 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="slot1Sensor" prefHeight="25.0" prefWidth="366.0" GridPane.rowIndex="1">
+            <ChoiceBox fx:id="slot1SensorChoice" prefHeight="25.0" prefWidth="366.0" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin></ChoiceBox>
-            <ChoiceBox fx:id="slot2Sensor" prefHeight="25.0" prefWidth="437.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ChoiceBox fx:id="slot2SensorChoice" prefHeight="25.0" prefWidth="437.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </ChoiceBox>
-            <ChoiceBox fx:id="slot3Sensor" prefHeight="25.0" prefWidth="397.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ChoiceBox fx:id="slot3SensorChoice" prefHeight="25.0" prefWidth="397.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>

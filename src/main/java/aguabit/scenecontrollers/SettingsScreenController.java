@@ -4,6 +4,7 @@ import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import saveFile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,14 +18,14 @@ public class SettingsScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        if(MenuOverlayController.menuBarSide) {settingsSideMenuBarButton.setSelected(true);}
+        if(SaveFile.menuBarSide) {settingsSideMenuBarButton.setSelected(true);}
         else{settingsTopMenuBarButton.setSelected(true);}
     }
     public void menuBarToggle (ActionEvent event) throws IOException {
         if(settingsSideMenuBarButton.isSelected()){
-            MenuOverlayController.menuBarSide = true;
+            SaveFile.menuBarSide = true;
         } else if (settingsTopMenuBarButton.isSelected()){
-            MenuOverlayController.menuBarSide = false;
+            SaveFile.menuBarSide = false;
         }
     }
 
