@@ -4,13 +4,16 @@ import com.fazecast.jSerialComm.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MeasureScreenController {
+public class MeasureScreenController implements Initializable {
     public static String port1 = "";
     public static String port2 = "";
     public static String port3 = "";
@@ -38,16 +41,16 @@ public class MeasureScreenController {
     @FXML
     private Label sensor3Indication = new Label();
 
-    public void printComs(ActionEvent event) throws IOException {
-        measureThread = new Thread(this::printComsActual);
-        measureThread.start();
-
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         sensor1Type.setText(ConnectScreenController.slot1Type);
         sensor2Type.setText(ConnectScreenController.slot2Type);
         sensor3Type.setText(ConnectScreenController.slot3Type);
+    }
 
-
+    public void printComs(ActionEvent event) throws IOException {
+        measureThread = new Thread(this::printComsActual);
+        measureThread.start();
     }
 
     private void printComsActual(){
@@ -82,7 +85,6 @@ public class MeasureScreenController {
             for(int i = 0; i < 5; i++){
                 port3 +=(char) readFromMicroBit.read();
             }
-
         } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
         System.out.println(port1+"\n"+port2+"\n"+port3);
         microBit.closePort();

@@ -30,11 +30,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="257.0" text="Sensor 1" GridPane.columnIndex="1" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="305.0" text="Sensor 2" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="305.0" text="Sensor 3" GridPane.columnIndex="3" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="257.0" text="Slot 1" GridPane.columnIndex="1" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="305.0" text="Slot 2" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="305.0" text="Slot 3" GridPane.columnIndex="3" />
             <Label fx:id="sensor1Type" alignment="CENTER" prefHeight="17.0" prefWidth="275.0" text="Empty" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="sensor1Type" alignment="CENTER" layoutX="10.0" layoutY="54.0" prefHeight="17.0" prefWidth="264.0" text="Empty" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="sensor2Type" alignment="CENTER" layoutX="10.0" layoutY="54.0" prefHeight="17.0" prefWidth="264.0" text="Empty" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="sensor3Type" alignment="CENTER" layoutX="119.0" layoutY="54.0" prefHeight="17.0" prefWidth="241.0" text="Empty" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label fx:id="sensor1Value" alignment="CENTER" prefHeight="17.0" prefWidth="264.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="sensor2Value" alignment="CENTER" layoutX="10.0" layoutY="89.0" prefHeight="17.0" prefWidth="241.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
