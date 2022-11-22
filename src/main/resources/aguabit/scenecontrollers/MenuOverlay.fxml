@@ -159,7 +159,7 @@
    <bottom>
       <AnchorPane prefHeight="30.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Label maxHeight="100.0" prefHeight="23.0" prefWidth="150.0" text="Agua:bit not connected" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <Label fx:id="AguabitConnectedStatus" maxHeight="100.0" prefHeight="23.0" prefWidth="150.0" text="Agua:bit not connected" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" />
                </padding>

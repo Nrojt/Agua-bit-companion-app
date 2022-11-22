@@ -49,10 +49,12 @@ public class MenuOverlayController implements Initializable {
     private MenuBar topMenuBar = new MenuBar();
     @FXML
     private ImageView menuToggleThreeLines = new ImageView();
+    @FXML
+    private Label AguabitConnectedStatus = new Label();
+
+    public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
 
     public MenuOverlayController() throws IOException {
-        USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
-        driveDetector.addDriveListener(System.out::println);
         //this runs every time this controller gets loaded, which should only be once at startup.
     }
 
@@ -60,6 +62,7 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        driveDetector.addDriveListener(System.out::println);
         //loading in the mainscreen fxml file
         try {
             screenSwitcher("MainScreen.fxml");
@@ -132,7 +135,7 @@ public class MenuOverlayController implements Initializable {
     }
 
     //code for the exit button
-    public void exit (ActionEvent event){
+    public void exit (ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
         alert.setHeaderText("You're about to close the application");
@@ -140,6 +143,7 @@ public class MenuOverlayController implements Initializable {
 
         if(alert.showAndWait().get()== ButtonType.OK) {
             menuUpdateThread.stop();
+            driveDetector.close();
             stage = (Stage) menuPane.getScene().getWindow();
             stage.close();
         }
@@ -191,6 +195,19 @@ public class MenuOverlayController implements Initializable {
                     loginButton.setText("Logout");
                 } else {
                     loginButton.setText("Login");
+                }
+
+                try{
+                    if (!driveDetector.getRemovableDevices().isEmpty()) {
+                        if (driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
+                            AguabitConnectedStatus.setText("Agua:bit Connected");
+                        }
+                    } else {
+                        AguabitConnectedStatus.setText("Agua:bit not connected");
+                    }
+
+                } catch (IndexOutOfBoundsException e) {
+
                 }
             });
             //sleep

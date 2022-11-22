@@ -30,6 +30,11 @@ public class Main extends Application {
 
     public void exit (Stage stage){
         MenuOverlayController.menuUpdateThread.stop();
+        try {
+            MenuOverlayController.driveDetector.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         stage.close();
     }
 
