@@ -44,7 +44,7 @@ public class ConnectScreenController implements Initializable {
 
     //this is going to show a confirmation to the user that the information about the connected sensors is sucesfully sent to the microbit
     public void sendToProduct(ActionEvent action) {
-        if (slot1SensorChoice.getValue().isEmpty() || slot2SensorChoice.getValue().isEmpty() || slot3SensorChoice.getValue().isEmpty()){
+        if (slot1SensorChoice.getSelectionModel().isEmpty() || slot2SensorChoice.getSelectionModel().isEmpty() || slot3SensorChoice.getSelectionModel().isEmpty()){
             informationLabel.setText("Please make a selection for each slot");
         } else {
             slot1Type = slot1SensorChoice.getValue();

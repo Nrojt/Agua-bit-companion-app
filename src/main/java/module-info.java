@@ -4,6 +4,7 @@ module com.example.scenecontrollers {
     requires java.desktop;
     requires MaterialFX;
     requires com.fazecast.jSerialComm;
+    requires usbdrivedetector;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
 }

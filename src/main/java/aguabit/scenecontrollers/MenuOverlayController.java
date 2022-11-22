@@ -1,23 +1,25 @@
 package aguabit.scenecontrollers;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import saveFile.SaveFile;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import saveFile.SaveFile;
+import net.samuelcampos.usbdrivedetector.*;
 
 
 public class MenuOverlayController implements Initializable {
@@ -49,6 +51,8 @@ public class MenuOverlayController implements Initializable {
     private ImageView menuToggleThreeLines = new ImageView();
 
     public MenuOverlayController() throws IOException {
+        USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
+        driveDetector.addDriveListener(System.out::println);
         //this runs every time this controller gets loaded, which should only be once at startup.
     }
 
