@@ -49,8 +49,12 @@ public class MeasureScreenController implements Initializable {
     }
 
     public void printComs(ActionEvent event) throws IOException {
-        measureThread = new Thread(this::printComsActual);
-        measureThread.start();
+        if(MenuOverlayController.isAguabitConnected) {
+            measureThread = new Thread(this::printComsActual);
+            measureThread.start();
+        } else{
+            System.out.println("No microbit connected");
+        }
     }
 
     private void printComsActual(){

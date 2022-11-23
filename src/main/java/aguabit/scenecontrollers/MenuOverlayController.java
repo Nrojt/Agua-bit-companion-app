@@ -88,9 +88,13 @@ public class MenuOverlayController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage2 = new Stage();
-        stage2.setScene(new Scene(root1));
+        Scene scene2 = new Scene(root1);
+        //stage2.setScene(new Scene(root1));
         stage2.setTitle("Agua:bit account login");
         stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+        String css = this.getClass().getResource("LoginScreen.css").toExternalForm();
+        scene2.getStylesheets().add(css);
+        stage2.setScene(scene2);
         stage2.setResizable(false);
         stage2.show();
         loginStatus = true;
