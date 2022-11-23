@@ -113,15 +113,15 @@
                         <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Measurements">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
-                     </items>
-                  </Menu>
                   <Menu mnemonicParsing="false" text="Connect">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#connectScreen" text="Connect" />
                         <MenuItem mnemonicParsing="false" onAction="#updateScreen" text="Update" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Measurements">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#measureScreen" text="Measure" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Information">

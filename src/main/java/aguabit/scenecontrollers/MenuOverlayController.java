@@ -171,6 +171,7 @@ public class MenuOverlayController implements Initializable {
         while (true) {
             try{
                 if (!driveDetector.getRemovableDevices().isEmpty()) {
+                    //System.out.println(driveDetector.getRemovableDevices().toString().charAt(32));
                     if (driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
                         isAguabitConnected = true;
                     }
