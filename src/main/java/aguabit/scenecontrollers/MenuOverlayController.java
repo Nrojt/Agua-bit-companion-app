@@ -51,6 +51,7 @@ public class MenuOverlayController implements Initializable {
     private ImageView menuToggleThreeLines = new ImageView();
     @FXML
     private Label AguabitConnectedStatus = new Label();
+    public static boolean isAguabitConnected = false;
 
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
 
@@ -62,7 +63,7 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        driveDetector.addDriveListener(System.out::println);
+        //driveDetector.addDriveListener(System.out::println);
         //loading in the mainscreen fxml file
         try {
             screenSwitcher("MainScreen.fxml");
@@ -164,6 +165,15 @@ public class MenuOverlayController implements Initializable {
     //updating the menu overlay, this is run on a separate thread
     public void menuUpdate() {
         while (true) {
+            try{
+                if (!driveDetector.getRemovableDevices().isEmpty()) {
+                    if (driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
+                        isAguabitConnected = true;
+                    }
+                } else {
+                    isAguabitConnected = false;
+                }
+            } catch (IndexOutOfBoundsException e) {}
             //platform.runlater makes the code in it run on the same thread as the menu, not on the newly made thread
             Platform.runLater(() -> {
                 menuBarSide = SaveFile.menuBarSide;
@@ -197,18 +207,11 @@ public class MenuOverlayController implements Initializable {
                     loginButton.setText("Login");
                 }
 
-                try{
-                    if (!driveDetector.getRemovableDevices().isEmpty()) {
-                        if (driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
-                            AguabitConnectedStatus.setText("Agua:bit connected");
-                        }
-                    } else {
-                        AguabitConnectedStatus.setText("Agua:bit not connected");
-                    }
-
-                } catch (IndexOutOfBoundsException e) {
-
+                if(isAguabitConnected){
+                    AguabitConnectedStatus.setText("Agua:bit connected");
                 }
+                else {AguabitConnectedStatus.setText("Agua:bit not connected");};
+
             });
             //sleep
             try{Thread.sleep(100);}
