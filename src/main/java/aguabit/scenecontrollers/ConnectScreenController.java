@@ -47,31 +47,40 @@ public class ConnectScreenController implements Initializable {
         if (slot1SensorChoice.getSelectionModel().isEmpty() || slot2SensorChoice.getSelectionModel().isEmpty() || slot3SensorChoice.getSelectionModel().isEmpty()){
             informationLabel.setText("Please make a selection for each slot");
         } else {
-            slot1Type = slot1SensorChoice.getValue();
-            slot2Type = slot2SensorChoice.getValue();
-            slot3Type = slot3SensorChoice.getValue();
+            if (!MenuOverlayController.driveDetector.getRemovableDevices().isEmpty()) {
+                if (MenuOverlayController.driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
+                    slot1Type = slot1SensorChoice.getValue();
+                    slot2Type = slot2SensorChoice.getValue();
+                    slot3Type = slot3SensorChoice.getValue();
 
-            switch (slot1SensorChoice.getValue()) {
-                case "PH-Sensor" -> slot1Send = "PH";
-                case "Temperature sensor" -> slot1Send = "TP";
-                case "Empty" -> slot1Send = "EM";
+                    switch (slot1SensorChoice.getValue()) {
+                        case "PH-Sensor" -> slot1Send = "PH";
+                        case "Temperature sensor" -> slot1Send = "TP";
+                        case "Empty" -> slot1Send = "EM";
+                    }
+
+                    switch (slot2SensorChoice.getValue()) {
+                        case "PH-Sensor" -> slot2Send = "PH";
+                        case "Temperature sensor" -> slot2Send = "TP";
+                        case "Empty" -> slot2Send = "EM";
+                    }
+
+                    switch (slot3SensorChoice.getValue()) {
+                        case "PH-Sensor" -> slot3Send = "PH";
+                        case "Temperature sensor" -> slot3Send = "TP";
+                        case "Empty" -> slot3Send = "EM";
+                    }
+
+                    connectThread = new Thread(this::sendToMicroBit);
+                    connectThread.start();
+                    informationLabel.setText("Slot choices have been sent to the Agua:bit");
+                } else{
+                    informationLabel.setText("Please connect the Agua:bit");
+                }
             }
-
-            switch (slot2SensorChoice.getValue()) {
-                case "PH-Sensor" -> slot2Send = "PH";
-                case "Temperature sensor" -> slot2Send = "TP";
-                case "Empty" -> slot2Send = "EM";
+            else{
+                informationLabel.setText("Please connect the Agua:bit");
             }
-
-            switch (slot3SensorChoice.getValue()) {
-                case "PH-Sensor" -> slot3Send = "PH";
-                case "Temperature sensor" -> slot3Send = "TP";
-                case "Empty" -> slot3Send = "EM";
-            }
-
-            connectThread = new Thread(this::sendToMicroBit);
-            connectThread.start();
-            informationLabel.setText("Information sent to product");
         }
     }
 
