@@ -12,6 +12,7 @@ public class Main extends Application {
     //override gets run after loading in
     @Override
     public void start(Stage stage) throws IOException {
+        //code for loading in the fxml and css file for running the application.
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MenuOverlay.fxml"));
         Scene scene = new Scene(fxmlLoader.load(),1280,720);
         stage.setTitle("Agua:bit companion app");
@@ -24,6 +25,7 @@ public class Main extends Application {
         stage.setOnCloseRequest(event -> exit(stage));
     }
 
+    //this code gets executed when the user pressed the close button in the top right corner.
     public void exit (Stage stage){
         MenuOverlayController.menuUpdateThread.stop();
         try {

@@ -21,6 +21,8 @@ public class SettingsScreenController implements Initializable {
         if(SaveFile.menuBarSide) {settingsSideMenuBarButton.setSelected(true);}
         else{settingsTopMenuBarButton.setSelected(true);}
     }
+
+    //code for switching between the side and top menubar
     public void menuBarToggle (ActionEvent event) throws IOException {
         if(settingsSideMenuBarButton.isSelected()){
             SaveFile.menuBarSide = true;

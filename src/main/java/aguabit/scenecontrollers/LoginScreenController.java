@@ -53,6 +53,7 @@ public class LoginScreenController {
         }
     }
 
+    //this code is here so multiple screens can be implemented in this separate window, for example a register account screen. These screens still have to be made.
     public void screenSwitcher(String fxmlFile) throws IOException{
         AnchorPane pane = FXMLLoader.load(getClass().getResource(fxmlFile));
         fxmlPane.getChildren().setAll(pane);

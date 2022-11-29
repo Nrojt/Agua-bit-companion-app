@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import com.fazecast.jSerialComm.*;
 
 public class ConnectScreenController implements Initializable {
+    //variables for selecting the different slots
     public static String slot1Type = "Empty";
     public static String slot2Type = "Empty";
     public static String slot3Type = "Empty";
@@ -31,10 +32,9 @@ public class ConnectScreenController implements Initializable {
     private String slot1Send = "AB";
     private String slot2Send = "AB";
     private String slot3Send = "AB";
-    private Thread connectThread;
 
 
-    //Choiceboxes need their choices to be defined in the override
+    //Choiceboxes need their choices to be defined in an override
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slot1SensorChoice.getItems().addAll("PH-Sensor", "Temperature sensor", "Empty");
@@ -42,55 +42,57 @@ public class ConnectScreenController implements Initializable {
         slot3SensorChoice.getItems().addAll("PH-Sensor", "Temperature sensor",  "Empty");
     }
 
-    //this is going to show a confirmation to the user that the information about the connected sensors is sucesfully sent to the microbit
+    //SendToProduct makes things ready to send the selected sensors to the microbit over usb
     public void sendToProduct(ActionEvent action) {
         if (slot1SensorChoice.getSelectionModel().isEmpty() || slot2SensorChoice.getSelectionModel().isEmpty() || slot3SensorChoice.getSelectionModel().isEmpty()){
             informationLabel.setText("Please make a selection for each slot");
         } else {
-            if (!MenuOverlayController.driveDetector.getRemovableDevices().isEmpty()) {
-                if (MenuOverlayController.driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
-                    slot1Type = slot1SensorChoice.getValue();
-                    slot2Type = slot2SensorChoice.getValue();
-                    slot3Type = slot3SensorChoice.getValue();
+            //this checks if the Microbit is detected or not
+            if (MenuOverlayController.isAguabitConnected) {
+                slot1Type = slot1SensorChoice.getValue();
+                slot2Type = slot2SensorChoice.getValue();
+                slot3Type = slot3SensorChoice.getValue();
 
-                    switch (slot1SensorChoice.getValue()) {
-                        case "PH-Sensor" -> slot1Send = "PH";
-                        case "Temperature sensor" -> slot1Send = "TP";
-                        case "Empty" -> slot1Send = "EM";
-                    }
-
-                    switch (slot2SensorChoice.getValue()) {
-                        case "PH-Sensor" -> slot2Send = "PH";
-                        case "Temperature sensor" -> slot2Send = "TP";
-                        case "Empty" -> slot2Send = "EM";
-                    }
-
-                    switch (slot3SensorChoice.getValue()) {
-                        case "PH-Sensor" -> slot3Send = "PH";
-                        case "Temperature sensor" -> slot3Send = "TP";
-                        case "Empty" -> slot3Send = "EM";
-                    }
-
-                    connectThread = new Thread(this::sendToMicroBit);
-                    connectThread.start();
-                    informationLabel.setText("Slot choices have been sent to the Agua:bit");
-                } else{
-                    informationLabel.setText("Please connect the Agua:bit");
+                //switch cases are like if statements
+                switch (slot1SensorChoice.getValue()) {
+                    case "PH-Sensor" -> slot1Send = "PH";
+                    case "Temperature sensor" -> slot1Send = "TP";
+                    case "Empty" -> slot1Send = "EM";
                 }
-            }
-            else{
+
+                switch (slot2SensorChoice.getValue()) {
+                    case "PH-Sensor" -> slot2Send = "PH";
+                    case "Temperature sensor" -> slot2Send = "TP";
+                    case "Empty" -> slot2Send = "EM";
+                }
+
+                switch (slot3SensorChoice.getValue()) {
+                    case "PH-Sensor" -> slot3Send = "PH";
+                    case "Temperature sensor" -> slot3Send = "TP";
+                    case "Empty" -> slot3Send = "EM";
+                }
+
+                //this makes a new thread so the application does not lock while sending the slot choises to the microbit
+                Thread connectThread = new Thread(this::sendToMicroBit);
+                connectThread.start();
+
+                informationLabel.setText("Slot choices have been sent to the Agua:bit");
+            } else{
                 informationLabel.setText("Please connect the Agua:bit");
             }
         }
     }
 
+    //this code actually sends the selected sensors to the microbit
     private void sendToMicroBit(){
+        //code for setting up a connection with the microbit over usb
         SerialPort microBit = SerialPort.getCommPorts()[0];
         microBit.openPort();
         microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
         microBit.setBaudRate(115200);
         OutputStream sendToMicroBit = microBit.getOutputStream();
 
+        //code for sending the slot choices over usb as chars so the microbit can read them.
         try {
                 sendToMicroBit.write('C');
                 for (int i = 0; i < slot1Send.length(); i++) {

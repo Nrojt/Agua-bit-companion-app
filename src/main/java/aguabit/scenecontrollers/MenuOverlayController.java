@@ -37,7 +37,7 @@ public class MenuOverlayController implements Initializable {
     @FXML
     public Label userNameLabel;
 
-    //variables for the menubar
+    //variables for the menu overlay
     public static boolean menuBarSide = SaveFile.menuBarSide;
     @FXML
     private Button menuToggle = new Button();
@@ -89,7 +89,6 @@ public class MenuOverlayController implements Initializable {
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage2 = new Stage();
         Scene scene2 = new Scene(root1);
-        //stage2.setScene(new Scene(root1));
         stage2.setTitle("Agua:bit account login");
         stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         String css = this.getClass().getResource("LoginScreen.css").toExternalForm();
@@ -97,7 +96,7 @@ public class MenuOverlayController implements Initializable {
         stage2.setScene(scene2);
         stage2.setResizable(false);
         stage2.show();
-        loginStatus = true;
+        loginStatus = true; //this needs to be placed somewhere else when the database is working correctly
     }
 
     //code for all the clickable buttons
@@ -215,10 +214,10 @@ public class MenuOverlayController implements Initializable {
                 if(isAguabitConnected){
                     AguabitConnectedStatus.setText("Agua:bit connected");
                 }
-                else {AguabitConnectedStatus.setText("Agua:bit not connected");};
+                else {AguabitConnectedStatus.setText("Agua:bit not connected");}
 
             });
-            //sleep
+            //pausing the thread
             try{Thread.sleep(100);}
             catch (InterruptedException iex){}
         }

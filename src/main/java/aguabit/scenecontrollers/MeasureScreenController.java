@@ -34,6 +34,7 @@ public class MeasureScreenController implements Initializable {
     @FXML
     private Label sensor3Value = new Label();
 
+    //labels for the measurement indications, these are not implemented yet.
     @FXML
     private Label sensor1Indication = new Label();
     @FXML
@@ -43,6 +44,7 @@ public class MeasureScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //setting the sensors to the sensors which were selected in the connect screen.
         sensor1Type.setText(ConnectScreenController.slot1Type);
         sensor2Type.setText(ConnectScreenController.slot2Type);
         sensor3Type.setText(ConnectScreenController.slot3Type);
@@ -50,24 +52,28 @@ public class MeasureScreenController implements Initializable {
 
     public void printComs(ActionEvent event) throws IOException {
         if(MenuOverlayController.isAguabitConnected) {
-            measureThread = new Thread(this::printComsActual);
+            //starting a new thread for getting the measurements from the Microbit
+            measureThread = new Thread(this::getMeasurementsFromMicrobit);
             measureThread.start();
         } else{
-            System.out.println("No microbit connected");
+            System.out.println("Please connect the Agua:bit");
         }
     }
 
-    private void printComsActual(){
+    private void getMeasurementsFromMicrobit(){
         port1 = "";
         port2 = "";
         port3 = "";
+
+        //opening a port for communicating with the Microbit over usb
         SerialPort microBit = SerialPort.getCommPorts()[0];
         microBit.openPort();
         microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-        microBit.setBaudRate(115200);
+        microBit.setBaudRate(115200); //the speed of communication
         OutputStream sendToMicroBit = microBit.getOutputStream();
         InputStream readFromMicroBit = microBit.getInputStream();
 
+        //code for getting the measurement reading from the microbit
         try {
             sendToMicroBit.write('M');
 
@@ -92,6 +98,8 @@ public class MeasureScreenController implements Initializable {
         } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
         System.out.println(port1+"\n"+port2+"\n"+port3);
         microBit.closePort();
+
+        //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
             if(!port1.equals("EMPTY")){
                 sensor1Value.setText(port1);
