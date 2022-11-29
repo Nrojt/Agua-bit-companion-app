@@ -12,10 +12,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="462.0" layoutY="307.0" mnemonicParsing="false" text="Update" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="462.0" AnchorPane.rightAnchor="462.0" />
-      <Label layoutX="406.0" layoutY="210.0" text="Current product version:" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="406.0" />
-      <Label layoutX="406.0" layoutY="227.0" text="Latest product version:" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="406.0" />
-      <Label layoutX="549.0" layoutY="210.0" text="1.0.0" AnchorPane.bottomAnchor="412.6666666666667" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="406.0" />
-      <Label layoutX="549.0" layoutY="227.0" text="1.0.1" AnchorPane.bottomAnchor="395.6666666666667" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="406.0" />
+      <Button layoutX="462.0" layoutY="307.0" mnemonicParsing="false" onAction="#copyToMicroBit" text="Update" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="462.0" AnchorPane.rightAnchor="462.0" />
+      <Label fx:id="notificationLabel" alignment="CENTER" layoutX="459.0" layoutY="467.0" text="Notification" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

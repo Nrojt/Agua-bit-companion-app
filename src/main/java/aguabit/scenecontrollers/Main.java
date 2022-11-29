@@ -1,16 +1,12 @@
 package aguabit.scenecontrollers;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import javafx.scene.image.Image;
 
 public class Main extends Application {
     //override gets run after loading in

@@ -76,12 +76,12 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="111.0" onAction="#settingsScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Settings">
+                  <MFXButton id="MenuBarButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="187.0" onAction="#updateScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Update">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton id="MenuBarButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="187.0" onAction="#updateScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Update">
+                  <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="111.0" onAction="#settingsScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Settings">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
