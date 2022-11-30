@@ -127,6 +127,9 @@ public class MenuOverlayController implements Initializable {
     public void settingsScreen(ActionEvent e) throws IOException{
         screenSwitcher("SettingsScreen.fxml");
     }
+    public void databaseScreen(ActionEvent e) throws IOException{
+        screenSwitcher("DatabaseScreen.fxml");
+    }
 
     //code for the logout button
     public void logout(ActionEvent event){

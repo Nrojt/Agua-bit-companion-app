@@ -91,6 +91,7 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
+                  <MFXButton alignment="BASELINE_LEFT" onAction="#databaseScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Database" />
                </children>
             </VBox>
          </children>

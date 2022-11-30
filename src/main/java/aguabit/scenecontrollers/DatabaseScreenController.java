@@ -21,7 +21,7 @@ public class DatabaseScreenController implements Initializable {
         DatabaseConnection connectionNow = new DatabaseConnection();
         Connection connectDB = connectionNow.getDBConnection();
 
-        String connectQuery = "SELECT user_id, username FROM user";
+        String connectQuery = "SELECT * FROM user";
 
         try {
 
@@ -31,8 +31,9 @@ public class DatabaseScreenController implements Initializable {
             while (queryOutput.next()) {
 
                 String user_id = queryOutput.getString("user_id");
+                String first_name = queryOutput.getString("first_name");
                 String username = queryOutput.getString("username");
-                String listOut = user_id + "\"" +username + "\"";
+                String listOut = user_id + "\""+ first_name + "\"" +username + "\"";
 
                 DatabaseScreen.getItems().add(listOut);
             }
