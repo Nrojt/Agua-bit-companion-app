@@ -17,18 +17,29 @@ public class SettingsScreenController implements Initializable {
     private MFXRadioButton settingsSideMenuBarButton = new MFXRadioButton();
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-        if(SaveFile.menuBarSide) {settingsSideMenuBarButton.setSelected(true);}
-        else{settingsTopMenuBarButton.setSelected(true);}
-    }
-
-    //code for switching between the side and top menubar
-    public void menuBarToggle (ActionEvent event) throws IOException {
-        if(settingsSideMenuBarButton.isSelected()){
-            SaveFile.menuBarSide = true;
-        } else if (settingsTopMenuBarButton.isSelected()){
-            SaveFile.menuBarSide = false;
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (SaveFile.menuBarSide) {
+            settingsSideMenuBarButton.setSelected(true);
+        } else {
+            settingsTopMenuBarButton.setSelected(true);
         }
     }
 
+    //code for switching between the side and top menubar
+    public void menuBarToggle(ActionEvent event) throws IOException {
+        if (settingsSideMenuBarButton.isSelected()) {
+            SaveFile.menuBarSide = true;
+        } else if (settingsTopMenuBarButton.isSelected()) {
+            SaveFile.menuBarSide = false;
+        }
+    }
+    // public static boolean islightmode = true;
+    //public void Changemode (ActionEvent event){
+    //  islightmode =!islightmode;
+    //if(islightmode){
+    // setlightmode();}
+    //  else {
+    //   setDarkMode();}
+    //}
+    // (-pratik)
 }

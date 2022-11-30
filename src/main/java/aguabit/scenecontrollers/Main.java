@@ -16,7 +16,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MenuOverlay.fxml"));
         Scene scene = new Scene(fxmlLoader.load(),1280,720);
         stage.setTitle("Agua:bit companion app");
-        String css = this.getClass().getResource("MainScreen.css").toExternalForm();
+        String css = this.getClass().getResource("lightmode.css").toExternalForm();
         stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         scene.getStylesheets().add(css);
         stage.setScene(scene);
