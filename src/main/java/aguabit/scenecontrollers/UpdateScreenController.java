@@ -16,6 +16,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.apache.commons.io.*;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.conn.ssl.*;
+import org.apache.http.HttpResponse;
+
 
 import javax.swing.*;
 
@@ -30,9 +39,13 @@ public class UpdateScreenController implements Initializable {
 
     public void copyToMicroBit(ActionEvent e) throws IOException {
         if (!new File(pathToFirmware).isFile()) {
-            notificationLabel.setText("Downloading firmware, please wait");
-            downloadingFirmware = new Thread(this::downloadFiles);
-            downloadingFirmware.start();
+            if(isReachable("https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.0/Aguabit-firmware.hex")) {
+                notificationLabel.setText("Downloading firmware, please wait");
+                downloadingFirmware = new Thread(this::downloadFiles);
+                downloadingFirmware.start();
+            } else {
+                notificationLabel.setText("Cannot reach the server, check your internet connection and come back later");
+            }
         } else if(MenuOverlayController.isAguabitConnected && microBitDriveLetter != ' '){
             notificationLabel.setText("Uploading firmware to Agua:bit, please wait");
             uploadingFirmware = new Thread(this::setUploadingFirmware);
@@ -43,7 +56,7 @@ public class UpdateScreenController implements Initializable {
 
     private void downloadFiles(){
         try {
-            FileUtils.copyURLToFile(new URL("https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.0/Aguabit-firmware.hex"), new File(pathToFirmware));
+            FileUtils.copyURLToFile(new URL("https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.0/Aguabit-firmware.hex"), new File(pathToFirmware), 5000, 5000);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -67,6 +80,25 @@ public class UpdateScreenController implements Initializable {
             microBitDriveLetter = MenuOverlayController.driveDetector.getRemovableDevices().toString().charAt(32);
             notificationLabel.setText("Click the button to update the firmware");
         }
-        else{notificationLabel.setText("Please connext the Agua:bit and refresh this page");}
+        else{notificationLabel.setText("Please connect the Agua:bit and refresh this page");}
+    }
+
+    public static boolean isReachable(String url) throws IOException{
+        boolean isReachable = true;
+        try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())
+        {
+            HttpHead request = new HttpHead(url);
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            if (response.getStatusLine().getStatusCode() == 404) {
+                System.out.println("URL " + url + " Not found");
+                isReachable = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            isReachable = false;
+        }
+
+        return isReachable;
     }
 }
