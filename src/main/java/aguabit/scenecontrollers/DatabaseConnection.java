@@ -9,7 +9,7 @@ public class DatabaseConnection {
 
     public Connection getDBConnection() {
 
-        String url = "jdbc:sqlite:C:\\Users\\Gebruiker\\IdeaProjects\\JavaFX-menu-test-Challenge\\src\\main\\java\\db\\aguabit.db";
+        String url = "jdbc:sqlite:src/main/java/db/aguabit.db";
 
         try {
 
