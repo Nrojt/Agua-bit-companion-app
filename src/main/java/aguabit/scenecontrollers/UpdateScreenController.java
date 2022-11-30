@@ -83,6 +83,7 @@ public class UpdateScreenController implements Initializable {
         else{notificationLabel.setText("Please connect the Agua:bit and refresh this page");}
     }
 
+    //this code checks if website is reachable, but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
     public static boolean isReachable(String url) throws IOException{
         boolean isReachable = true;
         try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())
@@ -95,7 +96,7 @@ public class UpdateScreenController implements Initializable {
                 isReachable = false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             isReachable = false;
         }
 
