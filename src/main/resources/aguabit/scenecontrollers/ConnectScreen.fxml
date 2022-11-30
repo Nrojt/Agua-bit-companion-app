@@ -59,7 +59,7 @@
             </ChoiceBox>
          </children>
       </GridPane>
-      <Button fx:id="buttonSendToProduct" layoutX="251.0" layoutY="303.0" mnemonicParsing="false" onAction="#sendToProduct" text="Send to Product" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
+      <Button fx:id="buttonSendToProduct" layoutX="251.0" layoutY="303.0" mnemonicParsing="false" onAction="#sendToProduct" text="Send to Agua:Bit" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
       <Label fx:id="informationLabel" alignment="CENTER" layoutY="271.0" prefHeight="17.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

@@ -25,7 +25,7 @@
                         <Image url="@images/standardProfilePic.png" />
                      </image>
                      <VBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="25.0" top="5.0" />
                      </VBox.margin>
                   </ImageView>
                   <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="30.0" prefWidth="200.0" text="user">
