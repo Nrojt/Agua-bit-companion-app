@@ -67,6 +67,6 @@ public class UpdateScreenController implements Initializable {
             microBitDriveLetter = MenuOverlayController.driveDetector.getRemovableDevices().toString().charAt(32);
             notificationLabel.setText("Click the button to update the firmware");
         }
-        else{notificationLabel.setText("Please connext the Agua:bit and refresh this page");}
+        else{notificationLabel.setText("Please connect the Agua:bit and refresh this page");}
     }
 }
