@@ -39,9 +39,9 @@
             <Label fx:id="sensor1Value" alignment="CENTER" prefHeight="17.0" prefWidth="264.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="sensor2Value" alignment="CENTER" layoutX="10.0" layoutY="89.0" prefHeight="17.0" prefWidth="241.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="sensor3Value" alignment="CENTER" layoutX="119.0" layoutY="89.0" prefHeight="17.0" prefWidth="225.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label fx:id="sensor1Indication" alignment="CENTER" prefHeight="17.0" prefWidth="234.0" text="Unkown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="sensor2Indication" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="17.0" prefWidth="303.0" text="Unkown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="sensor3Indication" alignment="CENTER" layoutX="119.0" layoutY="96.0" prefHeight="17.0" prefWidth="239.0" text="Unkown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="sensor1Indication" alignment="CENTER" onMouseClicked="#slot1Information" prefHeight="17.0" prefWidth="234.0" text="Unkown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="sensor2Indication" alignment="CENTER" layoutX="10.0" layoutY="96.0" onMouseClicked="#slot2Information" prefHeight="17.0" prefWidth="303.0" text="Unkown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="sensor3Indication" alignment="CENTER" layoutX="119.0" layoutY="96.0" onMouseClicked="#slot3Information" prefHeight="17.0" prefWidth="239.0" text="Unkown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label prefHeight="20.0" prefWidth="188.0" text="Sensor slot:">
                <font>
                   <Font size="14.0" />

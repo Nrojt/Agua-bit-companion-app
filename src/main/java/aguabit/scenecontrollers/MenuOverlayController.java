@@ -18,6 +18,7 @@ import saveFile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import net.samuelcampos.usbdrivedetector.*;
 
@@ -90,8 +91,8 @@ public class MenuOverlayController implements Initializable {
         Stage stage2 = new Stage();
         Scene scene2 = new Scene(root1);
         stage2.setTitle("Agua:bit account login");
-        stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
-        String css = this.getClass().getResource("LoginScreen.css").toExternalForm();
+        stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
         scene2.getStylesheets().add(css);
         stage2.setScene(scene2);
         stage2.setResizable(false);
@@ -103,7 +104,7 @@ public class MenuOverlayController implements Initializable {
     public void connectScreen(ActionEvent event) throws IOException{
         screenSwitcher("ConnectScreen.fxml");
     }
-    public void mainScreen() throws IOException{
+    public void mainScreen(ActionEvent event) throws IOException{
         screenSwitcher("MainScreen.fxml");
     }
     public void accountScreen(ActionEvent event) throws IOException{
@@ -120,9 +121,6 @@ public class MenuOverlayController implements Initializable {
     }
     public void aboutScreen(ActionEvent event) throws IOException{
         screenSwitcher("AboutScreen.fxml");
-    }
-    public void measureInfoScreen(ActionEvent e) throws IOException{
-        screenSwitcher("MeasureInfoScreen.fxml");
     }
     public void settingsScreen(ActionEvent e) throws IOException{
         screenSwitcher("SettingsScreen.fxml");
