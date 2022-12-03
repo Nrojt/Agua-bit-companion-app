@@ -46,10 +46,9 @@ public class LoginScreenController {
     }
     public void onCreateURL (ActionEvent event){
         try {
-            java.awt.Desktop.getDesktop().browse(java.net.URI.create("www.dehaagsehogeschool.nl/"));
-        }
-        catch (java.io.IOException e) {
-            System.out.println(e.getMessage());
+            screenSwitcher("SignUpScreen.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
