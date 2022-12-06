@@ -5,13 +5,14 @@ import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class SignUpScreenController{
+public class SignUpScreenController implements Initializable{
     //making variables for the textfields and the button on this screen
     @FXML
     public TextField usernameTextfield = new TextField();
@@ -29,50 +30,61 @@ public class SignUpScreenController{
     public MFXDatePicker dobPicker = new MFXDatePicker();
     @FXML
     public MFXButton signupButton = new MFXButton();
+    @FXML
+    public Label informationLabel = new Label();
+
+    private int phoneNumber = Integer.parseInt(null);
 
     protected String querry = "INSERT INTO user(first_name, last_name, username, phonenumber, password, email, date_of_birth) VALUES(?,?,?,?,?,?,?)";;
 
 
     public void printInput(ActionEvent e){
         if(!usernameTextfield.getText().isBlank() && !passwordTextfield.getText().isBlank() && !emailTextfield.getText().isBlank()) {
+            String firstName = firstnameTextfield.getText();
+            String lastName = lastnameTextfield.getText();
+            String userName = usernameTextfield.getText();
+            String password = passwordTextfield.getText();
+            String email = emailTextfield.getText();
+            String dob = String.valueOf(dobPicker.getValue());
 
-            System.out.println("username " + usernameTextfield.getText());
-            System.out.println("firstname " + firstnameTextfield.getText());
-            System.out.println("lastname " + lastnameTextfield.getText());
-            System.out.println("phone number " + phonenumberTextfield.getText());
-            System.out.println("email " + emailTextfield.getText());
-            System.out.println("password " + passwordTextfield.getText());
-            System.out.println("date of birth " + dobPicker.getValue());
-
-
-            DatabaseConnection connectionNow = new DatabaseConnection();
-            try (Connection connectDB = connectionNow.getDBConnection();
-                 PreparedStatement pstmt = connectDB.prepareStatement(querry)) {
-                pstmt.setString(1, firstnameTextfield.getText());
-                pstmt.setString(2, lastnameTextfield.getText());
-                pstmt.setString(3, usernameTextfield.getText());
-                try{
-                    pstmt.setInt(4, Integer.parseInt((phonenumberTextfield.getText())));
-                } catch (NumberFormatException ne){
-                    if(phonenumberTextfield.getText().isBlank()) {
-                        System.out.println("not a phone number");
-                    }
-
-                }
-                pstmt.setString(5, passwordTextfield.getText());
-                pstmt.setString(6, emailTextfield.getText());
-                pstmt.setString(7, String.valueOf(dobPicker.getValue()));
-
-                pstmt.executeUpdate();
-            } catch (SQLException z) {
-                System.out.println(z.getMessage());
+            if(phonenumberTextfield.getText().matches("[0-9]+")) {
+                phoneNumber = Integer.parseInt(phonenumberTextfield.getText());
+            } else if (!phonenumberTextfield.getText().isBlank()) {
+                informationLabel.setText("Not a valid phone number, please only enter numbers.");
             }
 
-        } else{
-            System.out.println("not filled");
-        }
+            System.out.println("username " + userName);
+            System.out.println("firstname " + firstName);
+            System.out.println("lastname " + lastName);
+            System.out.println("phone number " + phonenumberTextfield.getText());
+            System.out.println("email " + email);
+            System.out.println("password " + password);
+            System.out.println("date of birth " + dob);
 
+            if((phonenumberTextfield.getText().matches("[0-9]+") && !phonenumberTextfield.getText().isBlank()) || phonenumberTextfield.getText().isBlank()) {
+                DatabaseConnection connectionNow = new DatabaseConnection();
+                try (Connection connectDB = connectionNow.getDBConnection();
+                    PreparedStatement pstmt = connectDB.prepareStatement(querry)) {
+                    pstmt.setString(1, firstName);
+                    pstmt.setString(2, lastName);
+                    pstmt.setString(3, userName);
+                    pstmt.setInt(4, phoneNumber);
+                    pstmt.setString(5, password);
+                    pstmt.setString(6, email);
+                    pstmt.setString(7, dob);
+                    pstmt.executeUpdate();
+                } catch (SQLException z) {
+                    System.out.println(z.getMessage());
+                }
+                informationLabel.setText("Registration succesfull");
+            }
+        } else{
+            informationLabel.setText("Not all required textfields filled in");
+        }
     }
 
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        informationLabel.setText("Information can be changed at a later date");
+    }
 }

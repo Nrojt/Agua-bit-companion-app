@@ -151,6 +151,7 @@ public class MenuOverlayController implements Initializable {
             driveDetector.close();
             stage = (Stage) menuPane.getScene().getWindow();
             stage.close();
+            Platform.exit();
         }
     }
 

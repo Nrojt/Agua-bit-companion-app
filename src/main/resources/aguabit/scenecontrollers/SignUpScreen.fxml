@@ -14,13 +14,33 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextfield" layoutX="14.0" layoutY="125.0" promptText="Username" />
-      <TextField fx:id="firstnameTextfield" layoutX="14.0" layoutY="174.0" promptText="First name" />
-      <TextField fx:id="lastnameTextfield" layoutX="14.0" layoutY="225.0" promptText="Last name" />
-      <TextField fx:id="phonenumberTextfield" layoutX="14.0" layoutY="276.0" promptText="Phone number" />
-      <TextField fx:id="emailTextfield" layoutX="436.0" layoutY="125.0" promptText="e-mail adress" />
-      <TextField fx:id="passwordTextfield" layoutX="436.0" layoutY="174.0" promptText="password" />
+      <TextField fx:id="usernameTextfield" layoutX="121.0" layoutY="124.0" prefHeight="25.0" prefWidth="149.0" promptText="Username">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></TextField>
+      <TextField fx:id="firstnameTextfield" layoutX="329.0" layoutY="124.0" promptText="First name" />
+      <TextField fx:id="lastnameTextfield" layoutX="329.0" layoutY="159.0" promptText="Last name" />
+      <TextField fx:id="phonenumberTextfield" layoutX="329.0" layoutY="194.0" promptText="Phone number" />
+      <TextField fx:id="emailTextfield" layoutX="121.0" layoutY="159.0" prefHeight="25.0" prefWidth="149.0" promptText="E-mail adress">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></TextField>
+      <TextField fx:id="passwordTextfield" layoutX="121.0" layoutY="194.0" prefHeight="25.0" prefWidth="149.0" promptText="Password">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></TextField>
       <MFXButton fx:id="signupButton" layoutX="271.0" layoutY="332.0" onAction="#printInput" text="Sign up" />
-      <MFXDatePicker fx:id="dobPicker" editable="false" layoutX="435.0" layoutY="219.0" prefHeight="26.0" prefWidth="150.0" promptText="Date of birth" />
+      <MFXDatePicker fx:id="dobPicker" editable="false" layoutX="329.0" layoutY="229.0" prefHeight="26.0" prefWidth="150.0" promptText="Date of birth" />
+      <Label fx:id="informationLabel" alignment="TOP_LEFT" layoutX="121.0" layoutY="229.0" prefHeight="38.0" prefWidth="149.0" text="information label" wrapText="true" />
+      <Label alignment="CENTER" layoutX="121.0" layoutY="96.0" prefHeight="17.0" prefWidth="149.0" text="Required">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="329.0" layoutY="96.0" prefHeight="17.0" prefWidth="149.0" text="Optional">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
