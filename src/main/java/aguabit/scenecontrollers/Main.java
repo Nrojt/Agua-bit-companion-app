@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     //override gets run after loading in
@@ -16,8 +17,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MenuOverlay.fxml"));
         Scene scene = new Scene(fxmlLoader.load(),1280,720);
         stage.setTitle("Agua:bit companion app");
-        String css = this.getClass().getResource("lightmode.css").toExternalForm();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+        String css = Objects.requireNonNull(this.getClass().getResource("lightmode.css")).toExternalForm();
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();

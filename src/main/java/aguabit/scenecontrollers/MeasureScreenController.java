@@ -4,13 +4,19 @@ import com.fazecast.jSerialComm.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MeasureScreenController implements Initializable {
@@ -111,6 +117,37 @@ public class MeasureScreenController implements Initializable {
                 sensor3Value.setText(port3);
             } else {sensor3Value.setText("Empty");}
         });
+    }
+
+    public void slot1Information() throws IOException{
+        slotInformationScreens(1, sensor1Type.getText(), sensor1Value.getText());
+
+    }
+    public void slot2Information() throws IOException {
+
+        slotInformationScreens(2, sensor2Type.getText(), sensor2Value.getText());
+    }
+    public void slot3Information() throws IOException {
+
+        slotInformationScreens(3, sensor3Type.getText(), sensor3Value.getText());
+    }
+
+    private void slotInformationScreens(int slot, String sensorType, String sensorValue) throws IOException {
+        System.out.println(slot + " "+ sensorType);
+        MeasureInfoScreenController.slotNumber = slot;
+        MeasureInfoScreenController.sensorValue = sensorValue;
+        MeasureInfoScreenController.sensorType = sensorType;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MeasureInfoScreen.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage2 = new Stage();
+        Scene scene2 = new Scene(root1);
+        stage2.setTitle("Measurement Information");
+        stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        scene2.getStylesheets().add(css);
+        stage2.setScene(scene2);
+        stage2.setResizable(false);
+        stage2.show();
     }
 
 }

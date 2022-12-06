@@ -33,13 +33,14 @@ public class UpdateScreenController implements Initializable {
     public static Thread uploadingFirmware;
     private final String pathToDocumentFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     private final String pathToFirmware = pathToDocumentFolder + "/AguaBit/Aguabit-firmware.hex";
+    private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.1/Aguabit-firmware.hex";
     private char microBitDriveLetter = ' ';
     @FXML
     private Label notificationLabel = new Label();
 
     public void copyToMicroBit(ActionEvent e) throws IOException {
         if (!new File(pathToFirmware).isFile()) {
-            if(isReachable("https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.0/Aguabit-firmware.hex")) {
+            if(isReachable(urlToFirmware)) {
                 notificationLabel.setText("Downloading firmware, please wait");
                 downloadingFirmware = new Thread(this::downloadFiles);
                 downloadingFirmware.start();
@@ -56,7 +57,7 @@ public class UpdateScreenController implements Initializable {
 
     private void downloadFiles(){
         try {
-            FileUtils.copyURLToFile(new URL("https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.0/Aguabit-firmware.hex"), new File(pathToFirmware), 5000, 5000);
+            FileUtils.copyURLToFile(new URL(urlToFirmware), new File(pathToFirmware), 5000, 5000);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,6 +84,7 @@ public class UpdateScreenController implements Initializable {
         else{notificationLabel.setText("Please connect the Agua:bit and refresh this page");}
     }
 
+    //this code checks if website is reachable, but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
     public static boolean isReachable(String url) throws IOException{
         boolean isReachable = true;
         try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())
@@ -95,7 +97,7 @@ public class UpdateScreenController implements Initializable {
                 isReachable = false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             isReachable = false;
         }
 

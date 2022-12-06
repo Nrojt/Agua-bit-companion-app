@@ -61,11 +61,6 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton alignment="BASELINE_LEFT" onAction="#measureInfoScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Measurement Information">
-                     <VBox.margin>
-                        <Insets bottom="2.0" />
-                     </VBox.margin>
-                  </MFXButton>
                   <MFXButton alignment="BASELINE_LEFT" layoutX="10.0" layoutY="86.0" onAction="#setupScreen" prefHeight="30.0" prefWidth="200.0" rippleColor="LIGHTBLUE" styleClass="MenuBarButtons" text="Setup Guide">
                      <VBox.margin>
                         <Insets bottom="2.0" />
@@ -127,7 +122,6 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Information">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#measureInfoScreen" text="Measurement Information" />
                         <MenuItem mnemonicParsing="false" onAction="#setupScreen" text="Setup Guide" />
                      </items>
                   </Menu>
