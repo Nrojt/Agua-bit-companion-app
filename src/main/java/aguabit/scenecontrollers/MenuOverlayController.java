@@ -202,7 +202,7 @@ public class MenuOverlayController implements Initializable {
                     menuToggleThreeLines.setDisable(true);
                 }
                 if (userName.isEmpty()) {
-                    userName = "user";
+                    userName = "User";
                 }
                 userNameLabel.setText(userName);
 
@@ -217,6 +217,7 @@ public class MenuOverlayController implements Initializable {
                     AguabitConnectedStatus.setText("Agua:bit connected");
                 }
                 else {AguabitConnectedStatus.setText("Agua:bit not connected");}
+
 
             });
             //pausing the thread

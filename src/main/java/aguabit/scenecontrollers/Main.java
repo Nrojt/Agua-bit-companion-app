@@ -35,6 +35,12 @@ public class Main extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            MeasureScreenController.measureThread.stop();
+            UpdateScreenController.uploadingFirmware.stop();
+            UpdateScreenController.downloadingFirmware.stop();
+        }catch(NullPointerException ignored){}
+
         stage.close();
         Platform.exit();
     }
