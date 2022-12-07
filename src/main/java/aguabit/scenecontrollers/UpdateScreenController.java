@@ -80,7 +80,7 @@ public class UpdateScreenController implements Initializable {
     }
 
     private void setUploadingFirmware(){
-        char microBitDriveLetter = MenuOverlayController.driveDetector.getRemovableDevices().toString().charAt(32);
+        char microBitDriveLetter = MenuOverlayController.driveLetter;
         Path firmwareLocation = Paths.get(pathToFirmware);
         Path microbitDrive = Paths.get(microBitDriveLetter + ":\\Aguabit-firmware.hex");
         System.out.println(microbitDrive);

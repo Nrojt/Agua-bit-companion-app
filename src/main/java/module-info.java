@@ -10,6 +10,7 @@ module com.example.scenecontrollers {
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
     requires geoip2;
+    requires com.google.gson;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
 }

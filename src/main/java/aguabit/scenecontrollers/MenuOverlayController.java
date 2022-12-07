@@ -54,6 +54,8 @@ public class MenuOverlayController implements Initializable {
     private Label AguabitConnectedStatus = new Label();
     public static boolean isAguabitConnected = false;
 
+    public static char driveLetter;
+
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
 
     public MenuOverlayController() throws IOException {
@@ -64,7 +66,7 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //driveDetector.addDriveListener(System.out::println);
+        //driveDetector.addDriveListener(System.out::println); //for printing out when usb devices connect or disconnect
         //loading in the mainscreen fxml file
         try {
             screenSwitcher("MainScreen.fxml");
@@ -80,14 +82,14 @@ public class MenuOverlayController implements Initializable {
 
     //the code for loading in the different windows
     public void screenSwitcher(String fxmlFile) throws IOException{
-        AnchorPane pane = FXMLLoader.load(getClass().getResource(fxmlFile));
+        AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         fxmlPane.getChildren().setAll(pane);
     }
 
     //the login screen gets opened in a new window, so it cannot use the screenSwitcher code.
     public void loginScreen(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
         Stage stage2 = new Stage();
         Scene scene2 = new Scene(root1);
         stage2.setTitle("Agua:bit account login");
@@ -167,19 +169,35 @@ public class MenuOverlayController implements Initializable {
         sideMenuBar.setVisible(!sideMenuBar.isVisible());
     }
 
+
     //updating the menu overlay, this is run on a separate thread
     public void menuUpdate() {
         while (true) {
+
+            //
+            String[] connectedDrivesString = new String[0];
+            Object[] connectedDrivesObject = driveDetector.getRemovableDevices().toArray();
             try{
-                if (!driveDetector.getRemovableDevices().isEmpty()) {
-                    //System.out.println(driveDetector.getRemovableDevices().toString().charAt(32));
-                    if (driveDetector.getRemovableDevices().get(0).toString().contains("MICROBIT")) {
-                        isAguabitConnected = true;
-                    }
-                } else {
-                    isAguabitConnected = false;
-                }
+               connectedDrivesString = new String[connectedDrivesObject.length];
+               for(int i = 0; i < connectedDrivesObject.length; i++){
+                   connectedDrivesString[i] = driveDetector.getRemovableDevices().get(i).toString();
+               }
+
             } catch (IndexOutOfBoundsException e) {}
+
+            for (String s : connectedDrivesString) {
+                try {
+                    if (s.contains("MICROBIT")) {
+                        isAguabitConnected = true;
+                        driveLetter = s.charAt(31);
+                    }
+                    else{
+                        isAguabitConnected = false;
+                    }
+                } catch (NullPointerException ignored) {
+                }
+            }
+
             //platform.runlater makes the code in it run on the same thread as the menu, not on the newly made thread
             Platform.runLater(() -> {
                 menuBarSide = SaveFile.menuBarSide;
@@ -217,12 +235,10 @@ public class MenuOverlayController implements Initializable {
                     AguabitConnectedStatus.setText("Agua:bit connected");
                 }
                 else {AguabitConnectedStatus.setText("Agua:bit not connected");}
-
-
             });
             //pausing the thread
             try{Thread.sleep(100);}
-            catch (InterruptedException iex){}
+            catch (InterruptedException ignored){}
         }
     }
 }
