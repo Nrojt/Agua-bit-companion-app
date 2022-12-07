@@ -9,6 +9,7 @@ module com.example.scenecontrollers {
     requires java.sql;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
+    requires geoip2;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
 }
