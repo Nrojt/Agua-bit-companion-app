@@ -12,9 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -57,16 +55,16 @@ public class MeasureScreenController implements Initializable {
     }
 
     public void printComs(ActionEvent event) throws IOException {
-        if(MenuOverlayController.isAguabitConnected) {
+        if (MenuOverlayController.isAguabitConnected) {
             //starting a new thread for getting the measurements from the Microbit
             measureThread = new Thread(this::getMeasurementsFromMicrobit);
             measureThread.start();
-        } else{
+        } else {
             System.out.println("Please connect the Agua:bit");
         }
     }
 
-    private void getMeasurementsFromMicrobit(){
+    private void getMeasurementsFromMicrobit() {
         port1 = "";
         port2 = "";
         port3 = "";
@@ -83,57 +81,69 @@ public class MeasureScreenController implements Initializable {
         try {
             sendToMicroBit.write('M');
 
-            try{
+            try {
                 Thread.sleep(200);
-            } catch (InterruptedException ignored){}
+            } catch (InterruptedException ignored) {
+            }
 
 
-            for(int i = 0; i < 5; i++){
+            for (int i = 0; i < 5; i++) {
                 port1 += (char) readFromMicroBit.read();
             }
 
 
-            for(int i = 0; i < 5; i++){
-                port2 +=(char) readFromMicroBit.read();
+            for (int i = 0; i < 5; i++) {
+                port2 += (char) readFromMicroBit.read();
             }
 
 
-            for(int i = 0; i < 5; i++){
-                port3 +=(char) readFromMicroBit.read();
+            for (int i = 0; i < 5; i++) {
+                port3 += (char) readFromMicroBit.read();
             }
-        } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
-        System.out.println(port1+"\n"+port2+"\n"+port3);
+        } catch (SerialPortIOException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(port1 + "\n" + port2 + "\n" + port3);
         microBit.closePort();
 
         //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
-            if(!port1.equals("EMPTY")){
+            if (!port1.equals("EMPTY")) {
                 sensor1Value.setText(port1);
-            } else {sensor1Value.setText("Empty");}
-            if(!port2.equals("EMPTY")){
+            } else {
+                sensor1Value.setText("Empty");
+            }
+            if (!port2.equals("EMPTY")) {
                 sensor2Value.setText(port2);
-            } else {sensor2Value.setText("Empty");}
-            if(!port3.equals("EMPTY")){
+            } else {
+                sensor2Value.setText("Empty");
+            }
+            if (!port3.equals("EMPTY")) {
                 sensor3Value.setText(port3);
-            } else {sensor3Value.setText("Empty");}
+            } else {
+                sensor3Value.setText("Empty");
+            }
         });
     }
 
-    public void slot1Information() throws IOException{
+    public void slot1Information() throws IOException {
         slotInformationScreens(1, sensor1Type.getText(), sensor1Value.getText());
 
     }
+
     public void slot2Information() throws IOException {
 
         slotInformationScreens(2, sensor2Type.getText(), sensor2Value.getText());
     }
+
     public void slot3Information() throws IOException {
 
         slotInformationScreens(3, sensor3Type.getText(), sensor3Value.getText());
     }
 
     private void slotInformationScreens(int slot, String sensorType, String sensorValue) throws IOException {
-        System.out.println(slot + " "+ sensorType);
+        System.out.println(slot + " " + sensorType);
         MeasureInfoScreenController.slotNumber = slot;
         MeasureInfoScreenController.sensorValue = sensorValue;
         MeasureInfoScreenController.sensorType = sensorType;
@@ -150,4 +160,23 @@ public class MeasureScreenController implements Initializable {
         stage2.show();
     }
 
+    public static void main(String args[]) {
+
+        //saves output in to a .txt file has to be linked to measure screen controller.
+        FileOutputStream out;
+        PrintStream p;
+
+        try {
+            // connected to "myfile.txt"
+            out = new FileOutputStream("myfile.txt");
+            p = new PrintStream(out);
+            p.append(port1 + "\n" + port2 + "\n" + port3); // connected it to the port which connects to the sensor value.
+
+            p.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            //System.err.println ("Error writing to file")
+        }
+    }
 }
