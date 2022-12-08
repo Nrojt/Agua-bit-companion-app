@@ -18,40 +18,65 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MeasureScreenController implements Initializable {
-    public static String port1 = "";
-    public static String port2 = "";
-    public static String port3 = "";
+    public static String port1 = "Empty";
+    public static String port2 = "Empty";
+    public static String port3 = "Empty";
 
     public static Thread measureThread;
 
-    @FXML
-    public static Label sensor1Type = new Label();
-    @FXML
-    public static Label sensor2Type = new Label();
-    @FXML
-    public static Label sensor3Type = new Label();
+    public static String sensor1TypeString = "Unknown";
+    public static String sensor2TypeString = "Unknown";
+    public static String sensor3TypeString = "Unknown";
+    public static String sensor1ValueString = "Unknown";
+    public static String sensor2ValueString = "Unknown";
+    public static String sensor3ValueString = "Unknown";
+    public static String sensor1IndicationString = "Unknown";
+    public static String sensor2IndicationString = "Unknown";
+    public static String sensor3IndicationString = "Unknown";
+
 
     @FXML
-    public static Label sensor1Value = new Label();
+    private Label sensor1TypeLabel = new Label();
     @FXML
-    public static Label sensor2Value = new Label();
+    private Label sensor2TypeLabel = new Label();
     @FXML
-    public static Label sensor3Value = new Label();
+    private Label sensor3TypeLabel = new Label();
+
+    @FXML
+    private Label sensor1ValueLabel = new Label();
+    @FXML
+    private Label sensor2ValueLabel = new Label();
+    @FXML
+    private Label sensor3ValueLabel = new Label();
 
     //labels for the measurement indications, these are not implemented yet.
     @FXML
-    public static Label sensor1Indication = new Label();
+    private Label sensor1IndicationLabel = new Label();
     @FXML
-    public static Label sensor2Indication = new Label();
+    private Label sensor2IndicationLabel = new Label();
     @FXML
-    public static Label sensor3Indication = new Label();
+    private Label sensor3IndicationLabel = new Label();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //setting the sensors to the sensors which were selected in the connect screen.
-        sensor1Type.setText(ConnectScreenController.slot1Type);
-        sensor2Type.setText(ConnectScreenController.slot2Type);
-        sensor3Type.setText(ConnectScreenController.slot3Type);
+        sensor1TypeString = ConnectScreenController.slot1Type;
+        sensor2TypeString = ConnectScreenController.slot2Type;
+        sensor3TypeString = ConnectScreenController.slot3Type;
+
+
+        sensor1ValueLabel.setText(sensor1ValueString);
+        sensor2ValueLabel.setText(sensor2ValueString);
+        sensor3ValueLabel.setText(sensor3ValueString);
+
+        sensor1TypeLabel.setText(sensor1TypeString);
+        sensor2TypeLabel.setText(sensor2TypeString);
+        sensor3TypeLabel.setText(sensor3TypeString);
+
+        sensor1IndicationLabel.setText(sensor1IndicationString);
+        sensor2IndicationLabel.setText(sensor2IndicationString);
+        sensor3IndicationLabel.setText(sensor3IndicationString);
     }
 
     public void printComs(ActionEvent event) throws IOException {
@@ -96,52 +121,68 @@ public class MeasureScreenController implements Initializable {
             sendToMicroBit.write('M');
 
             try{
-                Thread.sleep(200);
+                Thread.sleep(500);
             } catch (InterruptedException ignored){}
 
-
-            for(int i = 0; i < 5; i++){
-                port1 += (char) readFromMicroBit.read();
+            if(!sensor1TypeString.equals("Empty")) {
+                for (int i = 0; i < 5; i++) {
+                    port1 += (char) readFromMicroBit.read();;
+                }
+            }
+            else{
+                port1 = "Empty";
             }
 
-
-            for(int i = 0; i < 5; i++){
-                port2 +=(char) readFromMicroBit.read();
+            if(!sensor2TypeString.equals("Empty")) {
+                for (int i = 0; i < 5; i++) {
+                    port2 += (char) readFromMicroBit.read();;
+                }
+            }
+            else{
+                port2 = "Empty";
             }
 
-
-            for(int i = 0; i < 5; i++){
-                port3 +=(char) readFromMicroBit.read();
+            if(!sensor3TypeString.equals("Empty")) {
+                for (int i = 0; i < 5; i++) {
+                    port3 += (char)readFromMicroBit.read();
+                }
             }
+            else{
+                port3 = "Empty";
+            }
+
+            if(port1.isBlank()){port1 = "ERROR";}
+            if(port2.isBlank()){port2 = "ERROR";}
+            if(port2.isBlank()){port2 = "ERROR";}
+
         } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
         System.out.println(port1+"\n"+port2+"\n"+port3);
         microBit.closePort();
 
+        sensor1ValueString = port1;
+        sensor2ValueString = port2;
+        sensor3ValueString = port3;
+
+
         //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
-            if(!port1.equals("EMPTY")){
-                sensor1Value.setText(port1);
-            } else {sensor1Value.setText("Empty");}
-            if(!port2.equals("EMPTY")){
-                sensor2Value.setText(port2);
-            } else {sensor2Value.setText("Empty");}
-            if(!port3.equals("EMPTY")){
-                sensor3Value.setText(port3);
-            } else {sensor3Value.setText("Empty");}
+            sensor1ValueLabel.setText(sensor1ValueString);
+            sensor2ValueLabel.setText(sensor2ValueString);
+            sensor3ValueLabel.setText(sensor3ValueString);
         });
     }
 
     public void slot1Information() throws IOException{
-        slotInformationScreens(1, sensor1Type.getText(), sensor1Value.getText());
-
+        slotInformationScreens(1, sensor1TypeString, sensor1ValueString);
     }
+
     public void slot2Information() throws IOException {
 
-        slotInformationScreens(2, sensor2Type.getText(), sensor2Value.getText());
+        slotInformationScreens(2, sensor2TypeString, sensor2ValueString);
     }
     public void slot3Information() throws IOException {
 
-        slotInformationScreens(3, sensor3Type.getText(), sensor3Value.getText());
+        slotInformationScreens(3, sensor3TypeString, sensor3ValueString);
     }
 
     private void slotInformationScreens(int slot, String sensorType, String sensorValue) throws IOException {

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import location.Location;
 import saveFile.SaveFile;
 
@@ -44,17 +45,19 @@ public class SaveMeasurementScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sensor1Type.setText(MeasureScreenController.sensor1Type.getText());
-        sensor2Type.setText(MeasureScreenController.sensor2Type.getText());
-        sensor3Type.setText(MeasureScreenController.sensor3Type.getText());
 
-        sensor1Value.setText(MeasureScreenController.sensor1Value.getText());
-        sensor2Value.setText(MeasureScreenController.sensor2Value.getText());
-        sensor3Value.setText(MeasureScreenController.sensor3Value.getText());
+        sensor1Type.setText(MeasureScreenController.sensor1TypeString);
+        sensor2Type.setText(MeasureScreenController.sensor2TypeString);
+        sensor3Type.setText(MeasureScreenController.sensor2TypeString);
 
-        sensor1Indication.setText(MeasureScreenController.sensor1Indication.getText());
-        sensor2Indication.setText(MeasureScreenController.sensor2Indication.getText());
-        sensor3Indication.setText(MeasureScreenController.sensor3Indication.getText());
+        sensor1Value.setText(MeasureScreenController.sensor1ValueString);
+        sensor2Value.setText(MeasureScreenController.sensor2ValueString);
+        sensor3Value.setText(MeasureScreenController.sensor3ValueString);
+
+        sensor1Indication.setText(MeasureScreenController.sensor1IndicationString);
+        sensor2Indication.setText(MeasureScreenController.sensor2IndicationString);
+        sensor3Indication.setText(MeasureScreenController.sensor3IndicationString);
+
 
         try {
             measurementLocationTextfield.setText((Location.getUserLocation()));
@@ -72,6 +75,9 @@ public class SaveMeasurementScreenController implements Initializable {
             } else{
                 SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
             }
+            Stage stage = (Stage) measurementNameTextfield.getScene().getWindow();
+            stage.close(); //closes the window
         }
+
     }
 }
