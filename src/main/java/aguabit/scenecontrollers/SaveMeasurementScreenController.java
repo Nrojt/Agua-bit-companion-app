@@ -1,10 +1,13 @@
 package aguabit.scenecontrollers;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import location.Location;
+import saveFile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,6 +62,16 @@ public class SaveMeasurementScreenController implements Initializable {
         } catch (IOException | GeoIp2Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void saveMeasurement(ActionEvent e){
+        //code for actually saving the measurement
+        if(!measurementNameTextfield.getText().isBlank()){
+            if(MenuOverlayController.loginStatus) {
+                System.out.println("saved online");
+            } else{
+                SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
+            }
+        }
     }
 }

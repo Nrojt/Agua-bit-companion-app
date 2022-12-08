@@ -13,4 +13,6 @@ module com.example.scenecontrollers {
     requires com.google.gson;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
+    exports location;
+    opens location to javafx.fxml;
 }
