@@ -15,13 +15,7 @@ import com.google.gson.JsonParser;
 
 
 public class Location {
-    public static void main(String[] args) throws IOException, GeoIp2Exception {
-
-        date();
-
-    }
-
-    public static void date() throws IOException, GeoIp2Exception {
+    public static String getUserLocation() throws IOException, GeoIp2Exception {
             String IP;
 
             //This gives the correct ipv4 address, localhost doesn't work correctly when multiple network devices are present.
@@ -46,6 +40,7 @@ public class Location {
 
             System.out.println("latitude " + latitude);
             System.out.println("longitude "+ longitude);
+            return (latitude + "," + longitude);
         }
 }
 

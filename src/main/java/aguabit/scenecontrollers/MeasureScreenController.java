@@ -25,26 +25,26 @@ public class MeasureScreenController implements Initializable {
     public static Thread measureThread;
 
     @FXML
-    private Label sensor1Type = new Label();
+    public static Label sensor1Type = new Label();
     @FXML
-    private Label sensor2Type = new Label();
+    public static Label sensor2Type = new Label();
     @FXML
-    private Label sensor3Type = new Label();
+    public static Label sensor3Type = new Label();
 
     @FXML
-    private Label sensor1Value = new Label();
+    public static Label sensor1Value = new Label();
     @FXML
-    private Label sensor2Value = new Label();
+    public static Label sensor2Value = new Label();
     @FXML
-    private Label sensor3Value = new Label();
+    public static Label sensor3Value = new Label();
 
     //labels for the measurement indications, these are not implemented yet.
     @FXML
-    private Label sensor1Indication = new Label();
+    public static Label sensor1Indication = new Label();
     @FXML
-    private Label sensor2Indication = new Label();
+    public static Label sensor2Indication = new Label();
     @FXML
-    private Label sensor3Indication = new Label();
+    public static Label sensor3Indication = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,13 +55,27 @@ public class MeasureScreenController implements Initializable {
     }
 
     public void printComs(ActionEvent event) throws IOException {
-        if (MenuOverlayController.isAguabitConnected) {
+        if(MenuOverlayController.isAguabitConnected) {
             //starting a new thread for getting the measurements from the Microbit
             measureThread = new Thread(this::getMeasurementsFromMicrobit);
             measureThread.start();
-        } else {
+        } else{
             System.out.println("Please connect the Agua:bit");
         }
+    }
+
+    public void saveMeasurement(ActionEvent e) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
+        Parent root2 = (Parent) fxmlLoader.load();
+        Stage stage3 = new Stage();
+        Scene scene3 = new Scene(root2);
+        stage3.setTitle("Save Measurement");
+        stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        scene3.getStylesheets().add(css);
+        stage3.setScene(scene3);
+        stage3.setResizable(false);
+        stage3.show();
     }
 
     private void getMeasurementsFromMicrobit() {
@@ -81,69 +95,57 @@ public class MeasureScreenController implements Initializable {
         try {
             sendToMicroBit.write('M');
 
-            try {
+            try{
                 Thread.sleep(200);
-            } catch (InterruptedException ignored) {
-            }
+            } catch (InterruptedException ignored){}
 
 
-            for (int i = 0; i < 5; i++) {
+            for(int i = 0; i < 5; i++){
                 port1 += (char) readFromMicroBit.read();
             }
 
 
-            for (int i = 0; i < 5; i++) {
-                port2 += (char) readFromMicroBit.read();
+            for(int i = 0; i < 5; i++){
+                port2 +=(char) readFromMicroBit.read();
             }
 
 
-            for (int i = 0; i < 5; i++) {
-                port3 += (char) readFromMicroBit.read();
+            for(int i = 0; i < 5; i++){
+                port3 +=(char) readFromMicroBit.read();
             }
-        } catch (SerialPortIOException ignored) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(port1 + "\n" + port2 + "\n" + port3);
+        } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
+        System.out.println(port1+"\n"+port2+"\n"+port3);
         microBit.closePort();
 
         //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
-            if (!port1.equals("EMPTY")) {
+            if(!port1.equals("EMPTY")){
                 sensor1Value.setText(port1);
-            } else {
-                sensor1Value.setText("Empty");
-            }
-            if (!port2.equals("EMPTY")) {
+            } else {sensor1Value.setText("Empty");}
+            if(!port2.equals("EMPTY")){
                 sensor2Value.setText(port2);
-            } else {
-                sensor2Value.setText("Empty");
-            }
-            if (!port3.equals("EMPTY")) {
+            } else {sensor2Value.setText("Empty");}
+            if(!port3.equals("EMPTY")){
                 sensor3Value.setText(port3);
-            } else {
-                sensor3Value.setText("Empty");
-            }
+            } else {sensor3Value.setText("Empty");}
         });
     }
 
-    public void slot1Information() throws IOException {
+    public void slot1Information() throws IOException{
         slotInformationScreens(1, sensor1Type.getText(), sensor1Value.getText());
 
     }
-
     public void slot2Information() throws IOException {
 
         slotInformationScreens(2, sensor2Type.getText(), sensor2Value.getText());
     }
-
     public void slot3Information() throws IOException {
 
         slotInformationScreens(3, sensor3Type.getText(), sensor3Value.getText());
     }
 
     private void slotInformationScreens(int slot, String sensorType, String sensorValue) throws IOException {
-        System.out.println(slot + " " + sensorType);
+        System.out.println(slot + " "+ sensorType);
         MeasureInfoScreenController.slotNumber = slot;
         MeasureInfoScreenController.sensorValue = sensorValue;
         MeasureInfoScreenController.sensorType = sensorType;
@@ -159,6 +161,5 @@ public class MeasureScreenController implements Initializable {
         stage2.setResizable(false);
         stage2.show();
     }
-
 
 }
