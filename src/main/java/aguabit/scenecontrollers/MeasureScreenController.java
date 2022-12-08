@@ -160,23 +160,5 @@ public class MeasureScreenController implements Initializable {
         stage2.show();
     }
 
-    public static void main(String args[]) {
 
-        //saves output in to a .txt file has to be linked to measure screen controller.
-        FileOutputStream out;
-        PrintStream p;
-
-        try {
-            // connected to "myfile.txt"
-            out = new FileOutputStream("myfile.txt");
-            p = new PrintStream(out);
-            p.append(port1 + "\n" + port2 + "\n" + port3); // connected it to the port which connects to the sensor value.
-
-            p.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            //System.err.println ("Error writing to file")
-        }
-    }
 }
