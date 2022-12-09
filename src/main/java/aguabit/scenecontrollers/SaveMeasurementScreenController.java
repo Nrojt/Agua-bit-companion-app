@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 
 public class SaveMeasurementScreenController implements Initializable {
+    private int userID = 1;
     @FXML
     private Label sensor1Type = new Label();
     @FXML
@@ -71,7 +72,7 @@ public class SaveMeasurementScreenController implements Initializable {
         //code for actually saving the measurement
         if(!measurementNameTextfield.getText().isBlank()){
             if(MenuOverlayController.loginStatus) {
-                System.out.println("saved online");
+                SaveFile.saveMeasurementDatabase(userID, measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
             } else{
                 SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
             }

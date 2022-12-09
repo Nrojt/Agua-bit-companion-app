@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -108,7 +110,10 @@ public class MeasureScreenController implements Initializable {
         port2 = "";
         port3 = "";
 
+        String microbitInput = "";
+
         //opening a port for communicating with the Microbit over usb
+        //System.out.println(SerialPort.getCommPorts());
         SerialPort microBit = SerialPort.getCommPorts()[0];
         microBit.openPort();
         microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
@@ -120,49 +125,68 @@ public class MeasureScreenController implements Initializable {
         try {
             sendToMicroBit.write('M');
 
-            try{
+            try {
                 Thread.sleep(500);
-            } catch (InterruptedException ignored){}
+            } catch (InterruptedException ignored) {
+            }
 
-            if(!sensor1TypeString.equals("Empty")) {
-                for (int i = 0; i < 5; i++) {
-                    port1 += (char) readFromMicroBit.read();;
+            for(int i = 0; i< 50; i++){
+                char input = (char) readFromMicroBit.read();
+                if(input == '!' || String.valueOf(input).isBlank()){
+                    break;
+                }else{
+                    microbitInput += input;
                 }
             }
-            else{
-                port1 = "Empty";
-            }
 
-            if(!sensor2TypeString.equals("Empty")) {
-                for (int i = 0; i < 5; i++) {
-                    port2 += (char) readFromMicroBit.read();;
-                }
-            }
-            else{
-                port2 = "Empty";
-            }
-
-            if(!sensor3TypeString.equals("Empty")) {
-                for (int i = 0; i < 5; i++) {
-                    port3 += (char)readFromMicroBit.read();
-                }
-            }
-            else{
-                port3 = "Empty";
-            }
-
-            if(port1.isBlank()){port1 = "ERROR";}
-            if(port2.isBlank()){port2 = "ERROR";}
-            if(port2.isBlank()){port2 = "ERROR";}
-
-        } catch (SerialPortIOException ignored){} catch (Exception e) {e.printStackTrace();}
-        System.out.println(port1+"\n"+port2+"\n"+port3);
+        } catch (SerialPortIOException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(microbitInput);
+        microBit.flushIOBuffers();
         microBit.closePort();
+
+
+        port1 = microbitInput.split("\\|")[0];
+        port2 = microbitInput.split("\\|")[1];
+        port3 = microbitInput.split("\\|")[2];
+
+        switch(sensor1TypeString) {
+            case "PH-Value":
+                port1 = String.valueOf(roundDoubles((Double.parseDouble(port1)/100),2));
+                break;
+            case "Temperature sensor":
+                port1 = String.valueOf(roundDoubles(Double.parseDouble(port1),2));
+            default:
+                break;
+        }
+
+        switch(sensor2TypeString) {
+            case "PH-Value":
+                port2 = String.valueOf(roundDoubles((Double.parseDouble(port2)/100),2));
+                break;
+            case "Temperature sensor":
+                port2 = String.valueOf(roundDoubles(Double.parseDouble(port2),2));
+            default:
+                break;
+        }
+
+        switch(sensor3TypeString) {
+            case "PH-Value":
+                port3 = String.valueOf(roundDoubles((Double.parseDouble(port3)/100),2));
+                break;
+            case "Temperature sensor":
+                port3 = String.valueOf(roundDoubles(Double.parseDouble(port3),2));
+            default:
+                break;
+        }
 
         sensor1ValueString = port1;
         sensor2ValueString = port2;
         sensor3ValueString = port3;
 
+        System.out.println(port1+"\n"+port2+"\n"+port3+"\n");
 
         //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
@@ -185,11 +209,18 @@ public class MeasureScreenController implements Initializable {
         slotInformationScreens(3, sensor3TypeString, sensor3ValueString);
     }
 
-    private void slotInformationScreens(int slot, String sensorType, String sensorValue) throws IOException {
-        System.out.println(slot + " "+ sensorType);
+    private Double roundDoubles(Double input, int decimalPlaces){
+        if (decimalPlaces < 0) throw new IllegalArgumentException();
+        BigDecimal bd = BigDecimal.valueOf(input);
+        bd = bd.setScale(decimalPlaces, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    private void slotInformationScreens(int slot, String Type, String Value) throws IOException {
+        System.out.println(slot + " "+ Type);
         MeasureInfoScreenController.slotNumber = slot;
-        MeasureInfoScreenController.sensorValue = sensorValue;
-        MeasureInfoScreenController.sensorType = sensorType;
+        MeasureInfoScreenController.sensorValue = Value;
+        MeasureInfoScreenController.sensorType = Type;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MeasureInfoScreen.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage2 = new Stage();
