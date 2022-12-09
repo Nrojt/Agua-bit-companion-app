@@ -30,8 +30,8 @@ public class UpdateScreenController implements Initializable {
     public static Thread downloadingFirmware;
     public static Thread uploadingFirmware;
     private final String pathToDocumentFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
-    private final String pathToFirmware = pathToDocumentFolder + "/AguaBit/Aguabit-firmware.hex";
-    private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.2/Aguabit-firmware.hex";
+    private final String pathToFirmware = pathToDocumentFolder + "/AguaBit/firmware/Aguabit-firmware.hex";
+    private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.0.1/Aguabit-firmware.hex";
     @FXML
     private Label notificationLabel = new Label();
     public void copyToMicroBit(ActionEvent e){

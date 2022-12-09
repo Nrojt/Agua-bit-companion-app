@@ -1,8 +1,0 @@
-measurement
-52.3759,4.8975
-Empty
-Empty
-Empty
-Empty
-Empty
-21.50

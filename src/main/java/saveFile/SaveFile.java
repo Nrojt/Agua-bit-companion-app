@@ -2,6 +2,8 @@ package saveFile;
 
 import aguabit.scenecontrollers.MeasureScreenController;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
@@ -9,6 +11,7 @@ import java.io.PrintStream;
 public class SaveFile {
     public static boolean menuBarSide = true;
     public static boolean darkmode = false;
+    private static final String pathForMeasurements = new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+"/AguaBit/measurements/";
 
     public static void saveMeasurementLocal(String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String sensor1Indication, String sensor2Indication, String sensor3Indication){
 
@@ -18,7 +21,10 @@ public class SaveFile {
 
         try {
             // connected to "myfile.txt"
-            out = new FileOutputStream("myfile.txt");
+            File measurementFile = new File(pathForMeasurements+measurementName+".txt");
+            measurementFile.getParentFile().mkdirs();
+            measurementFile.createNewFile();
+            out = new FileOutputStream(measurementFile);
             p = new PrintStream(out);
             p.append(measurementName+"\n"+measurementLocation+"\n"+sensor1Type+"\n"+sensor2Type+"\n"+sensor3Type+"\n"+sensor1Value+"\n"+sensor2Value+"\n"+sensor3Value+"\n"); // connected it to the port which connects to the sensor value.
             p.close();
