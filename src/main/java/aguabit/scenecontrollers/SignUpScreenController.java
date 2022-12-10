@@ -35,11 +35,11 @@ public class SignUpScreenController implements Initializable{
 
     int phoneNumber;
 
-    protected String querry = "INSERT INTO user(first_name, last_name, username, phonenumber, password, email, date_of_birth) VALUES(?,?,?,?,?,?,?)";;
+    protected String querry = "INSERT INTO user(first_name, last_name, username, phonenumber, password, email, date_of_birth) VALUES(?,?,?,?,?,?,?)";
 
 
-    public void printInput(ActionEvent e){
-        if(!usernameTextfield.getText().isBlank() && !passwordTextfield.getText().isBlank() && !emailTextfield.getText().isBlank()) {
+    public void printInput(ActionEvent e) {
+        if (!usernameTextfield.getText().isBlank() && !passwordTextfield.getText().isBlank() && !emailTextfield.getText().isBlank()) {
             String firstName = firstnameTextfield.getText();
             String lastName = lastnameTextfield.getText();
             String userName = usernameTextfield.getText();
@@ -47,7 +47,7 @@ public class SignUpScreenController implements Initializable{
             String email = emailTextfield.getText();
             String dob = String.valueOf(dobPicker.getValue());
 
-            if(phonenumberTextfield.getText().matches("[0-9]+")) {
+            if (phonenumberTextfield.getText().matches("[0-9]+")) {
                 phoneNumber = Integer.parseInt(phonenumberTextfield.getText());
             } else if (!phonenumberTextfield.getText().isBlank()) {
                 informationLabel.setText("Not a valid phone number, please only enter numbers.");
@@ -61,30 +61,64 @@ public class SignUpScreenController implements Initializable{
             System.out.println("password " + password);
             System.out.println("date of birth " + dob);
 
-            if((phonenumberTextfield.getText().matches("[0-9]+") && !phonenumberTextfield.getText().isBlank()) || phonenumberTextfield.getText().isBlank()) {
-                DatabaseConnection connectionNow = new DatabaseConnection();
-                try (Connection connectDB = connectionNow.getDBConnection();
-                     PreparedStatement pstmt = connectDB.prepareStatement(querry)) {
-                    pstmt.setString(1, firstName);
-                    pstmt.setString(2, lastName);
-                    pstmt.setString(3, userName);
-                    pstmt.setInt(4, phoneNumber);
-                    pstmt.setString(5, password);
-                    pstmt.setString(6, email);
-                    pstmt.setString(7, dob);
-                    pstmt.executeUpdate();
-                } catch (SQLException z) {
-                    System.out.println(z.getMessage());
+
+            if ((phonenumberTextfield.getText().matches("[0-9]+")) || phonenumberTextfield.getText().isBlank()) {
+                try {
+                    if (checkEmail(email)) {
+                        try {
+                            DatabaseConnection connectionNow = new DatabaseConnection();
+                            Connection connectDB = connectionNow.getDBConnection();
+                            PreparedStatement pstmt = connectDB.prepareStatement(querry);
+                            pstmt.setString(1, firstName);
+                            pstmt.setString(2, lastName);
+                            pstmt.setString(3, userName);
+                            pstmt.setInt(4, phoneNumber);
+                            pstmt.setString(5, password);
+                            pstmt.setString(6, email);
+                            pstmt.setString(7, dob);
+                            pstmt.executeUpdate();
+
+                        } catch (SQLException z) {
+                            System.out.println(z.getMessage());
+                        }
+                        informationLabel.setText("Registration succesfull");
+                    } else {
+                        informationLabel.setText("This email is already in use");
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
                 }
-                informationLabel.setText("Registration succesfull");
+            } else {
+                informationLabel.setText("Not all required textfields filled in");
             }
-        } else{
-            informationLabel.setText("Not all required textfields filled in");
         }
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         informationLabel.setText("Information can be changed at a later date");
+    }
+
+    public boolean checkEmail(String email) throws SQLException {
+        boolean doesEmailExist = false;
+
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String checkEmailQuerry = "SELECT email FROM user WHERE email = '"+ email +"'";
+
+        Statement emailCheck = connectDB.createStatement();
+        ResultSet result = emailCheck.executeQuery(checkEmailQuerry);
+        if(result.next()){
+            System.out.println("bestaat");
+            doesEmailExist = true;
+        }
+        else{System.out.println("bestaat niet");}
+
+        connectDB.close();
+        emailCheck.close();
+        result.close();
+
+        return !doesEmailExist;
     }
 }

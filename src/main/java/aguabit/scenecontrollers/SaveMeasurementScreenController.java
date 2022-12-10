@@ -1,6 +1,7 @@
 package aguabit.scenecontrollers;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,6 +44,8 @@ public class SaveMeasurementScreenController implements Initializable {
     private TextField measurementNameTextfield = new TextField();
     @FXML
     private TextField measurementLocationTextfield = new TextField();
+    @FXML
+    private MFXDatePicker measurementDatePicker = new MFXDatePicker();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,9 +75,9 @@ public class SaveMeasurementScreenController implements Initializable {
         //code for actually saving the measurement
         if(!measurementNameTextfield.getText().isBlank()){
             if(MenuOverlayController.loginStatus) {
-                SaveFile.saveMeasurementDatabase(userID, measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
+                SaveFile.saveMeasurementDatabase(userID, measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), String.valueOf(measurementDatePicker.getValue()));
             } else{
-                SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), sensor1Indication.getText(), sensor2Indication.getText(), sensor3Indication.getText());
+                SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(),String.valueOf(measurementDatePicker.getValue()));
             }
             Stage stage = (Stage) measurementNameTextfield.getScene().getWindow();
             stage.close(); //closes the window
