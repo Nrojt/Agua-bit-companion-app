@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static saveFile.SaveFile.*;
+
 public class SettingsScreenController implements Initializable {
     @FXML
     private MFXRadioButton settingsTopMenuBarButton = new MFXRadioButton();
@@ -18,7 +20,7 @@ public class SettingsScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (SaveFile.menuBarSide) {
+        if (menuBarSide) {
             settingsSideMenuBarButton.setSelected(true);
         } else {
             settingsTopMenuBarButton.setSelected(true);
@@ -27,10 +29,11 @@ public class SettingsScreenController implements Initializable {
     //code for switching between the side and top menubar
     public void menuBarToggle(ActionEvent event) throws IOException {
         if (settingsSideMenuBarButton.isSelected()) {
-            SaveFile.menuBarSide = true;
+            menuBarSide = true;
         } else if (settingsTopMenuBarButton.isSelected()) {
-            SaveFile.menuBarSide = false;
+            menuBarSide = false;
         }
+        saveSettings();
     }
     // public static boolean islightmode = true;
     //public void Changemode (ActionEvent event){

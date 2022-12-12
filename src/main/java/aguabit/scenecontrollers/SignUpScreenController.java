@@ -4,10 +4,13 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -32,6 +35,8 @@ public class SignUpScreenController implements Initializable{
     public MFXButton signupButton = new MFXButton();
     @FXML
     public Label informationLabel = new Label();
+    @FXML
+    public AnchorPane fxmlPane;
 
     int phoneNumber;
 
@@ -120,5 +125,15 @@ public class SignUpScreenController implements Initializable{
         result.close();
 
         return !doesEmailExist;
+    }
+
+    public void backToLoginScreen(ActionEvent a) throws IOException {
+        screenSwitcher("LoginScreen.fxml");
+    }
+
+
+    public void screenSwitcher(String fxmlFile) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource(fxmlFile));
+        fxmlPane.getChildren().setAll(pane);
     }
 }

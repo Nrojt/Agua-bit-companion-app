@@ -99,7 +99,6 @@ public class MenuOverlayController implements Initializable {
         stage2.setScene(scene2);
         stage2.setResizable(false);
         stage2.show();
-        loginStatus = true; //this needs to be placed somewhere else when the database is working correctly
     }
 
     //code for all the clickable buttons

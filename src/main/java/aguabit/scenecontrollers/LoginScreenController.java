@@ -30,6 +30,7 @@ public class LoginScreenController {
         if(!userNameTextField.getText().isEmpty()) { //check to see if the login field is empty
             String username = userNameTextField.getText();
             MenuOverlayController.userName = username;
+            MenuOverlayController.loginStatus = true;
             stage = (Stage) userNameTextField.getScene().getWindow();
             stage.close(); //closes the window
         }

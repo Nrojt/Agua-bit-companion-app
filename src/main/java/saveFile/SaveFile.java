@@ -17,7 +17,9 @@ import java.sql.SQLException;
 public class SaveFile {
     public static boolean menuBarSide = true;
     public static boolean darkmode = false;
-    private static final String pathForMeasurements = new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+"/AguaBit/measurements/";
+    private static final String pathToDocumentsFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+    private static final String pathForMeasurements = pathToDocumentsFolder+"/AguaBit/measurements/";
+    private static final String pathForSettings = pathToDocumentsFolder + "/AguaBit/settings/";
     private static final String measurementQuery = "INSERT into measurement(user_id, measurement_name, measurement_location, slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, date ) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     public static void saveMeasurementDatabase(int userID, String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date){
@@ -44,14 +46,10 @@ public class SaveFile {
     public static void saveMeasurementLocal(String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date){
 
         //saves output in to a .txt file has to be linked to measure screen controller.
-        FileOutputStream out;
-        PrintStream p;
-
         try {
             // connected to "myfile.txt"
             File measurementFile = new File(pathForMeasurements+measurementName+".txt");
             if(measurementFile.exists()){
-                System.out.println("");
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit");
                 alert.setHeaderText("A file with this name already exist.");
@@ -81,8 +79,28 @@ public class SaveFile {
         PrintStream p;
         out = new FileOutputStream(measurementFile);
         p = new PrintStream(out);
-        p.append(measurementName+"\n"+measurementLocation+"\n"+sensor1Type+"\n"+sensor2Type+"\n"+sensor3Type+"\n"+sensor1Value+"\n"+sensor2Value+"\n"+sensor3Value+"\n"+date); // connected it to the port which connects to the sensor value.
+        p.append(measurementName+"\n"+measurementLocation+"\n"+sensor1Type+"\n"+sensor2Type+"\n"+sensor3Type+"\n"+sensor1Value+"\n"+sensor2Value+"\n"+sensor3Value+"\n"+date);
         p.close();
         System.out.println("File successfully created");
+    }
+
+    public static void saveSettings(){
+        File settingsFile = new File(pathForSettings +"settings"+ ".txt");
+        settingsFile.getParentFile().mkdirs();
+        try {
+            settingsFile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        FileOutputStream settingsOut;
+        PrintStream settings;
+        try {
+            settingsOut = new FileOutputStream(settingsFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        settings = new PrintStream(settingsOut);
+        settings.append(String.valueOf(menuBarSide));
+        settings.close();
     }
 }

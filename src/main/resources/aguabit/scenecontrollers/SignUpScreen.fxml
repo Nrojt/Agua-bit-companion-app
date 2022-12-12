@@ -2,12 +2,13 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SignUpScreenController">
+<AnchorPane fx:id="fxmlPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SignUpScreenController">
    <children>
       <Label alignment="CENTER" layoutX="5.0" layoutY="85.0" prefHeight="36.0" prefWidth="609.0" text="Sign up" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <font>
@@ -42,5 +43,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button layoutX="69.0" layoutY="332.0" mnemonicParsing="false" onAction="#backToLoginScreen" text="Back" />
    </children>
 </AnchorPane>
