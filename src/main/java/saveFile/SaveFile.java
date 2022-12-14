@@ -3,18 +3,23 @@ package saveFile;
 import aguabit.scenecontrollers.DatabaseConnection;
 import aguabit.scenecontrollers.MeasureScreenController;
 import javafx.application.Platform;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.*;
+import java.net.URL;
+import java.nio.Buffer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.ResourceBundle;
 
 //different package that will probably be used for saving the settings and measurements locally
-public class SaveFile {
+public class SaveFile{
     public static boolean menuBarSide = true;
     public static boolean darkmode = false;
     private static final String pathToDocumentsFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
@@ -100,7 +105,37 @@ public class SaveFile {
             throw new RuntimeException(e);
         }
         settings = new PrintStream(settingsOut);
-        settings.append(String.valueOf(menuBarSide));
+        settings.append("menubar:"+String.valueOf(menuBarSide)+ "\n"+ "darkmode:"+ darkmode);
         settings.close();
+    }
+
+    //code for reading in the settings from the settings.txt file
+    public static void readSettingsFromFile(){
+        File settingsFile = new File(pathForSettings +"settings"+ ".txt");
+
+        if(settingsFile.exists()){
+            FileReader settingsFileReader = null;
+            try {
+                settingsFileReader = new FileReader(settingsFile);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BufferedReader settingsReader = new BufferedReader(settingsFileReader);
+            String line;
+
+            while(true){
+                try {
+                    if ((line = settingsReader.readLine()) == null) break;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if(line.contains("menubar")) {
+                    menuBarSide = Boolean.valueOf(line.split("\\:")[1]);
+                }
+                else if(line.contains("darkmode")){
+                    darkmode = Boolean.valueOf(line.split("\\:")[1]);
+                }
+            }
+        }
     }
 }

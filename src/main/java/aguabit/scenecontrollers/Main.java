@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
+    private String csstheme = "lightmode.css";
     //override gets run after loading in
     @Override
     public void start(Stage stage) throws IOException {
@@ -18,7 +19,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MenuOverlay.fxml"));
         Scene scene = new Scene(fxmlLoader.load(),1280,720);
         stage.setTitle("Agua:bit companion app");
-        String css = Objects.requireNonNull(this.getClass().getResource("lightmode.css")).toExternalForm();
+        String css = Objects.requireNonNull(this.getClass().getResource(csstheme)).toExternalForm();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         scene.getStylesheets().add(css);
         stage.setScene(scene);

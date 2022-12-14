@@ -66,6 +66,7 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SaveFile.readSettingsFromFile();
         //driveDetector.addDriveListener(System.out::println); //for printing out when usb devices connect or disconnect
         //loading in the mainscreen fxml file
         try {
