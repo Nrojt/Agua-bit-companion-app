@@ -17,24 +17,46 @@ public class SettingsScreenController implements Initializable {
     private MFXRadioButton settingsTopMenuBarButton = new MFXRadioButton();
     @FXML
     private MFXRadioButton settingsSideMenuBarButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton settingsLightThemeButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton settingsDarkThemeButton = new MFXRadioButton();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //code that makes the correct buttons selected on the settings screen.
         if (menuBarSide) {
             settingsSideMenuBarButton.setSelected(true);
         } else {
             settingsTopMenuBarButton.setSelected(true);
         }
+
+        if(theme == 1){
+            settingsDarkThemeButton.setSelected(true);
+        } else if (theme == 0) {
+            settingsLightThemeButton.setSelected(true);
+        }
     }
+
     //code for switching between the side and top menubar
-    public void menuBarToggle(ActionEvent event) throws IOException {
+    public void settingsButtonClicked(ActionEvent event) throws IOException {
         if (settingsSideMenuBarButton.isSelected()) {
             menuBarSide = true;
         } else if (settingsTopMenuBarButton.isSelected()) {
             menuBarSide = false;
         }
+
+        if(settingsDarkThemeButton.isSelected()){
+            theme = 1;
+        } else if (settingsLightThemeButton.isSelected()) {
+            theme = 0;
+        }
+
         saveSettings();
     }
+
+
+
     // public static boolean islightmode = true;
     //public void Changemode (ActionEvent event){
     //  islightmode =!islightmode;

@@ -93,9 +93,11 @@ public class SignUpScreenController implements Initializable{
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-            } else {
-                informationLabel.setText("Not all required textfields filled in");
+            } else if (!phonenumberTextfield.getText().isBlank()) {
+                informationLabel.setText("Not a valid phone number, please only enter numbers.");
             }
+        }else {
+            informationLabel.setText("Not all required textfields filled in");
         }
     }
 

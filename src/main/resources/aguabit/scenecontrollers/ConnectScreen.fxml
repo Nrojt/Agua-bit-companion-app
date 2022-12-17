@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -59,7 +59,7 @@
             </ChoiceBox>
          </children>
       </GridPane>
-      <Button fx:id="buttonSendToProduct" layoutX="251.0" layoutY="303.0" mnemonicParsing="false" onAction="#sendToProduct" text="Send to Agua:Bit" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
       <Label fx:id="informationLabel" alignment="CENTER" layoutY="271.0" prefHeight="17.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <MFXButton fx:id="buttonSendToProduct" layoutX="350.0" layoutY="515.0" onAction="#sendToProduct" prefHeight="25.0" prefWidth="280.0" text="Send to Agua:bit" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
    </children>
 </AnchorPane>

@@ -26,7 +26,7 @@ public class LoginScreenController {
     private Stage stage;
 
     //this code runs when the loginbutton is pressed.
-    public void onLoginButtonCLick(ActionEvent event) throws IOException {
+    public void onLoginButtonClick(ActionEvent event) throws IOException {
         if(!userNameTextField.getText().isEmpty()) { //check to see if the login field is empty
             String username = userNameTextField.getText();
             MenuOverlayController.userName = username;

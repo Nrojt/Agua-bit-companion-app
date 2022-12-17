@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -12,8 +12,8 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="462.0" layoutY="495.0" mnemonicParsing="false" onAction="#copyToMicroBit" text="Upload" AnchorPane.bottomAnchor="119.66666666666663" AnchorPane.leftAnchor="462.0" AnchorPane.rightAnchor="462.0" />
       <Label fx:id="notificationLabel" alignment="CENTER" layoutX="459.0" layoutY="467.0" text="Notification" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <Button layoutX="455.0" layoutY="543.0" mnemonicParsing="false" onAction="#downloadButton" text="Download" />
+      <MFXButton layoutX="463.0" layoutY="495.0" onAction="#copyToMicroBit" text="Upload" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="460.0" />
+      <MFXButton layoutX="455.0" layoutY="543.0" onAction="#downloadButton" prefHeight="25.0" prefWidth="71.0" text="Download" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0" />
    </children>
 </AnchorPane>

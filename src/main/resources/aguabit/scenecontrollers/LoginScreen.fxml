@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -14,13 +15,12 @@
             <Font name="Broadway" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="loginButton" layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#onLoginButtonCLick" text="Login" />
       <Label layoutX="14.0" layoutY="360.0" text="Copyrigth SSD 2022" />
-      <TextField layoutX="226.0" layoutY="245.0" />
-      <TextField fx:id="userNameTextField" layoutX="226.0" layoutY="200.0" />
-      <Label layoutX="159.0" layoutY="204.0" text="Username" />
-      <Label layoutX="161.0" layoutY="249.0" text="Password" />
-      <Hyperlink fx:id="signupURL" layoutX="236.0" layoutY="270.0" onAction="#onCreateURL" text="No account? Sign up!" textFill="RED" />
-      <Hyperlink fx:id="forgotURL" layoutX="201.0" layoutY="294.0" onAction="#onForgetURL" text="Forgot your username or password?" textFill="RED" />
+      <TextField layoutX="226.0" layoutY="200.0" promptText="Password" />
+      <TextField fx:id="userNameTextField" layoutX="226.0" layoutY="170.0" promptText="Username" />
+      <Hyperlink fx:id="signupURL" layoutX="236.0" layoutY="273.0" onAction="#onCreateURL" text="No account? Sign up!" textFill="RED" />
+      <Hyperlink fx:id="forgotURL" layoutX="197.0" layoutY="300.0" onAction="#onForgetURL" text="Forgot your username or password?" textFill="RED" />
+      <MFXButton fx:id="loginButton" layoutX="262.0" layoutY="334.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="70.0" text="Login" />
+      <MFXCheckbox layoutX="226.0" layoutY="240.0" prefHeight="20.0" prefWidth="149.0" text="Remember me" />
    </children>
 </AnchorPane>

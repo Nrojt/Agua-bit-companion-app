@@ -38,6 +38,8 @@ public class MeasureScreenController implements Initializable {
 
 
     @FXML
+    private Label informationLabel = new Label();
+    @FXML
     private Label sensor1TypeLabel = new Label();
     @FXML
     private Label sensor2TypeLabel = new Label();
@@ -79,18 +81,26 @@ public class MeasureScreenController implements Initializable {
         sensor1IndicationLabel.setText(sensor1IndicationString);
         sensor2IndicationLabel.setText(sensor2IndicationString);
         sensor3IndicationLabel.setText(sensor3IndicationString);
+
+        //changing the text for the information label
+        if(MenuOverlayController.isAguabitConnected) {
+            informationLabel.setText("Click one of the buttons to start");
+        }else{
+            informationLabel.setText("Please connect the Agua:bit");
+        }
     }
 
-    public void printComs(ActionEvent event) throws IOException {
+    public void measurementButtonClick(ActionEvent event) throws IOException {
         if(MenuOverlayController.isAguabitConnected) {
             //starting a new thread for getting the measurements from the Microbit
             measureThread = new Thread(this::getMeasurementsFromMicrobit);
             measureThread.start();
         } else{
-            System.out.println("Please connect the Agua:bit");
+            informationLabel.setText("Please connect the Agua:bit");
         }
     }
 
+    //code for opening the saveMeasurement screen
     public void saveMeasurement(ActionEvent e) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
         Parent root2 = (Parent) fxmlLoader.load();
@@ -193,6 +203,7 @@ public class MeasureScreenController implements Initializable {
             sensor1ValueLabel.setText(sensor1ValueString);
             sensor2ValueLabel.setText(sensor2ValueString);
             sensor3ValueLabel.setText(sensor3ValueString);
+            informationLabel.setText("Measurement succesful");
         });
     }
 
@@ -232,6 +243,20 @@ public class MeasureScreenController implements Initializable {
         stage2.setScene(scene2);
         stage2.setResizable(false);
         stage2.show();
+    }
+
+    public void openMeasurementsButton(ActionEvent e) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OpenMeasurementsScreen.fxml"));
+        Parent root2 = (Parent) fxmlLoader.load();
+        Stage stage3 = new Stage();
+        Scene scene3 = new Scene(root2);
+        stage3.setTitle("Open saved measurements");
+        stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        scene3.getStylesheets().add(css);
+        stage3.setScene(scene3);
+        stage3.setResizable(false);
+        stage3.show();
     }
 
 }

@@ -21,9 +21,9 @@ import java.util.ResourceBundle;
 //different package that will probably be used for saving the settings and measurements locally
 public class SaveFile{
     public static boolean menuBarSide = true;
-    public static boolean darkmode = false;
+    public static int theme = 0;
     private static final String pathToDocumentsFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
-    private static final String pathForMeasurements = pathToDocumentsFolder+"/AguaBit/measurements/";
+    public static final String pathForMeasurements = pathToDocumentsFolder+"/AguaBit/measurements/";
     private static final String pathForSettings = pathToDocumentsFolder + "/AguaBit/settings/";
     private static final String measurementQuery = "INSERT into measurement(user_id, measurement_name, measurement_location, slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, date ) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
@@ -105,7 +105,7 @@ public class SaveFile{
             throw new RuntimeException(e);
         }
         settings = new PrintStream(settingsOut);
-        settings.append("menubar:"+String.valueOf(menuBarSide)+ "\n"+ "darkmode:"+ darkmode);
+        settings.append("menubar:"+String.valueOf(menuBarSide)+ "\n"+ "theme:"+ theme);
         settings.close();
     }
 
@@ -132,8 +132,8 @@ public class SaveFile{
                 if(line.contains("menubar")) {
                     menuBarSide = Boolean.valueOf(line.split("\\:")[1]);
                 }
-                else if(line.contains("darkmode")){
-                    darkmode = Boolean.valueOf(line.split("\\:")[1]);
+                else if(line.contains("theme")){
+                    theme = Integer.valueOf(line.split("\\:")[1]);
                 }
             }
         }

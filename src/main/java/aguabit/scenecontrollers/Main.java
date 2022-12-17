@@ -13,18 +13,22 @@ import java.util.Objects;
 
 public class Main extends Application {
     static Scene scene;
-    private  String lightTheme = "lightmode.css";
-    private String darkTheme = "darkmode.css";
+    private final String lightTheme = "lightmode.css";
+    private final String darkTheme = "darkmode.css";
     private String cssfile;
     //override gets run after loading in
     @Override
     public void start(Stage stage) throws IOException {
+        //reading saved settings(if they exist)
         SaveFile.readSettingsFromFile();
-        if(SaveFile.darkmode == true){
+
+        //code for setting either the dark or light theme.
+        if(SaveFile.theme == 1){
             cssfile = darkTheme;
-        }else{
+        }else if (SaveFile.theme == 0){
             cssfile = lightTheme;
         }
+
         //code for loading in the fxml and css file for running the application.
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MenuOverlay.fxml"));
         scene = new Scene(fxmlLoader.load(),1280,720);

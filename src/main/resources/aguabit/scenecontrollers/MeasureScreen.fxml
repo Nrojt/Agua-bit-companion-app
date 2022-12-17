@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,7 +16,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <GridPane gridLinesVisible="true" layoutX="45.0" layoutY="259.0" prefHeight="141.0" prefWidth="535.0" AnchorPane.bottomAnchor="239.66666666666663" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0">
+      <GridPane gridLinesVisible="true" layoutX="45.0" layoutY="259.0" prefHeight="141.0" prefWidth="535.0" AnchorPane.bottomAnchor="245.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -76,8 +76,9 @@
             </Label>
          </children>
       </GridPane>
-      <Button layoutX="37.0" layoutY="309.0" mnemonicParsing="false" onAction="#printComs" prefHeight="25.0" prefWidth="62.0" text="Measure" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="45.0" />
-      <Button layoutX="274.0" layoutY="309.0" mnemonicParsing="false" onAction="#saveMeasurement" prefHeight="25.0" prefWidth="62.0" text="Save" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
-      <Button layoutX="450.0" layoutY="309.0" mnemonicParsing="false" text="Open measurement" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="45.0" />
+      <MFXButton layoutX="49.0" layoutY="549.0" onAction="#measurementButtonClick" prefHeight="25.0" prefWidth="130.0" text="Measure" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="45.0" />
+      <MFXButton layoutX="350.0" layoutY="550.0" onAction="#saveMeasurement" prefHeight="25.0" prefWidth="280.0" text="Save" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" />
+      <MFXButton layoutX="808.0" layoutY="550.0" onAction="#openMeasurementsButton" prefHeight="25.0" prefWidth="130.0" text="Open measurement" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="45.0" />
+      <Label fx:id="informationLabel" alignment="CENTER" layoutX="205.0" layoutY="485.0" prefHeight="17.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>
