@@ -58,6 +58,8 @@ public class MenuOverlayController implements Initializable {
 
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
 
+    public static int userId = 1;
+
     public MenuOverlayController() throws IOException {
         //this runs every time this controller gets loaded, which should only be once at startup.
     }

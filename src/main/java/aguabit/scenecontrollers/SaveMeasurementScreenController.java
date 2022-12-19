@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 
 public class SaveMeasurementScreenController implements Initializable {
-    private int userID = 1;
+    private int userID = MenuOverlayController.userId;
     @FXML
     private Label sensor1Type = new Label();
     @FXML
