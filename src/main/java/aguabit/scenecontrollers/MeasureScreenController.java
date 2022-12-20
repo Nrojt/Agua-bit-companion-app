@@ -20,6 +20,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MeasureScreenController implements Initializable {
+    public static boolean shouldMeasureScreenUpdate = true;
+    public static Thread updateThread;
     public static String port1 = "Empty";
     public static String port2 = "Empty";
     public static String port3 = "Empty";
@@ -62,6 +64,7 @@ public class MeasureScreenController implements Initializable {
     private Label sensor3IndicationLabel = new Label();
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //setting the sensors to the sensors which were selected in the connect screen.
@@ -88,6 +91,10 @@ public class MeasureScreenController implements Initializable {
         }else{
             informationLabel.setText("Please connect the Agua:bit");
         }
+
+        shouldMeasureScreenUpdate = true;
+        updateThread = new Thread(this::menuUpdate);
+        updateThread.start();
     }
 
     public void measurementButtonClick(ActionEvent event) throws IOException {
@@ -258,5 +265,25 @@ public class MeasureScreenController implements Initializable {
         stage3.setResizable(false);
         stage3.show();
     }
+
+    private void menuUpdate(){
+        while(shouldMeasureScreenUpdate) {
+            System.out.println("loop");
+            Platform.runLater(() -> {
+                sensor1ValueLabel.setText(sensor1ValueString);
+                sensor2ValueLabel.setText(sensor2ValueString);
+                sensor3ValueLabel.setText(sensor3ValueString);
+                sensor1TypeLabel.setText(sensor1TypeString);
+                sensor2TypeLabel.setText(sensor2TypeString);
+                sensor3TypeLabel.setText(sensor3TypeString);
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+        }
+    }
+
+
 
 }

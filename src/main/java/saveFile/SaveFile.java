@@ -2,6 +2,7 @@ package saveFile;
 
 import aguabit.scenecontrollers.DatabaseConnection;
 import aguabit.scenecontrollers.MeasureScreenController;
+import aguabit.scenecontrollers.MenuOverlayController;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -84,7 +85,7 @@ public class SaveFile{
         PrintStream p;
         out = new FileOutputStream(measurementFile);
         p = new PrintStream(out);
-        p.append(measurementName+"\n"+measurementLocation+"\n"+sensor1Type+"\n"+sensor2Type+"\n"+sensor3Type+"\n"+sensor1Value+"\n"+sensor2Value+"\n"+sensor3Value+"\n"+date);
+        p.append("name:"+measurementName+"\nlocation:"+measurementLocation+"\nsensor1Type:"+sensor1Type+"\nsensor2Type:"+sensor2Type+"\nsensor3Type:"+sensor3Type+"\nsensor1Value:"+sensor1Value+"\nsensor2Value:"+sensor2Value+"\nsensor3Value:"+sensor3Value+"\ndate:"+date);
         p.close();
         System.out.println("File successfully created");
     }
@@ -139,4 +140,58 @@ public class SaveFile{
         }
     }
 
+    public static void readMeasurementFromFile(String filename){
+        File measurementFile = new File(pathForMeasurements + filename);
+        System.out.println(measurementFile);
+
+        if(measurementFile.exists()){
+            FileReader measurementFileReader = null;
+            try {
+                measurementFileReader = new FileReader(measurementFile);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BufferedReader measurementReader = new BufferedReader(measurementFileReader);
+            String line;
+
+            String test1 = "";
+            String test2 = "";
+            String test3 = "";
+            String test4 = "";
+            String test5 = "";
+            String test6 = "";
+
+
+            while(true){
+                try {
+                    if ((line = measurementReader.readLine()) == null) break;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if(line.contains("sensor1Type")) {
+                    test1 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor1TypeString = test1;
+
+                } else if(line.contains("sensor2Type")) {
+                    test2 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor2TypeString = test2;
+                }else if(line.contains("sensor3Type")) {
+                    test3 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor3TypeString = test3;
+                } else if(line.contains("sensor1Value")) {
+                    test4 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor1ValueString = test4;
+                }
+                else if(line.contains("sensor2Value")) {
+                    test5 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor2ValueString = test5;
+                }
+                else if(line.contains("sensor3Value")) {
+                    test6 = String.valueOf(line.split("\\:")[1]);
+                    MeasureScreenController.sensor3ValueString = test6;
+                    System.out.println(MeasureScreenController.sensor3ValueString);
+                }
+            }
+        }
+    }
 }

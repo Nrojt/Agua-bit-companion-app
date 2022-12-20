@@ -26,8 +26,6 @@ public class Location {
                 throw new RuntimeException(e);
             }
 
-            System.out.println(IP);
-
             String dbLocation = "src/main/resources/database/GeoLite2-City.mmdb";
             File database = new File(dbLocation);
             DatabaseReader dbr = new DatabaseReader.Builder(database).build();
@@ -38,8 +36,6 @@ public class Location {
             String latitude = response.getLocation().getLatitude().toString();
             String longitude = response.getLocation().getLongitude().toString();
 
-            System.out.println("latitude " + latitude);
-            System.out.println("longitude "+ longitude);
             return (latitude + "," + longitude);
         }
 }

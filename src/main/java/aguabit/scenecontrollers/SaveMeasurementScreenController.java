@@ -65,7 +65,6 @@ public class SaveMeasurementScreenController implements Initializable {
 
         try {
             measurementLocationTextfield.setText((Location.getUserLocation()));
-
         } catch (IOException | GeoIp2Exception e) {
             throw new RuntimeException(e);
         }

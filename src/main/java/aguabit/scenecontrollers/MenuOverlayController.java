@@ -84,6 +84,7 @@ public class MenuOverlayController implements Initializable {
 
     //the code for loading in the different windows
     public void screenSwitcher(String fxmlFile) throws IOException{
+        MeasureScreenController.shouldMeasureScreenUpdate = false;
         AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         fxmlPane.getChildren().setAll(pane);
     }
@@ -150,7 +151,9 @@ public class MenuOverlayController implements Initializable {
         alert.setContentText("Do you want to exit?");
 
         if(alert.showAndWait().get()== ButtonType.OK) {
-            menuUpdateThread.stop();
+            MeasureScreenController.measureThread.stop();
+            UpdateScreenController.uploadingFirmware.stop();
+            UpdateScreenController.downloadingFirmware.stop();
             driveDetector.close();
             stage = (Stage) menuPane.getScene().getWindow();
             stage.close();

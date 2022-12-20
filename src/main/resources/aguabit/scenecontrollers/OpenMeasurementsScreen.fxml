@@ -7,13 +7,13 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.OpenMeasurementsScreenController">
    <children>
-      <MFXListView fx:id="localMeasurementsListView" layoutX="14.0" layoutY="149.0" prefHeight="440.0" prefWidth="368.0" />
+      <MFXListView fx:id="localMeasurementsListView" depthLevel="LEVEL1" layoutX="14.0" layoutY="149.0" prefHeight="405.0" prefWidth="368.0" />
       <Label fx:id="test" alignment="CENTER" layoutX="25.0" layoutY="105.0" prefHeight="36.0" prefWidth="609.0" text="Open saved measurements" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <MFXListView fx:id="databaseMeasurementsListView" layoutX="418.0" layoutY="149.0" prefHeight="440.0" prefWidth="368.0" />
+      <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="418.0" layoutY="149.0" prefHeight="405.0" prefWidth="368.0" />
       <Label layoutX="164.0" layoutY="132.0" text="Saved locally" />
       <Label layoutX="568.0" layoutY="132.0" text="Saved online" />
    </children>

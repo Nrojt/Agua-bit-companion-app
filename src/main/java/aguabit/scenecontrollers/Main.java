@@ -44,16 +44,17 @@ public class Main extends Application {
 
     //this code gets executed when the user pressed the close button in the top right corner.
     public void exit (Stage stage){
-        MenuOverlayController.menuUpdateThread.stop();
         try {
             MenuOverlayController.driveDetector.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
+            MenuOverlayController.menuUpdateThread.stop();
             MeasureScreenController.measureThread.stop();
             UpdateScreenController.uploadingFirmware.stop();
             UpdateScreenController.downloadingFirmware.stop();
+            MeasureScreenController.updateThread.stop();
         }catch(NullPointerException ignored){}
 
         stage.close();
