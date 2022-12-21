@@ -54,16 +54,4 @@ public class SettingsScreenController implements Initializable {
 
         saveSettings();
     }
-
-
-
-    // public static boolean islightmode = true;
-    //public void Changemode (ActionEvent event){
-    //  islightmode =!islightmode;
-    //if(islightmode){
-    // setlightmode();}
-    //  else {
-    //   setDarkMode();}
-    //}
-    // (-pratik)
 }
