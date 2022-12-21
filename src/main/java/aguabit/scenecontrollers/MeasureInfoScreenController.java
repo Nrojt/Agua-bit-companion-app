@@ -27,10 +27,10 @@ public class MeasureInfoScreenController implements Initializable {
         sensorTypeLabel.setText(sensorType);
         informationArea.setText(sensorValue);
         if (sensorType.equals("Temperature sensor")) {
-            if (Double.parseDouble(sensorValue) >= 25 && Double.parseDouble(sensorValue) <= 70) {
+            if (Double.parseDouble(sensorValue) >= 20 && Double.parseDouble(sensorValue) <= 70) {
                 informationArea.setText("If your water is between 25 and 45 degrees. The bacteria can form and multiply faster. Because this is the optimum temperature for bacteria. With water above 45 degrees, it wil get tougher for bacteria to form and the process will also be sluggish.");
-            } else if (Double.parseDouble(sensorValue) >= 0 && Double.parseDouble(sensorValue) <= 25) {
-                informationArea.setText("If your water is too cold, your brain gets a signal to raise your body temperature. It is also not good for your stomach and respiratory tract because cold water allows the fat in your body to harden faster, also your digestion is slowed down. Cold water also causes your blood vessels to contract. the optimal temperature of water is between 10 and 15 degrees.");
+            } else if (Double.parseDouble(sensorValue) >= 0 && Double.parseDouble(sensorValue) <= 20) {
+                informationArea.setText("If your water is too cold, your brain gets a signal to raise your body temperature. It is also not good for your stomach and respiratory tract because cold water allows the fat in your body to harden faster, also your digestion is slowed down. Cold water also causes your blood vessels to contract. the optimal temperature of water is between 10 and 20 degrees.");
             } else if (Double.parseDouble(sensorValue) >= 70 && Double.parseDouble(sensorValue) <= 100) {
                 informationArea.setText("At temperatures above 70 to 75 degrees, the bacteria die. And you can drink the water the minus point is that the vitamins and minerals can evaporate or reduce in substance.");
             }
