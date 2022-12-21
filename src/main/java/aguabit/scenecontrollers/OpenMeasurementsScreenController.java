@@ -33,7 +33,6 @@ public class OpenMeasurementsScreenController implements Initializable {
         //arraylist are like arrays, but the size of arraylists can be extended.
         List<String> localMeasurements = new ArrayList<String>();
         List<String> databaseMeasurements = new ArrayList<String>();
-        List<Integer> databaseMeasurementID = new ArrayList<Integer>();
 
         //this gets all the files in the Agua:bit folder.
         File[] files = new File(SaveFile.pathForMeasurements).listFiles();
@@ -42,7 +41,7 @@ public class OpenMeasurementsScreenController implements Initializable {
         if (MenuOverlayController.loginStatus) {
             DatabaseConnection connection = new DatabaseConnection();
             Connection connectDB = connection.getDBConnection();
-            String measurementQuery = "SELECT measurement_id, measurement_name FROM measurement WHERE user_id = '" + MenuOverlayController.userId + "' ORDER BY DATE('date')";
+            String measurementQuery = "SELECT measurement_id, measurement_name FROM measurement WHERE user_id = '" + MenuOverlayController.userId + "' ORDER BY date ASC";
             Statement databaseMeasurementsStatement = null;
             ResultSet result;
 
@@ -57,11 +56,9 @@ public class OpenMeasurementsScreenController implements Initializable {
 
                 while (result.next()) {
                     for (int i = 2; i <= columnCount; i += 2) {
-                        databaseMeasurements.add(result.getString(i));
-                        databaseMeasurementID.add(result.getInt(i - 1));
+                        databaseMeasurements.add(result.getString(i-1)+". "+result.getString(i));
                     }
                 }
-                System.out.println(databaseMeasurementID);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -75,6 +72,7 @@ public class OpenMeasurementsScreenController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            databaseMeasurementsListView.getSelectionModel().selectionProperty().addListener(this::databaseMeasurementsListViewSelectionChange);
         } else {
             databaseMeasurementsListView.getItems().add("User not logged in");
         }
@@ -93,6 +91,12 @@ public class OpenMeasurementsScreenController implements Initializable {
         localMeasurementsListView.getSelectionModel().selectionProperty().addListener(this::localMeasurementsListViewSelectionChange);
     }
 
+    private void databaseMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1){
+        Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+        SaveFile.readMeasurementFromDatabase(Integer.valueOf(selectedItem[0].toString().split("\\. ")[0]));
+        Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+        stage.close(); //closes the window
+    }
     private void localMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1) {
         Object[] selectedItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
         String filename = selectedItem[0].toString() + ".txt";

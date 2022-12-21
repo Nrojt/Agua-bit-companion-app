@@ -97,7 +97,7 @@ public class MeasureScreenController implements Initializable {
         updateThread.start();
     }
 
-    public void measurementButtonClick(ActionEvent event) throws IOException {
+    public void measurementButtonClick(ActionEvent event){
         if(MenuOverlayController.isAguabitConnected) {
             //starting a new thread for getting the measurements from the Microbit
             measureThread = new Thread(this::getMeasurementsFromMicrobit);
@@ -110,7 +110,7 @@ public class MeasureScreenController implements Initializable {
     //code for opening the saveMeasurement screen
     public void saveMeasurement(ActionEvent e) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
-        Parent root2 = (Parent) fxmlLoader.load();
+        Parent root2 = fxmlLoader.load();
         Stage stage3 = new Stage();
         Scene scene3 = new Scene(root2);
         stage3.setTitle("Save Measurement");
@@ -240,7 +240,7 @@ public class MeasureScreenController implements Initializable {
         MeasureInfoScreenController.sensorValue = Value;
         MeasureInfoScreenController.sensorType = Type;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MeasureInfoScreen.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
         Stage stage2 = new Stage();
         Scene scene2 = new Scene(root1);
         stage2.setTitle("Measurement Information");
@@ -254,7 +254,7 @@ public class MeasureScreenController implements Initializable {
 
     public void openMeasurementsButton(ActionEvent e) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OpenMeasurementsScreen.fxml"));
-        Parent root2 = (Parent) fxmlLoader.load();
+        Parent root2 = fxmlLoader.load();
         Stage stage3 = new Stage();
         Scene scene3 = new Scene(root2);
         stage3.setTitle("Open saved measurements");
@@ -268,7 +268,6 @@ public class MeasureScreenController implements Initializable {
 
     private void menuUpdate(){
         while(shouldMeasureScreenUpdate) {
-            System.out.println("loop");
             Platform.runLater(() -> {
                 sensor1ValueLabel.setText(sensor1ValueString);
                 sensor2ValueLabel.setText(sensor2ValueString);

@@ -13,9 +13,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.Buffer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -154,14 +152,6 @@ public class SaveFile{
             BufferedReader measurementReader = new BufferedReader(measurementFileReader);
             String line;
 
-            String test1 = "";
-            String test2 = "";
-            String test3 = "";
-            String test4 = "";
-            String test5 = "";
-            String test6 = "";
-
-
             while(true){
                 try {
                     if ((line = measurementReader.readLine()) == null) break;
@@ -169,29 +159,45 @@ public class SaveFile{
                     throw new RuntimeException(e);
                 }
                 if(line.contains("sensor1Type")) {
-                    test1 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor1TypeString = test1;
+                    MeasureScreenController.sensor1TypeString = String.valueOf(line.split("\\:")[1]);
 
                 } else if(line.contains("sensor2Type")) {
-                    test2 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor2TypeString = test2;
+                    MeasureScreenController.sensor2TypeString = String.valueOf(line.split("\\:")[1]);
                 }else if(line.contains("sensor3Type")) {
-                    test3 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor3TypeString = test3;
+                    MeasureScreenController.sensor3TypeString = String.valueOf(line.split("\\:")[1]);
                 } else if(line.contains("sensor1Value")) {
-                    test4 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor1ValueString = test4;
+                    MeasureScreenController.sensor1ValueString = String.valueOf(line.split("\\:")[1]);
                 }
                 else if(line.contains("sensor2Value")) {
-                    test5 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor2ValueString = test5;
+                    MeasureScreenController.sensor2ValueString = String.valueOf(line.split("\\:")[1]);
                 }
                 else if(line.contains("sensor3Value")) {
-                    test6 = String.valueOf(line.split("\\:")[1]);
-                    MeasureScreenController.sensor3ValueString = test6;
-                    System.out.println(MeasureScreenController.sensor3ValueString);
+                    MeasureScreenController.sensor3ValueString = String.valueOf(line.split("\\:")[1]);
                 }
             }
         }
+    }
+
+    public static void readMeasurementFromDatabase(int measurementid){
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value FROM measurement WHERE measurement_id = '"+ measurementid+"'";
+        Statement databaseMeasurementsStatement = null;
+        ResultSet result;
+
+        try {
+            databaseMeasurementsStatement = connectDB.createStatement();
+            result = databaseMeasurementsStatement.executeQuery(readMeasurementQuery);
+            MeasureScreenController.sensor1TypeString = result.getString(1);
+            MeasureScreenController.sensor2TypeString = result.getString(2);
+            MeasureScreenController.sensor3TypeString = result.getString(3);
+            MeasureScreenController.sensor1ValueString = result.getString(4);
+            MeasureScreenController.sensor2ValueString = result.getString(5);
+            MeasureScreenController.sensor3ValueString = result.getString(6);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

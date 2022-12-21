@@ -50,6 +50,7 @@ public class Main extends Application {
             throw new RuntimeException(e);
         }
         try {
+            MeasureScreenController.shouldMeasureScreenUpdate = false;
             MenuOverlayController.menuUpdateThread.stop();
             MeasureScreenController.measureThread.stop();
             UpdateScreenController.uploadingFirmware.stop();
