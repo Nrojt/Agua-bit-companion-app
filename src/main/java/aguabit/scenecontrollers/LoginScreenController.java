@@ -3,19 +3,19 @@ package aguabit.scenecontrollers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.*;
 
 
 public class LoginScreenController {
     @FXML
-    TextField userNameTextField;
+    TextField emailTextField;
+    @FXML
+    TextField passwordTextField;
 
     @FXML
     Hyperlink signupURL = new Hyperlink();
@@ -27,12 +27,38 @@ public class LoginScreenController {
 
     //this code runs when the loginbutton is pressed.
     public void onLoginButtonClick(ActionEvent event) throws IOException {
-        if(!userNameTextField.getText().isEmpty()) { //check to see if the login field is empty
-            String username = userNameTextField.getText();
-            MenuOverlayController.userName = username;
-            MenuOverlayController.loginStatus = true;
-            stage = (Stage) userNameTextField.getScene().getWindow();
-            stage.close(); //closes the window
+        if(!emailTextField.getText().isEmpty()) { //check to see if the login field is empty
+            String email = emailTextField.getText();
+            String password = passwordTextField.getText();
+            String checkLoginQuery = "SELECT user_id, username FROM user WHERE email = '"+ email +"' AND password = '"+ password + "'";
+
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectDB = connection.getDBConnection();
+            Statement loginStatement = null;
+            ResultSet result;
+
+            try{
+                loginStatement = connectDB.createStatement();
+                result = loginStatement.executeQuery(checkLoginQuery);
+                ResultSetMetaData rsmd = result.getMetaData();
+                int columnCount = rsmd.getColumnCount();
+                if(result.getString(1) != null && result.getString(2) != null){
+                    MenuOverlayController.userId = result.getInt(1);
+                    MenuOverlayController.userName = result.getString(2);
+                    MenuOverlayController.loginStatus = true;
+                    connectDB.close();
+                    stage = (Stage) emailTextField.getScene().getWindow();
+                    stage.close(); //closes the window
+                }else {
+                    System.out.println("incorect");
+                }
+                connectDB.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            //MenuOverlayController.userName = username;
+            //MenuOverlayController.loginStatus = true;
         }
     }
 

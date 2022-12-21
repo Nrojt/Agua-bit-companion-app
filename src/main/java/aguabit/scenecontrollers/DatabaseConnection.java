@@ -12,7 +12,6 @@ public class DatabaseConnection {
         String url = "jdbc:sqlite:src/main/resources/database/aguabit.db";
 
         try {
-
             databaseLink = DriverManager.getConnection(url);
             System.out.println("Connected to sqlite");
 

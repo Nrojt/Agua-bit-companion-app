@@ -23,15 +23,21 @@
       </ImageView>
       <Label fx:id="userNameLabel" alignment="CENTER" layoutY="191.0" prefHeight="17.0" prefWidth="980.0" text="John Doe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0" />
       <Label alignment="CENTER" layoutY="208.0" prefHeight="17.0" prefWidth="836.0" text="johndoe@email.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="208.0" />
-      <TextField layoutX="419.0" layoutY="370.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="old email" AnchorPane.bottomAnchor="244.66666666666666" AnchorPane.leftAnchor="419.0" AnchorPane.rightAnchor="419.0" />
-      <TextField layoutX="419.0" layoutY="248.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="old password" AnchorPane.bottomAnchor="366.6666666666667" AnchorPane.leftAnchor="419.0" AnchorPane.rightAnchor="419.0" />
-      <TextField layoutX="419.0" layoutY="273.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="new password" AnchorPane.bottomAnchor="341.6666666666667" AnchorPane.leftAnchor="419.0" AnchorPane.rightAnchor="419.0">
+      <TextField layoutX="163.0" layoutY="409.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="old email" AnchorPane.bottomAnchor="205.66666666666669" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
+      <TextField layoutX="163.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="old password" AnchorPane.bottomAnchor="320.6666666666667" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
+      <TextField layoutX="163.0" layoutY="320.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="new password" AnchorPane.bottomAnchor="294.6666666666667" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </TextField>
-      <TextField layoutX="419.0" layoutY="395.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="new email" AnchorPane.bottomAnchor="219.66666666666669" AnchorPane.leftAnchor="419.0" AnchorPane.rightAnchor="419.0" />
-      <MFXButton layoutX="431.0" layoutY="307.0" prefHeight="25.0" prefWidth="118.0" text="Change password" />
-      <MFXButton layoutX="431.0" layoutY="431.0" prefHeight="25.0" prefWidth="118.0" text="Change email" />
+      <TextField layoutX="163.0" layoutY="434.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="new email" AnchorPane.bottomAnchor="180.66666666666669" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
+      <MFXButton layoutX="175.0" layoutY="361.0" prefHeight="25.0" prefWidth="118.0" text="Change password" />
+      <MFXButton layoutX="175.0" layoutY="492.0" prefHeight="25.0" prefWidth="118.0" text="Change email" />
+      <TextField layoutX="163.0" layoutY="459.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="password" />
+      <TextField layoutX="630.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="phone number" />
+      <MFXButton layoutX="642.0" layoutY="320.0" prefHeight="25.0" prefWidth="118.0" text="Change number" />
+      <TextField layoutX="409.0" layoutY="307.0" promptText="First name" />
+      <TextField layoutX="409.0" layoutY="348.0" promptText="Last name" />
+      <TextField layoutX="409.0" layoutY="386.0" promptText="Username" />
    </children>
 </AnchorPane>

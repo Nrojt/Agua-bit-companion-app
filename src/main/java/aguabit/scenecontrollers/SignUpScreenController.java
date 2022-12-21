@@ -38,12 +38,12 @@ public class SignUpScreenController implements Initializable{
     @FXML
     public AnchorPane fxmlPane;
 
-    int phoneNumber;
+    long phoneNumber;
 
     protected String querry = "INSERT INTO user(first_name, last_name, username, phonenumber, password, email, date_of_birth) VALUES(?,?,?,?,?,?,?)";
 
 
-    public void printInput(ActionEvent e) {
+    public void signUp(ActionEvent e) {
         if (!usernameTextfield.getText().isBlank() && !passwordTextfield.getText().isBlank() && !emailTextfield.getText().isBlank()) {
             String firstName = firstnameTextfield.getText();
             String lastName = lastnameTextfield.getText();
@@ -53,11 +53,12 @@ public class SignUpScreenController implements Initializable{
             String dob = String.valueOf(dobPicker.getValue());
 
             if (phonenumberTextfield.getText().matches("[0-9]+")) {
-                phoneNumber = Integer.parseInt(phonenumberTextfield.getText());
+                phoneNumber = Long.parseLong(phonenumberTextfield.getText());
             } else if (!phonenumberTextfield.getText().isBlank()) {
                 informationLabel.setText("Not a valid phone number, please only enter numbers.");
             }
 
+            /*
             System.out.println("username " + userName);
             System.out.println("firstname " + firstName);
             System.out.println("lastname " + lastName);
@@ -65,6 +66,7 @@ public class SignUpScreenController implements Initializable{
             System.out.println("email " + email);
             System.out.println("password " + password);
             System.out.println("date of birth " + dob);
+             */
 
 
             if ((phonenumberTextfield.getText().matches("[0-9]+")) || phonenumberTextfield.getText().isBlank()) {
@@ -77,11 +79,13 @@ public class SignUpScreenController implements Initializable{
                             pstmt.setString(1, firstName);
                             pstmt.setString(2, lastName);
                             pstmt.setString(3, userName);
-                            pstmt.setInt(4, phoneNumber);
+                            pstmt.setLong(4, phoneNumber);
                             pstmt.setString(5, password);
                             pstmt.setString(6, email);
                             pstmt.setString(7, dob);
                             pstmt.executeUpdate();
+
+                            connectDB.close();
 
                         } catch (SQLException z) {
                             System.out.println(z.getMessage());

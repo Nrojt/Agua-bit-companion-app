@@ -93,9 +93,11 @@ public class OpenMeasurementsScreenController implements Initializable {
 
     private void databaseMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1){
         Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-        SaveFile.readMeasurementFromDatabase(Integer.valueOf(selectedItem[0].toString().split("\\. ")[0]));
-        Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-        stage.close(); //closes the window
+        if(!selectedItem[0].toString().equals("No saved measurements found in database")) {
+            SaveFile.readMeasurementFromDatabase(Integer.valueOf(selectedItem[0].toString().split("\\. ")[0]));
+            Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+            stage.close(); //closes the window
+        }
     }
     private void localMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1) {
         Object[] selectedItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();

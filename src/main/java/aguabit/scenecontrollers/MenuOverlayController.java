@@ -129,9 +129,6 @@ public class MenuOverlayController implements Initializable {
     public void settingsScreen(ActionEvent e) throws IOException{
         screenSwitcher("SettingsScreen.fxml");
     }
-    public void databaseScreen(ActionEvent e) throws IOException{
-        screenSwitcher("DatabaseScreen.fxml");
-    }
 
     //code for the logout button
     public void logout(ActionEvent event){
@@ -151,10 +148,20 @@ public class MenuOverlayController implements Initializable {
         alert.setContentText("Do you want to exit?");
 
         if(alert.showAndWait().get()== ButtonType.OK) {
-            MeasureScreenController.measureThread.stop();
-            UpdateScreenController.uploadingFirmware.stop();
-            UpdateScreenController.downloadingFirmware.stop();
-            driveDetector.close();
+            try {
+                driveDetector.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                MeasureScreenController.shouldMeasureScreenUpdate = false;
+                MenuOverlayController.menuUpdateThread.stop();
+                MeasureScreenController.measureThread.stop();
+                UpdateScreenController.uploadingFirmware.stop();
+                UpdateScreenController.downloadingFirmware.stop();
+                MeasureScreenController.updateThread.stop();
+            }catch(NullPointerException ignored){}
             stage = (Stage) menuPane.getScene().getWindow();
             stage.close();
             Platform.exit();
