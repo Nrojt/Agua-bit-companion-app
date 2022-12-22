@@ -2,22 +2,14 @@ package saveFile;
 
 import aguabit.scenecontrollers.DatabaseConnection;
 import aguabit.scenecontrollers.MeasureScreenController;
-import aguabit.scenecontrollers.MenuOverlayController;
-import javafx.application.Platform;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.*;
-import java.net.URL;
-import java.nio.Buffer;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.ResourceBundle;
 
-//different package that will probably be used for saving the settings and measurements locally
+//Most of the saving to Aguabit folder and the database is done in this class.
 public class SaveFile{
     public static boolean menuBarSide = true;
     public static int theme = 0;
@@ -26,6 +18,7 @@ public class SaveFile{
     private static final String pathForSettings = pathToDocumentsFolder + "/AguaBit/settings/";
     private static final String measurementQuery = "INSERT into measurement(user_id, measurement_name, measurement_location, slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, date ) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
+    //code for saving the measurements to the database
     public static void saveMeasurementDatabase(int userID, String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date){
         DatabaseConnection connectionNow = new DatabaseConnection();
         try (Connection connectDB = connectionNow.getDBConnection();
@@ -44,16 +37,15 @@ public class SaveFile{
         } catch (SQLException z) {
             System.out.println(z.getMessage());
         }
-        System.out.println("adding measurement succesfull");
+        System.out.println("Adding measurement successful");
     }
 
+    //saves measurements in to a .txt file in the AguaBit folder (in documents folder)
     public static void saveMeasurementLocal(String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date){
-
-        //saves output in to a .txt file has to be linked to measure screen controller.
         try {
-            // connected to "myfile.txt"
             File measurementFile = new File(pathForMeasurements+measurementName+".txt");
             if(measurementFile.exists()){
+                //adding a check to see if a file already exists and if the user wants to overwrite it if it does exist
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit");
                 alert.setHeaderText("A file with this name already exist.");
@@ -64,8 +56,10 @@ public class SaveFile{
                 }
 
             }else {
+                //mkdir creates the required directories if they don't exist
                 measurementFile.getParentFile().mkdirs();
                 try {
+                    //creating the measurement file if it doesn't exist yet
                     measurementFile.createNewFile();
                     savingTheFileLocal(measurementName, measurementLocation, sensor1Type, sensor2Type, sensor3Type, sensor1Value, sensor2Value, sensor3Value, measurementFile, date);
                 } catch (IOException ex) {
@@ -78,24 +72,27 @@ public class SaveFile{
         }
     }
 
+    //The code for actually saving the file to the AguaBit folder, separate because it needs to be called multiple times
     private static void savingTheFileLocal(String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, File measurementFile, String date) throws FileNotFoundException {
         FileOutputStream out;
         PrintStream p;
         out = new FileOutputStream(measurementFile);
         p = new PrintStream(out);
-        p.append("name:"+measurementName+"\nlocation:"+measurementLocation+"\nsensor1Type:"+sensor1Type+"\nsensor2Type:"+sensor2Type+"\nsensor3Type:"+sensor3Type+"\nsensor1Value:"+sensor1Value+"\nsensor2Value:"+sensor2Value+"\nsensor3Value:"+sensor3Value+"\ndate:"+date);
+        p.append("name:").append(measurementName).append("\nlocation:").append(measurementLocation).append("\nsensor1Type:").append(sensor1Type).append("\nsensor2Type:").append(sensor2Type).append("\nsensor3Type:").append(sensor3Type).append("\nsensor1Value:").append(sensor1Value).append("\nsensor2Value:").append(sensor2Value).append("\nsensor3Value:").append(sensor3Value).append("\ndate:").append(date);
         p.close();
         System.out.println("File successfully created");
     }
 
+    //code for saving the settings to the AguaBit folder
     public static void saveSettings(){
         File settingsFile = new File(pathForSettings +"settings"+ ".txt");
-        settingsFile.getParentFile().mkdirs();
+        settingsFile.getParentFile().mkdirs(); //creating parent directories if they don't exist yet
         try {
             settingsFile.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         FileOutputStream settingsOut;
         PrintStream settings;
         try {
@@ -104,7 +101,7 @@ public class SaveFile{
             throw new RuntimeException(e);
         }
         settings = new PrintStream(settingsOut);
-        settings.append("menubar:"+String.valueOf(menuBarSide)+ "\n"+ "theme:"+ theme);
+        settings.append("menubar:").append(String.valueOf(menuBarSide)).append("\n").append("theme:").append(String.valueOf(theme));
         settings.close();
     }
 
@@ -112,8 +109,9 @@ public class SaveFile{
     public static void readSettingsFromFile(){
         File settingsFile = new File(pathForSettings +"settings"+ ".txt");
 
+        //this gets called on startup in main.java , has a check to see if a settings file exist, otherwise just does nothing.
         if(settingsFile.exists()){
-            FileReader settingsFileReader = null;
+            FileReader settingsFileReader;
             try {
                 settingsFileReader = new FileReader(settingsFile);
             } catch (FileNotFoundException e) {
@@ -124,26 +122,28 @@ public class SaveFile{
 
             while(true){
                 try {
-                    if ((line = settingsReader.readLine()) == null) break;
+                    if ((line = settingsReader.readLine()) == null) break; //if the next line is empty, break the loop
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if(line.contains("menubar")) {
-                    menuBarSide = Boolean.valueOf(line.split("\\:")[1]);
+                //the settings are saved as settingsname:value, split separates them again
+                if(line.contains("menubar")) { //could also use line.split("\\:")[0] in stead of contains
+                    menuBarSide = Boolean.parseBoolean(line.split("\\:")[1]);
                 }
                 else if(line.contains("theme")){
-                    theme = Integer.valueOf(line.split("\\:")[1]);
+                    theme = Integer.parseInt(line.split("\\:")[1]);
                 }
             }
         }
     }
 
+    //code for reading in the locally saved measurements, code pretty simila to readSettingsFromFile
     public static void readMeasurementFromFile(String filename){
         File measurementFile = new File(pathForMeasurements + filename);
         System.out.println(measurementFile);
 
         if(measurementFile.exists()){
-            FileReader measurementFileReader = null;
+            FileReader measurementFileReader;
             try {
                 measurementFileReader = new FileReader(measurementFile);
             } catch (FileNotFoundException e) {
@@ -154,7 +154,7 @@ public class SaveFile{
 
             while(true){
                 try {
-                    if ((line = measurementReader.readLine()) == null) break;
+                    if ((line = measurementReader.readLine()) == null) break; //if the next line is empty, break the loop
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -178,13 +178,15 @@ public class SaveFile{
         }
     }
 
+    //code for getting the measurements from the database
     public static void readMeasurementFromDatabase(int measurementid){
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
         String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value FROM measurement WHERE measurement_id = '"+ measurementid+"'";
-        Statement databaseMeasurementsStatement = null;
+        Statement databaseMeasurementsStatement;
         ResultSet result;
 
+        //ResultSet starts counting at 1 instead of 0
         try {
             databaseMeasurementsStatement = connectDB.createStatement();
             result = databaseMeasurementsStatement.executeQuery(readMeasurementQuery);

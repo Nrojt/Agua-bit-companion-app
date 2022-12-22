@@ -1,8 +1,8 @@
 package aguabit.scenecontrollers;
 
-import com.fazecast.jSerialComm.*;
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortIOException;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -20,13 +22,18 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MeasureScreenController implements Initializable {
+    //a boolean that decides if menuUpdate() should run
     public static boolean shouldMeasureScreenUpdate = true;
+    // a boolean so the measurement button cant be spammed
+    private boolean noMeasurementGoingOn = true;
+    //declaring the separate threads that this screen will use
     public static Thread updateThread;
+    public static Thread measureThread;
+
+    //variables for the measurement values and slot types
     public static String port1 = "Empty";
     public static String port2 = "Empty";
     public static String port3 = "Empty";
-
-    public static Thread measureThread;
 
     public static String sensor1TypeString = "Unknown";
     public static String sensor2TypeString = "Unknown";
@@ -39,6 +46,7 @@ public class MeasureScreenController implements Initializable {
     public static String sensor3IndicationString = "Unknown";
 
 
+    //fxml labels for measurement values and slot types
     @FXML
     private Label informationLabel = new Label();
     @FXML
@@ -47,7 +55,6 @@ public class MeasureScreenController implements Initializable {
     private Label sensor2TypeLabel = new Label();
     @FXML
     private Label sensor3TypeLabel = new Label();
-
     @FXML
     private Label sensor1ValueLabel = new Label();
     @FXML
@@ -55,15 +62,13 @@ public class MeasureScreenController implements Initializable {
     @FXML
     private Label sensor3ValueLabel = new Label();
 
-    //labels for the measurement indications, these are not implemented yet.
+    //TODO measurement indications, use these labels
     @FXML
     private Label sensor1IndicationLabel = new Label();
     @FXML
     private Label sensor2IndicationLabel = new Label();
     @FXML
     private Label sensor3IndicationLabel = new Label();
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,13 +97,15 @@ public class MeasureScreenController implements Initializable {
             informationLabel.setText("Please connect the Agua:bit");
         }
 
+        //starting the thread that updates the ui
         shouldMeasureScreenUpdate = true;
         updateThread = new Thread(this::menuUpdate);
         updateThread.start();
     }
 
-    public void measurementButtonClick(ActionEvent event){
-        if(MenuOverlayController.isAguabitConnected) {
+    public void measurementButtonClick(){
+        if(MenuOverlayController.isAguabitConnected && noMeasurementGoingOn) {
+            noMeasurementGoingOn = false; //making it so the measurement button cannot be spammed
             //starting a new thread for getting the measurements from the Microbit
             measureThread = new Thread(this::getMeasurementsFromMicrobit);
             measureThread.start();
@@ -108,7 +115,7 @@ public class MeasureScreenController implements Initializable {
     }
 
     //code for opening the saveMeasurement screen
-    public void saveMeasurement(ActionEvent e) throws IOException {
+    public void saveMeasurement() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
         Parent root2 = fxmlLoader.load();
         Stage stage3 = new Stage();
@@ -122,6 +129,7 @@ public class MeasureScreenController implements Initializable {
         stage3.show();
     }
 
+    //code for reading the measurements from the microbit
     private void getMeasurementsFromMicrobit() {
         port1 = "";
         port2 = "";
@@ -131,7 +139,9 @@ public class MeasureScreenController implements Initializable {
 
         //opening a port for communicating with the Microbit over usb
         //System.out.println(SerialPort.getCommPorts());
+        //TODO find a better way to get the serialport of the microbit, if multiple serial ports are connected this current way will cause errors
         SerialPort microBit = SerialPort.getCommPorts()[0];
+
         microBit.openPort();
         microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
         microBit.setBaudRate(115200); //the speed of communication
@@ -140,13 +150,14 @@ public class MeasureScreenController implements Initializable {
 
         //code for getting the measurement reading from the microbit
         try {
-            sendToMicroBit.write('M');
+            sendToMicroBit.write('M'); //when the microbit receives 'M', it will enter the measurement state.
 
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ignored) {
             }
 
+            //actually reading the input
             for(int i = 0; i< 50; i++){
                 char input = (char) readFromMicroBit.read();
                 if(input == '!' || String.valueOf(input).isBlank()){
@@ -160,15 +171,19 @@ public class MeasureScreenController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         System.out.println(microbitInput);
+        //for emptying the connection, prevents problems with doing another measurement
         microBit.flushIOBuffers();
         microBit.closePort();
 
-
+        //the microbit sends the values with | in between, split seperates those again
         port1 = microbitInput.split("\\|")[0];
         port2 = microbitInput.split("\\|")[1];
         port3 = microbitInput.split("\\|")[2];
 
+
+        //rounding the input depending on what type of sensor it is
         switch(sensor1TypeString) {
             case "PH-Value":
                 port1 = String.valueOf(roundDoubles((Double.parseDouble(port1)/100),2));
@@ -205,6 +220,8 @@ public class MeasureScreenController implements Initializable {
 
         System.out.println(port1+"\n"+port2+"\n"+port3+"\n");
 
+        noMeasurementGoingOn = true; //making it so the measurement button can be pressed again
+
         //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
         Platform.runLater(() -> {
             sensor1ValueLabel.setText(sensor1ValueString);
@@ -214,26 +231,27 @@ public class MeasureScreenController implements Initializable {
         });
     }
 
+    //code to send the correct information to slotInformationScreens()
     public void slot1Information() throws IOException{
         slotInformationScreens(1, sensor1TypeString, sensor1ValueString);
     }
-
     public void slot2Information() throws IOException {
 
         slotInformationScreens(2, sensor2TypeString, sensor2ValueString);
     }
     public void slot3Information() throws IOException {
-
         slotInformationScreens(3, sensor3TypeString, sensor3ValueString);
     }
 
+    //this code rounds doubles to the amount of int decimalPlaces
     private Double roundDoubles(Double input, int decimalPlaces){
         if (decimalPlaces < 0) throw new IllegalArgumentException();
-        BigDecimal bd = BigDecimal.valueOf(input);
+        BigDecimal bd = BigDecimal.valueOf(input); //a BigDecimal handles decimal points better than doubles, probably overkill for what we use it for
         bd = bd.setScale(decimalPlaces, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 
+    //code for opening the information screens when clicking on the indications
     private void slotInformationScreens(int slot, String Type, String Value) throws IOException {
         System.out.println(slot + " "+ Type);
         MeasureInfoScreenController.slotNumber = slot;
@@ -252,7 +270,8 @@ public class MeasureScreenController implements Initializable {
         stage2.show();
     }
 
-    public void openMeasurementsButton(ActionEvent e) throws IOException {
+    //this opens the screen that displays the saved measurements
+    public void openMeasurementsButton() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OpenMeasurementsScreen.fxml"));
         Parent root2 = fxmlLoader.load();
         Stage stage3 = new Stage();
@@ -266,6 +285,7 @@ public class MeasureScreenController implements Initializable {
         stage3.show();
     }
 
+    //code for updating the labels on screen
     private void menuUpdate(){
         while(shouldMeasureScreenUpdate) {
             Platform.runLater(() -> {
@@ -282,7 +302,4 @@ public class MeasureScreenController implements Initializable {
             }
         }
     }
-
-
-
 }

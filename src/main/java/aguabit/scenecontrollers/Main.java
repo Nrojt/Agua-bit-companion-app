@@ -19,7 +19,7 @@ public class Main extends Application {
     //override gets run after loading in
     @Override
     public void start(Stage stage) throws IOException {
-        //reading saved settings(if they exist)
+        //reading saved settings
         SaveFile.readSettingsFromFile();
 
         //code for setting either the dark or light theme.
@@ -39,6 +39,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
+        //When someone presses the close button, custom code will run.
         stage.setOnCloseRequest(event -> exit(stage));
     }
 
@@ -49,6 +50,7 @@ public class Main extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //closing all the possible threads that could be open.
         try {
             MeasureScreenController.shouldMeasureScreenUpdate = false;
             MenuOverlayController.menuUpdateThread.stop();
@@ -58,6 +60,7 @@ public class Main extends Application {
             MeasureScreenController.updateThread.stop();
         }catch(NullPointerException ignored){}
 
+        //what actually closes the program
         stage.close();
         Platform.exit();
     }

@@ -1,12 +1,10 @@
 package aguabit.scenecontrollers;
 
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import saveFile.SaveFile;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,6 +19,9 @@ public class SettingsScreenController implements Initializable {
     private MFXRadioButton settingsLightThemeButton = new MFXRadioButton();
     @FXML
     private MFXRadioButton settingsDarkThemeButton = new MFXRadioButton();
+
+    //TODO make this screen look better
+    //TODO add the option to pick a profile picture
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +40,7 @@ public class SettingsScreenController implements Initializable {
     }
 
     //code for switching between the side and top menubar
-    public void settingsButtonClicked(ActionEvent event) throws IOException {
+    public void settingsButtonClicked(){
         if (settingsSideMenuBarButton.isSelected()) {
             menuBarSide = true;
         } else if (settingsTopMenuBarButton.isSelected()) {
@@ -51,7 +52,6 @@ public class SettingsScreenController implements Initializable {
         } else if (settingsLightThemeButton.isSelected()) {
             theme = 0;
         }
-
-        saveSettings();
+        SaveFile.saveSettings();
     }
 }

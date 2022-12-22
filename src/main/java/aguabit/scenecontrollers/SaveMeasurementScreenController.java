@@ -2,7 +2,6 @@ package aguabit.scenecontrollers;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -17,7 +16,7 @@ import java.util.ResourceBundle;
 
 
 public class SaveMeasurementScreenController implements Initializable {
-    private int userID = MenuOverlayController.userId;
+    private final int userID = MenuOverlayController.userId;
     @FXML
     private Label sensor1Type = new Label();
     @FXML
@@ -49,7 +48,6 @@ public class SaveMeasurementScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         sensor1Type.setText(MeasureScreenController.sensor1TypeString);
         sensor2Type.setText(MeasureScreenController.sensor2TypeString);
         sensor3Type.setText(MeasureScreenController.sensor2TypeString);
@@ -62,7 +60,6 @@ public class SaveMeasurementScreenController implements Initializable {
         sensor2Indication.setText(MeasureScreenController.sensor2IndicationString);
         sensor3Indication.setText(MeasureScreenController.sensor3IndicationString);
 
-
         try {
             measurementLocationTextfield.setText((Location.getUserLocation()));
         } catch (IOException | GeoIp2Exception e) {
@@ -70,17 +67,16 @@ public class SaveMeasurementScreenController implements Initializable {
         }
     }
 
-    public void saveMeasurement(ActionEvent e){
-        //code for actually saving the measurement
-        if(!measurementNameTextfield.getText().isBlank()){
-            if(MenuOverlayController.loginStatus) {
+    public void saveMeasurement(){
+        //the code for actually saving the measurement is handled in SaveFile.java
+        if(!measurementNameTextfield.getText().isBlank()) {
+            if (MenuOverlayController.loginStatus) {
                 SaveFile.saveMeasurementDatabase(userID, measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), String.valueOf(measurementDatePicker.getValue()));
-            } else{
-                SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(),String.valueOf(measurementDatePicker.getValue()));
+            } else {
+                SaveFile.saveMeasurementLocal(measurementNameTextfield.getText(), measurementLocationTextfield.getText(), sensor1Type.getText(), sensor2Type.getText(), sensor3Type.getText(), sensor1Value.getText(), sensor2Value.getText(), sensor3Value.getText(), String.valueOf(measurementDatePicker.getValue()));
             }
             Stage stage = (Stage) measurementNameTextfield.getScene().getWindow();
             stage.close(); //closes the window
         }
-
     }
 }

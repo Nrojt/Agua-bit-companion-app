@@ -24,13 +24,10 @@ import net.samuelcampos.usbdrivedetector.*;
 
 
 public class MenuOverlayController implements Initializable {
-    //variables for the windows
-    private static Stage stage;
     @FXML
     private BorderPane menuPane;
     @FXML
     public AnchorPane fxmlPane;
-    public static Thread menuUpdateThread;
 
     //variables for text in the menubar
     public static String userName = "User";
@@ -53,12 +50,10 @@ public class MenuOverlayController implements Initializable {
     @FXML
     private Label AguabitConnectedStatus = new Label();
     public static boolean isAguabitConnected = false;
-
+    public static Thread menuUpdateThread;
     public static char driveLetter;
-
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
-
-    public static int userId = 1;
+    public static int userId = -1;
 
     public MenuOverlayController() throws IOException {
         //this runs every time this controller gets loaded, which should only be once at startup.
@@ -90,6 +85,7 @@ public class MenuOverlayController implements Initializable {
     }
 
     //the login screen gets opened in a new window, so it cannot use the screenSwitcher code.
+    //ActionEvent event needs to stay here
     public void loginScreen(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
         Parent root1 = fxmlLoader.load();
@@ -105,35 +101,38 @@ public class MenuOverlayController implements Initializable {
     }
 
     //code for all the clickable buttons
-    public void connectScreen(ActionEvent event) throws IOException{
+    public void connectScreen() throws IOException{
         screenSwitcher("ConnectScreen.fxml");
     }
-    public void mainScreen(ActionEvent event) throws IOException{
+    public void mainScreen() throws IOException{
         screenSwitcher("MainScreen.fxml");
     }
-    public void accountScreen(ActionEvent event) throws IOException{
+    public void accountScreen() throws IOException{
         screenSwitcher("AccountScreen.fxml");
     }
-    public void measureScreen(ActionEvent event) throws IOException{
+    public void measureScreen() throws IOException{
         screenSwitcher("MeasureScreen.fxml");
     }
-    public void updateScreen(ActionEvent event) throws IOException{
+    public void updateScreen() throws IOException{
         screenSwitcher("UpdateScreen.fxml");
     }
-    public void setupScreen(ActionEvent event) throws IOException{
+    public void setupScreen() throws IOException{
         screenSwitcher("SetupScreen.fxml");
     }
-    public void aboutScreen(ActionEvent event) throws IOException{
+    public void aboutScreen() throws IOException{
         screenSwitcher("AboutScreen.fxml");
     }
-    public void settingsScreen(ActionEvent e) throws IOException{
+    public void settingsScreen() throws IOException{
         screenSwitcher("SettingsScreen.fxml");
     }
 
     //code for the logout button
+    //ActionEvent event needs to stay here
     public void logout(ActionEvent event){
         loginStatus = false;
-        userName = "user";
+        userName = "User";
+        userId = -1;
+
         if (menuPane.getChildren().contains(userNameLabel)){
             userNameLabel.setText(userName);
         }
@@ -141,19 +140,21 @@ public class MenuOverlayController implements Initializable {
     }
 
     //code for the exit button
-    public void exit (ActionEvent event) throws IOException{
+    public void exit (){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
         alert.setHeaderText("You're about to close the application");
         alert.setContentText("Do you want to exit?");
 
+        //Showing a prompt when the menu exit button is clicked, to make sure the user wants to quit
         if(alert.showAndWait().get()== ButtonType.OK) {
             try {
                 driveDetector.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
+            //stopping all the possibly active threads
+            //TODO change these from .stop() to something else, stop() is depricated
             try {
                 MeasureScreenController.shouldMeasureScreenUpdate = false;
                 MenuOverlayController.menuUpdateThread.stop();
@@ -162,7 +163,8 @@ public class MenuOverlayController implements Initializable {
                 UpdateScreenController.downloadingFirmware.stop();
                 MeasureScreenController.updateThread.stop();
             }catch(NullPointerException ignored){}
-            stage = (Stage) menuPane.getScene().getWindow();
+            //variables for the windows
+            Stage stage = (Stage) menuPane.getScene().getWindow();
             stage.close();
             Platform.exit();
         }
@@ -176,16 +178,15 @@ public class MenuOverlayController implements Initializable {
         else{logout(event);}
     }
     //code for the button to toggle the visibility of the sidemenubar
-    public void sideMenuToggle(ActionEvent event){
+    public void sideMenuToggle(){
         sideMenuBar.setVisible(!sideMenuBar.isVisible());
     }
-
 
     //updating the menu overlay, this is run on a separate thread
     public void menuUpdate() {
         while (true) {
 
-            //
+            //code for detecting the microbit and its drive letter
             String[] connectedDrivesString = new String[0];
             Object[] connectedDrivesObject = driveDetector.getRemovableDevices().toArray();
             try{
@@ -194,8 +195,10 @@ public class MenuOverlayController implements Initializable {
                    connectedDrivesString[i] = driveDetector.getRemovableDevices().get(i).toString();
                }
 
-            } catch (IndexOutOfBoundsException e) {}
+            } catch (IndexOutOfBoundsException ignored) {}
 
+            //checking if any of the connected devices is a microbit
+            //TODO figure out a way to support multiple connected microbits, not important
             for (String s : connectedDrivesString) {
                 try {
                     if (s.contains("MICROBIT")) {
@@ -209,7 +212,8 @@ public class MenuOverlayController implements Initializable {
                 }
             }
 
-            //platform.runlater makes the code in it run on the same thread as the menu, not on the newly made thread
+            //platform.runlater makes the code in it run on the same thread as the menu (gui thread), not on the newly made thread
+            //code for updating the menu overlay
             Platform.runLater(() -> {
                 menuBarSide = SaveFile.menuBarSide;
                 if (menuBarSide) {
@@ -247,6 +251,7 @@ public class MenuOverlayController implements Initializable {
                 }
                 else {AguabitConnectedStatus.setText("Agua:bit not connected");}
             });
+
             //pausing the thread
             try{Thread.sleep(100);}
             catch (InterruptedException ignored){}

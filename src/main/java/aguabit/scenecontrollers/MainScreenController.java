@@ -1,12 +1,10 @@
 package aguabit.scenecontrollers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -21,4 +19,5 @@ public class MainScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userNameLabel.setText("Hello "+ MenuOverlayController.userName);
     }
+    //TODO give the main screen functionality
 }

@@ -1,7 +1,6 @@
 package aguabit.scenecontrollers;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,17 +28,23 @@ import javax.swing.*;
 public class UpdateScreenController implements Initializable {
     public static Thread downloadingFirmware;
     public static Thread uploadingFirmware;
+
+    //These Strings are placed here, so they can be easily updated if required
     private final String pathToDocumentFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     private final String pathToFirmware = pathToDocumentFolder + "/AguaBit/firmware/Aguabit-firmware.hex";
     private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.5.0/Aguabit-firmware.hex";
     @FXML
     private Label notificationLabel = new Label();
-    public void copyToMicroBit(ActionEvent e){
+
+    //code for starting the thread for copying the microbit hex file to the microbit
+    public void copyToMicroBit(){
+        //checks if the .hex file exists
         if (!new File(pathToFirmware).isFile()) {
                 notificationLabel.setText("Downloading firmware, please wait.");
                 downloadingFirmware = new Thread(this::downloadFiles);
                 downloadingFirmware.start();
             }
+        //if it doesn't exist, downloading the hex file from urlToFirmware
         else if(MenuOverlayController.isAguabitConnected){
             notificationLabel.setText("Uploading firmware to Agua:bit, please wait.");
             uploadingFirmware = new Thread(this::setUploadingFirmware);
@@ -51,11 +56,13 @@ public class UpdateScreenController implements Initializable {
         //notificationLabel.setText("Click the button to update the firmware");
     }
 
+    //button for (re)downloading the hex file
     public void downloadButton(){
         notificationLabel.setText("Downloading firmware, please wait.");
         downloadingFirmware = new Thread(this::downloadFiles);
         downloadingFirmware.start();
     }
+    //actual code for downloading the hex file
     private void downloadFiles(){
         try {
             if(isReachable(urlToFirmware)) {
@@ -67,18 +74,16 @@ public class UpdateScreenController implements Initializable {
                 if (MenuOverlayController.isAguabitConnected) {
                     Platform.runLater(() -> notificationLabel.setText("Download done, click the button to upload the firmware."));
                 }
-
             }
             else {
                 Platform.runLater(() -> notificationLabel.setText("Cannot reach the server, check your internet connection and try again later."));
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    //the actual code for copying the hex file over to the microbit
     private void setUploadingFirmware(){
         char microBitDriveLetter = MenuOverlayController.driveLetter;
         Path firmwareLocation = Paths.get(pathToFirmware);
@@ -100,7 +105,8 @@ public class UpdateScreenController implements Initializable {
         else{notificationLabel.setText("Please connect the Agua:bit and reopen this page to upload.\nPress the download button to (re)download the firmware.");}
     }
 
-    //this code checks if website is reachable, but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
+    //this code checks if website is reachable (and thus if the user is online), but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
+    //TODO change the ssl to newer version, current one is depricated
     public static boolean isReachable(String url) throws IOException{
         boolean isReachable = true;
         try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())

@@ -2,7 +2,6 @@ package aguabit.scenecontrollers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,7 +42,7 @@ public class SignUpScreenController implements Initializable{
     protected String querry = "INSERT INTO user(first_name, last_name, username, phonenumber, password, email, date_of_birth) VALUES(?,?,?,?,?,?,?)";
 
 
-    public void signUp(ActionEvent e) {
+    public void signUp() {
         if (!usernameTextfield.getText().isBlank() && !passwordTextfield.getText().isBlank() && !emailTextfield.getText().isBlank()) {
             String firstName = firstnameTextfield.getText();
             String lastName = lastnameTextfield.getText();
@@ -133,7 +132,7 @@ public class SignUpScreenController implements Initializable{
         return !doesEmailExist;
     }
 
-    public void backToLoginScreen(ActionEvent a) throws IOException {
+    public void backToLoginScreen() throws IOException {
         screenSwitcher("LoginScreen.fxml");
     }
 
