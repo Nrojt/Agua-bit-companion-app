@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class SignUpScreenController implements Initializable{
     //making variables for the textfields and the button on this screen
@@ -57,6 +58,7 @@ public class SignUpScreenController implements Initializable{
                 informationLabel.setText("Not a valid phone number, please only enter numbers.");
             }
 
+            System.out.println(email);
             /*
             System.out.println("username " + userName);
             System.out.println("firstname " + firstName);
@@ -68,37 +70,41 @@ public class SignUpScreenController implements Initializable{
              */
 
 
-            if ((phonenumberTextfield.getText().matches("[0-9]+")) || phonenumberTextfield.getText().isBlank()) {
-                try {
-                    if (checkEmail(email)) {
-                        try {
-                            DatabaseConnection connectionNow = new DatabaseConnection();
-                            Connection connectDB = connectionNow.getDBConnection();
-                            PreparedStatement pstmt = connectDB.prepareStatement(querry);
-                            pstmt.setString(1, firstName);
-                            pstmt.setString(2, lastName);
-                            pstmt.setString(3, userName);
-                            pstmt.setLong(4, phoneNumber);
-                            pstmt.setString(5, password);
-                            pstmt.setString(6, email);
-                            pstmt.setString(7, dob);
-                            pstmt.executeUpdate();
+            if ((phonenumberTextfield.getText().matches("[0-9]+")) || phonenumberTextfield.getText().isBlank()) { //checking if input is a number, via regex
+                if (Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(email).matches()) { //checking if the input follows how an email should look, via regex
+                    try {
+                        if (checkEmail(email)) {
+                            try {
+                                DatabaseConnection connectionNow = new DatabaseConnection();
+                                Connection connectDB = connectionNow.getDBConnection();
+                                PreparedStatement pstmt = connectDB.prepareStatement(querry);
+                                pstmt.setString(1, firstName);
+                                pstmt.setString(2, lastName);
+                                pstmt.setString(3, userName);
+                                pstmt.setLong(4, phoneNumber);
+                                pstmt.setString(5, password);
+                                pstmt.setString(6, email);
+                                pstmt.setString(7, dob);
+                                pstmt.executeUpdate();
 
-                            connectDB.close();
+                                connectDB.close();
 
-                        } catch (SQLException z) {
-                            System.out.println(z.getMessage());
+                            } catch (SQLException z) {
+                                System.out.println(z.getMessage());
+                            }
+                            informationLabel.setText("Registration succesfull");
+                        } else {
+                            informationLabel.setText("This email is already in use");
                         }
-                        informationLabel.setText("Registration succesfull");
-                    } else {
-                        informationLabel.setText("This email is already in use");
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                } else{
+                    informationLabel.setText("This email adres is not accepted, please check if it is correct or use another email");
                 }
-            } else if (!phonenumberTextfield.getText().isBlank()) {
-                informationLabel.setText("Not a valid phone number, please only enter numbers.");
-            }
+                } else if (!phonenumberTextfield.getText().isBlank()) {
+                    informationLabel.setText("Not a valid phone number, please only enter numbers");
+                }
         }else {
             informationLabel.setText("Not all required textfields filled in");
         }

@@ -21,23 +21,23 @@
             <Image url="@images/standardProfilePic.png" />
          </image>
       </ImageView>
-      <Label fx:id="userNameLabel" alignment="CENTER" layoutY="191.0" prefHeight="17.0" prefWidth="980.0" text="John Doe" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0" />
-      <Label alignment="CENTER" layoutY="208.0" prefHeight="17.0" prefWidth="836.0" text="johndoe@email.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="208.0" />
-      <TextField layoutX="163.0" layoutY="409.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="Old e-mail" AnchorPane.bottomAnchor="205.66666666666669" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
-      <TextField layoutX="163.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="Old password" AnchorPane.bottomAnchor="320.6666666666667" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
-      <TextField layoutX="163.0" layoutY="320.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="New password" AnchorPane.bottomAnchor="294.6666666666667" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0">
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutY="191.0" prefHeight="17.0" prefWidth="980.0" text="User" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0" />
+      <Label fx:id="emailLabel" alignment="CENTER" layoutY="208.0" prefHeight="17.0" prefWidth="836.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="208.0" />
+      <TextField fx:id="oldEmailTextfield" layoutX="620.0" layoutY="434.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="(Old) E-mail" AnchorPane.bottomAnchor="180.66666666666669" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="211.0" />
+      <TextField fx:id="oldPasswordTextfield" layoutX="163.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Old password" AnchorPane.bottomAnchor="320.6666666666667" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="668.0" />
+      <TextField fx:id="newPasswordTextfield" layoutX="163.0" layoutY="320.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="New password" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="668.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </TextField>
-      <TextField layoutX="163.0" layoutY="434.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="New e-mail" AnchorPane.bottomAnchor="180.66666666666669" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="675.0" />
-      <MFXButton layoutX="175.0" layoutY="361.0" prefHeight="25.0" prefWidth="118.0" text="Change password" />
-      <MFXButton layoutX="175.0" layoutY="492.0" prefHeight="25.0" prefWidth="118.0" text="Change e-mail" />
-      <TextField layoutX="163.0" layoutY="459.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="Password" />
-      <TextField layoutX="630.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="142.0" promptText="Phone Number" />
-      <MFXButton layoutX="642.0" layoutY="320.0" prefHeight="25.0" prefWidth="118.0" text="Change number" />
-      <TextField layoutX="409.0" layoutY="307.0" promptText="First name" />
-      <TextField layoutX="409.0" layoutY="348.0" promptText="Last name" />
-      <TextField layoutX="409.0" layoutY="386.0" promptText="Username" />
+      <TextField fx:id="newEmailTextfield" layoutX="620.0" layoutY="398.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="New e-mail" AnchorPane.bottomAnchor="216.66666666666669" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="211.0" />
+      <MFXButton layoutX="163.0" layoutY="373.0" onAction="#updatePassword" prefHeight="25.0" prefWidth="142.0" text="Change password" />
+      <MFXButton layoutX="624.0" layoutY="484.0" onAction="#updateInformation" prefHeight="25.0" prefWidth="142.0" text="Update information" />
+      <TextField fx:id="passwordTextfield" layoutX="620.0" layoutY="459.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Password" />
+      <TextField fx:id="phoneNumberTextfield" layoutX="620.0" layoutY="373.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Phone Number" />
+      <TextField fx:id="firstNameTextfield" layoutX="620.0" layoutY="294.0" promptText="First name" />
+      <TextField fx:id="lastNameTextfield" layoutX="620.0" layoutY="320.0" promptText="Last name" />
+      <TextField fx:id="userNameTextfield" layoutX="620.0" layoutY="345.0" promptText="Username" />
+      <TextField fx:id="emailForPasswordTextfield" layoutX="163.0" layoutY="345.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="E-mail" />
    </children>
 </AnchorPane>

@@ -63,6 +63,8 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //logging the user in if remember me was pressed
+        SaveFile.rememberMeLogin();
         //driveDetector.addDriveListener(System.out::println); //for printing out when usb devices connect or disconnect
         //loading in the mainscreen fxml file
         try {
@@ -129,14 +131,23 @@ public class MenuOverlayController implements Initializable {
     //code for the logout button
     //ActionEvent event needs to stay here
     public void logout(ActionEvent event){
-        loginStatus = false;
-        userName = "User";
-        userId = -1;
+        //displaying a popup when the user clicks logout
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Log out");
+        alert.setHeaderText("You're about to log out");
+        alert.setContentText("Are you sure you want to logout?");
 
-        if (menuPane.getChildren().contains(userNameLabel)){
-            userNameLabel.setText(userName);
+        //Showing a prompt when the menu exit button is clicked, to make sure the user wants to quit
+        if(alert.showAndWait().get()== ButtonType.OK) {
+            loginStatus = false;
+            userName = "User";
+            userId = -1;
+
+            if (menuPane.getChildren().contains(userNameLabel)) {
+                userNameLabel.setText(userName);
+            }
+            loginButton.setText("Login");
         }
-        loginButton.setText("Login");
     }
 
     //code for the exit button

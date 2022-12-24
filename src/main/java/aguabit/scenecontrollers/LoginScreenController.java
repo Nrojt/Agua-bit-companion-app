@@ -1,17 +1,22 @@
 package aguabit.scenecontrollers;
 
+import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import saveFile.SaveFile;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 
 
 public class LoginScreenController {
+    @FXML
+    MFXCheckbox rememberMeCheckBox = new MFXCheckbox();
     @FXML
     TextField emailTextField;
     @FXML
@@ -24,40 +29,21 @@ public class LoginScreenController {
     @FXML
     public AnchorPane fxmlPane;
 
+
     //this code runs when the loginbutton is pressed.
     public void onLoginButtonClick(){
         if(!emailTextField.getText().isBlank() && !passwordTextField.getText().isBlank()) { //check to see if the login fields are not empty
 
+            System.out.println(rememberMeCheckBox.isSelected());
             String email = emailTextField.getText();
             String password = passwordTextField.getText();
-            String checkLoginQuery = "SELECT user_id, username FROM user WHERE email = '"+ email +"' AND password = '"+ password + "'";
 
-            //code for connecting to the database
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectDB = connection.getDBConnection();
-            Statement loginStatement;
-            ResultSet result; //for getting the query result
-
-            try{
-                loginStatement = connectDB.createStatement();
-                result = loginStatement.executeQuery(checkLoginQuery);
-                if(result.getString(1) != null && result.getString(2) != null){
-                    //setting the variables in MenuOverlayController to the information from the database
-                    MenuOverlayController.userId = result.getInt(1);
-                    MenuOverlayController.userName = result.getString(2);
-                    MenuOverlayController.loginStatus = true;
-
-                    connectDB.close();
-                    Stage stage = (Stage) emailTextField.getScene().getWindow();
-                    stage.close(); //closes the window
-                }else {
-                    System.out.println("incorect");
-                    //TODO make an information label that notifies the user if the entered information is wrong
-                }
-                connectDB.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if(loginCode(email, password) && rememberMeCheckBox.isSelected()){
+                SaveFile.rememberMe(email, password);
             }
+
+            Stage stage = (Stage) emailTextField.getScene().getWindow();
+            stage.close(); //closes the window
         }
     }
 
@@ -69,6 +55,40 @@ public class LoginScreenController {
             catch (java.io.IOException e) {
                 System.out.println(e.getMessage());
             }
+    }
+
+    //code for checking the input against database, aka actually logging in. Separate so remember me works
+    public static boolean loginCode(String email, String password){
+        //code for connecting to the database
+        boolean loginSuccesful = false;
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String checkLoginQuery = "SELECT user_id, username FROM user WHERE email = '"+ email +"' AND password = '"+ password + "'";
+        Statement loginStatement;
+        ResultSet result; //for getting the query result
+
+        try{
+            loginStatement = connectDB.createStatement();
+            result = loginStatement.executeQuery(checkLoginQuery);
+            if(result.getString(1) != null && result.getString(2) != null){
+                //setting the variables in MenuOverlayController to the information from the database
+                MenuOverlayController.userId = result.getInt(1);
+                MenuOverlayController.userName = result.getString(2);
+                MenuOverlayController.loginStatus = true;
+                loginSuccesful = true;
+            }else{
+                System.out.println("incorect");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            connectDB.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //TODO make an information label that notifies the user if the entered information is wrong
+        return loginSuccesful;
     }
 
     //when the user clicks on the signup button

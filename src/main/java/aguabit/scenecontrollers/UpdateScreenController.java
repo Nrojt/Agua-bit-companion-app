@@ -106,7 +106,7 @@ public class UpdateScreenController implements Initializable {
     }
 
     //this code checks if website is reachable (and thus if the user is online), but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
-    //TODO change the ssl to newer version, current one is depricated
+    //TODO change the ssl to newer version, current one is deprecated
     public static boolean isReachable(String url) throws IOException{
         boolean isReachable = true;
         try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())

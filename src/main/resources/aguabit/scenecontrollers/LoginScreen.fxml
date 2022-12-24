@@ -21,6 +21,6 @@
       <Hyperlink fx:id="signupURL" layoutX="236.0" layoutY="273.0" onAction="#onSignUpURL" text="No account? Sign up!" textFill="RED" />
       <Hyperlink fx:id="forgotURL" layoutX="197.0" layoutY="300.0" onAction="#onForgetURL" text="Forgot your username or password?" textFill="RED" />
       <MFXButton fx:id="loginButton" layoutX="262.0" layoutY="334.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="70.0" text="Login" />
-      <MFXCheckbox layoutX="226.0" layoutY="240.0" prefHeight="20.0" prefWidth="149.0" text="Remember me" />
+      <MFXCheckbox fx:id="rememberMeCheckBox" layoutX="226.0" layoutY="240.0" prefHeight="20.0" prefWidth="149.0" text="Remember me" />
    </children>
 </AnchorPane>
