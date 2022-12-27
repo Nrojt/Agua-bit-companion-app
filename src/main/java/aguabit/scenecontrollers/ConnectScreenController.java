@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConnectScreenController implements Initializable {
     //variables for selecting the different slots
@@ -30,6 +31,7 @@ public class ConnectScreenController implements Initializable {
     private String slot1Send = "AB";
     private String slot2Send = "AB";
     private String slot3Send = "AB";
+
 
 
     //Choice boxes need their choices to be defined in an override

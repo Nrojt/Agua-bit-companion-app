@@ -20,10 +20,11 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MeasureScreenController implements Initializable {
     //a boolean that decides if menuUpdate() should run
-    public static boolean shouldMeasureScreenUpdate = true;
+    public static AtomicBoolean updateThreadRunning = new AtomicBoolean(false);
     // a boolean so the measurement button cant be spammed
     private boolean noMeasurementGoingOn = true;
     //declaring the separate threads that this screen will use
@@ -98,22 +99,25 @@ public class MeasureScreenController implements Initializable {
         }
 
         //starting the thread that updates the ui
-        shouldMeasureScreenUpdate = true;
+        updateThreadRunning.set(true);
         updateThread = new Thread(this::menuUpdate);
         updateThread.start();
     }
 
     public void measurementButtonClick(){
-        if(MenuOverlayController.isAguabitConnected && noMeasurementGoingOn) {
-            noMeasurementGoingOn = false; //making it so the measurement button cannot be spammed
-            //starting a new thread for getting the measurements from the Microbit
-            measureThread = new Thread(this::getMeasurementsFromMicrobit);
-            measureThread.start();
+        if(MenuOverlayController.isAguabitConnected) {
+            if(noMeasurementGoingOn) {
+                noMeasurementGoingOn = false; //making it so the measurement button cannot be spammed
+                //starting a new thread for getting the measurements from the Microbit
+                measureThread = new Thread(this::getMeasurementsFromMicrobit);
+                measureThread.start();
+            } else {
+                informationLabel.setText("Please wait for the current measurement to finish");
+            }
         } else{
             informationLabel.setText("Please connect the Agua:bit");
         }
     }
-
     //code for opening the saveMeasurement screen
     public void saveMeasurement() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
@@ -152,12 +156,13 @@ public class MeasureScreenController implements Initializable {
         try {
             sendToMicroBit.write('M'); //when the microbit receives 'M', it will enter the measurement state.
 
+            //giving the microbit time to receive the 'M' and send the measurements over serial
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ignored) {
             }
 
-            //actually reading the input
+            //actually reading the input, the input cannot be longer then 50 characters. This is just as a failsafe
             for(int i = 0; i< 50; i++){
                 char input = (char) readFromMicroBit.read();
                 if(input == '!' || String.valueOf(input).isBlank()){
@@ -287,7 +292,7 @@ public class MeasureScreenController implements Initializable {
 
     //code for updating the labels on screen
     private void menuUpdate(){
-        while(shouldMeasureScreenUpdate) {
+        while(updateThreadRunning.get()) {
             Platform.runLater(() -> {
                 sensor1ValueLabel.setText(sensor1ValueString);
                 sensor2ValueLabel.setText(sensor2ValueString);

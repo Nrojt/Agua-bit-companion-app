@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import net.samuelcampos.usbdrivedetector.*;
 
 
@@ -47,12 +49,17 @@ public class MenuOverlayController implements Initializable {
     private MenuBar topMenuBar = new MenuBar();
     @FXML
     private ImageView menuToggleThreeLines = new ImageView();
+
+    public static Thread menuUpdateThread;
+    public static final AtomicBoolean menuOverlayUpdateThreadRunning = new AtomicBoolean(false); //AtomicBooleans are recommended when you have to set its value from another thread
+
+    //variables for the microbit
     @FXML
     private Label AguabitConnectedStatus = new Label();
     public static boolean isAguabitConnected = false;
-    public static Thread menuUpdateThread;
     public static char driveLetter;
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
+
     public static int userId = -1;
 
     public MenuOverlayController() throws IOException {
@@ -63,6 +70,7 @@ public class MenuOverlayController implements Initializable {
     //Override runs after the scene is loaded. This can be used to change text.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        menuOverlayUpdateThreadRunning.set(true);
         //logging the user in if remember me was pressed
         SaveFile.rememberMeLogin();
         //driveDetector.addDriveListener(System.out::println); //for printing out when usb devices connect or disconnect
@@ -81,7 +89,7 @@ public class MenuOverlayController implements Initializable {
 
     //the code for loading in the different windows
     public void screenSwitcher(String fxmlFile) throws IOException{
-        MeasureScreenController.shouldMeasureScreenUpdate = false;
+        MeasureScreenController.updateThreadRunning.set(false);
         AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         fxmlPane.getChildren().setAll(pane);
     }
@@ -165,14 +173,9 @@ public class MenuOverlayController implements Initializable {
                 throw new RuntimeException(e);
             }
             //stopping all the possibly active threads
-            //TODO change these from .stop() to something else, stop() is depricated
             try {
-                MeasureScreenController.shouldMeasureScreenUpdate = false;
-                MenuOverlayController.menuUpdateThread.stop();
-                MeasureScreenController.measureThread.stop();
-                UpdateScreenController.uploadingFirmware.stop();
-                UpdateScreenController.downloadingFirmware.stop();
-                MeasureScreenController.updateThread.stop();
+                MeasureScreenController.updateThreadRunning.set(false);
+                MenuOverlayController.menuOverlayUpdateThreadRunning.set(false);
             }catch(NullPointerException ignored){}
             //variables for the windows
             Stage stage = (Stage) menuPane.getScene().getWindow();
@@ -195,7 +198,7 @@ public class MenuOverlayController implements Initializable {
 
     //updating the menu overlay, this is run on a separate thread
     public void menuUpdate() {
-        while (true) {
+        while (menuOverlayUpdateThreadRunning.get()) {
 
             //code for detecting the microbit and its drive letter
             String[] connectedDrivesString = new String[0];

@@ -52,12 +52,8 @@ public class Main extends Application {
         }
         //closing all the possible threads that could be open.
         try {
-            MeasureScreenController.shouldMeasureScreenUpdate = false;
-            MenuOverlayController.menuUpdateThread.stop();
-            MeasureScreenController.measureThread.stop();
-            UpdateScreenController.uploadingFirmware.stop();
-            UpdateScreenController.downloadingFirmware.stop();
-            MeasureScreenController.updateThread.stop();
+            MeasureScreenController.updateThreadRunning.set(false);
+            MenuOverlayController.menuOverlayUpdateThreadRunning.set(false);
         }catch(NullPointerException ignored){}
 
         //what actually closes the program

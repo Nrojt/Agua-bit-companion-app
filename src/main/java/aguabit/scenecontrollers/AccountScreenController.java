@@ -47,9 +47,6 @@ public class AccountScreenController implements Initializable {
     private String phoneNumber;
     private int profilePicture;
 
-    //TODO make the labels update with the user information
-    //TODO adding the ability to change user information in the database
-
     //setting all the labels
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -132,7 +129,7 @@ public class AccountScreenController implements Initializable {
                 }
             }
         } else {
-            System.out.println("USer not logged in");
+            System.out.println("User not logged in");
         }
     }
 }

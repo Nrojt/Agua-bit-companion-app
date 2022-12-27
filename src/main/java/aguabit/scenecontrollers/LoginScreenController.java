@@ -4,6 +4,7 @@ import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -27,23 +28,29 @@ public class LoginScreenController {
     @FXML
     Hyperlink forgotURL = new Hyperlink();
     @FXML
-    public AnchorPane fxmlPane;
+    AnchorPane fxmlPane;
+
+    @FXML
+    Label informationLabel = new Label();
 
 
     //this code runs when the loginbutton is pressed.
     public void onLoginButtonClick(){
         if(!emailTextField.getText().isBlank() && !passwordTextField.getText().isBlank()) { //check to see if the login fields are not empty
 
-            System.out.println(rememberMeCheckBox.isSelected());
             String email = emailTextField.getText();
             String password = passwordTextField.getText();
 
-            if(loginCode(email, password) && rememberMeCheckBox.isSelected()){
-                SaveFile.rememberMe(email, password);
+            if(loginCode(email, password)){
+                if(rememberMeCheckBox.isSelected()) {
+                    SaveFile.rememberMe(email, password);
+                }
+                Stage stage = (Stage) emailTextField.getScene().getWindow();
+                stage.close(); //closes the window
+            } else{
+                informationLabel.setText("E-mail or password incorrect");
             }
 
-            Stage stage = (Stage) emailTextField.getScene().getWindow();
-            stage.close(); //closes the window
         }
     }
 
@@ -76,8 +83,6 @@ public class LoginScreenController {
                 MenuOverlayController.userName = result.getString(2);
                 MenuOverlayController.loginStatus = true;
                 loginSuccesful = true;
-            }else{
-                System.out.println("incorect");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -87,7 +92,6 @@ public class LoginScreenController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //TODO make an information label that notifies the user if the entered information is wrong
         return loginSuccesful;
     }
 

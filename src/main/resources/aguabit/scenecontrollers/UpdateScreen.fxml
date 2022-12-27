@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.UpdateScreenController">
+<AnchorPane fx:id="" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.UpdateScreenController">
    <children>
       <Label alignment="CENTER" layoutX="10.0" layoutY="47.0" prefHeight="36.0" prefWidth="609.0" text="Update" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="notificationLabel" alignment="CENTER" layoutX="459.0" layoutY="467.0" text="Notification" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label fx:id="informationLabel" alignment="CENTER" layoutX="459.0" layoutY="467.0" text="Notification" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <MFXButton layoutX="463.0" layoutY="495.0" onAction="#copyToMicroBit" text="Upload" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="460.0" />
       <MFXButton layoutX="455.0" layoutY="543.0" onAction="#downloadButton" prefHeight="25.0" prefWidth="71.0" text="Download" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0" />
    </children>

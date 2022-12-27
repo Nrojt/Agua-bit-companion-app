@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.io.*;
 import java.sql.*;
 
-//Most of the saving to Aguabit folder and the database is done in this class.
+//Most of the saving to Agua:bit folder and the database is done in this class.
 public class SaveFile {
     public static boolean menuBarSide = true;
     public static int theme = 0;
