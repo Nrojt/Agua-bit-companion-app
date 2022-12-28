@@ -43,5 +43,6 @@
          </font>
       </Label>
       <MFXButton layoutX="279.0" layoutY="336.0" onAction="#backToLoginScreen" text="Back" />
+      <Label layoutX="24.0" layoutY="370.0" text="Copyrigth SSD 2022" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="14.0" />
    </children>
 </AnchorPane>

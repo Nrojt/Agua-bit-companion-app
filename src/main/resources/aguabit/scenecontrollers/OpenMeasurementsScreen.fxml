@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXListView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -7,14 +8,18 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.OpenMeasurementsScreenController">
    <children>
-      <MFXListView fx:id="localMeasurementsListView" depthLevel="LEVEL1" layoutX="14.0" layoutY="149.0" prefHeight="405.0" prefWidth="368.0" />
+      <MFXListView fx:id="localMeasurementsListView" depthLevel="LEVEL1" layoutX="14.0" layoutY="149.0" prefHeight="369.0" prefWidth="368.0" />
       <Label alignment="CENTER" layoutX="25.0" layoutY="105.0" prefHeight="36.0" prefWidth="609.0" text="Open saved measurements" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="418.0" layoutY="149.0" prefHeight="405.0" prefWidth="368.0" />
+      <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="418.0" layoutY="149.0" prefHeight="369.0" prefWidth="368.0" />
       <Label layoutX="164.0" layoutY="132.0" text="Saved locally" />
       <Label layoutX="554.0" layoutY="132.0" text="Saved in database" />
+      <MFXButton fx:id="deleteLocalButton" layoutX="14.0" layoutY="518.0" onAction="#deleteSavedLocal" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton fx:id="openLocalButton" layoutX="334.0" layoutY="518.0" onAction="#openSavedLocal" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton fx:id="deleteDatabaseButton" layoutX="418.0" layoutY="518.0" onAction="#deleteSavedDatabase" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton fx:id="openDatabaseButton" layoutX="738.0" layoutY="518.0" onAction="#openSavedDatabase" text="Open" AnchorPane.bottomAnchor="50.0" />
    </children>
 </AnchorPane>

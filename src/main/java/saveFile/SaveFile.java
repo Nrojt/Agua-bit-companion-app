@@ -20,7 +20,7 @@ public class SaveFile {
     private static final String pathForRememberMe = pathToDocumentsFolder + "/AguaBit/account/";
     private static final String measurementQuery = "INSERT into measurement(user_id, measurement_name, measurement_location, slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, date ) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-    //TODO replace the creating files with java filestream.io, way easier and less code
+    //TODO replace the creating files with java filestream.io, less code
 
     //code for saving the measurements to the database
     public static void saveMeasurementDatabase(int userID, String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date) {
@@ -202,6 +202,25 @@ public class SaveFile {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void deleteMeasurementFromFile(String filename){
+        File measurementFile = new File(pathForMeasurements + filename);
+        measurementFile.delete();
+    }
+
+    public static void deleteMeasurementFromDatabase(int measurementid){
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String deleteMeasurementQuery = "DELETE FROM measurement WHERE measurement_id = '" + measurementid + "'";
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = connectDB.prepareStatement(deleteMeasurementQuery);
+            pstmt.executeUpdate();
+            connectDB.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //code for saving the email and password to a textfile in the document folder when the remember me button is checked

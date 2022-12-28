@@ -1,10 +1,11 @@
 package aguabit.scenecontrollers;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXListView;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import saveFile.SaveFile;
 
@@ -22,6 +23,14 @@ public class OpenMeasurementsScreenController implements Initializable {
     private MFXListView<String> localMeasurementsListView = new MFXListView<>();
     @FXML
     private MFXListView<String> databaseMeasurementsListView = new MFXListView<>();
+    @FXML
+    private MFXButton openLocalButton = new MFXButton();
+    @FXML
+    private MFXButton openDatabaseButton = new MFXButton();
+    @FXML
+    private MFXButton deleteLocalButton = new MFXButton();
+    @FXML
+    private MFXButton deleteDatabaseButton = new MFXButton();
 
 
     @Override
@@ -69,13 +78,13 @@ public class OpenMeasurementsScreenController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            databaseMeasurementsListView.getSelectionModel().selectionProperty().addListener(this::databaseMeasurementsListViewSelectionChange);
         } else {
             databaseMeasurementsListView.getItems().add("User not logged in");
         }
 
+        System.out.println(files.length);
         //getting the names of the locally saved measurements and adding them to the locally saved listview
-        if (files != null) {
+        if (files.length > 0) {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".txt")) {
                     localMeasurements.add(file.getName().split("\\.")[0]);
@@ -86,27 +95,79 @@ public class OpenMeasurementsScreenController implements Initializable {
         } else {
             localMeasurementsListView.getItems().add("No locally saved measurements found");
         }
-        localMeasurementsListView.getSelectionModel().selectionProperty().addListener(this::localMeasurementsListViewSelectionChange);
     }
 
-    //these two listeners get activated whenever a change happens to the selected value in the listview.
-    //Listview value is standard empty, once a measurement is clicked on in the listview, the window will close and the values will be shown in the measurement screen
-    private void databaseMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1){
-        Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-        if(!selectedItem[0].toString().equals("No saved measurements found in database")) {
-            SaveFile.readMeasurementFromDatabase(Integer.parseInt(selectedItem[0].toString().split("\\. ")[0]));
-            Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-            stage.close(); //closes the window
+    //Listview value is standard empty, once a measurement is selected and the open button is pressed, the window will close
+    public void openSavedDatabase(){
+        if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            if (!selectedItem[0].toString().equals("No saved measurements found in database") && !selectedItem[0].toString().equals("User not logged in")) {
+                SaveFile.readMeasurementFromDatabase(Integer.parseInt(selectedItem[0].toString().split("\\. ")[0]));
+                Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                stage.close(); //closes the window
+            }
+        } else{
+            System.out.println("Nothing selected");
         }
     }
 
-    private void localMeasurementsListViewSelectionChange(ObservableValue<? extends ObservableMap<Integer, String>> observableValue, ObservableMap<Integer, String> integerStringObservableMap, ObservableMap<Integer, String> integerStringObservableMap1) {
-        Object[] selectedItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-        String filename = selectedItem[0].toString() + ".txt";
+    public void openSavedLocal(){
+        if(!localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            Object[] selectedItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            if(!selectedItem[0].toString().equals("No locally saved measurements found")) {
+                String filename = selectedItem[0].toString() + ".txt";
+                System.out.println(filename);
+                SaveFile.readMeasurementFromFile(filename);
+                Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                stage.close(); //closes the window
+            }
+        } else {
+            System.out.println("Nothing selected");
+        }
+    }
 
-        System.out.println(filename);
-        SaveFile.readMeasurementFromFile(filename);
-        Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-        stage.close(); //closes the window
+    public void deleteSavedDatabase(){
+        if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            if (!selectedItem[0].toString().equals("No saved measurements found in database") && !selectedItem[0].toString().equals("User not logged in")) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                alert.setHeaderText("You're about to delete "+ selectedItem[0].toString().split("\\. ")[1]);
+                alert.setContentText("Are you sure you want to delete?");
+
+                //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
+                if(alert.showAndWait().get()== ButtonType.OK) {
+                    SaveFile.deleteMeasurementFromDatabase(Integer.parseInt(selectedItem[0].toString().split("\\. ")[0]));
+                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                    stage.close(); //closes the window
+                }
+            }
+        } else{
+            System.out.println("Nothing selected");
+        }
+    }
+
+    public void deleteSavedLocal(){
+        if(!localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            Object[] selectedItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            if(!selectedItem[0].toString().equals("No locally saved measurements found")) {
+                String filename = selectedItem[0].toString() + ".txt";
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                alert.setHeaderText("You're about to delete "+filename);
+                alert.setContentText("Are you sure you want to delete?");
+
+                //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
+                if(alert.showAndWait().get()== ButtonType.OK) {
+                    System.out.println(filename);
+                    SaveFile.deleteMeasurementFromFile(filename);
+                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                    stage.close(); //closes the window
+                }
+            }
+        } else {
+            System.out.println("Nothing selected");
+        }
     }
 }

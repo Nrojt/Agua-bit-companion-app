@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SettingsScreenController">
+<AnchorPane fx:id="" prefHeight="640.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.SettingsScreenController">
    <children>
       <MFXRadioButton fx:id="settingsTopMenuBarButton" layoutX="-1.0" layoutY="142.0" onAction="#settingsButtonClicked" text="On the top" AnchorPane.leftAnchor="0.0">
          <toggleGroup>
@@ -35,13 +35,19 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <MFXRadioButton fx:id="settingsLightThemeButton" layoutX="13.0" layoutY="229.0" onAction="#settingsButtonClicked" text="Light">
+      <MFXRadioButton fx:id="settingsLightThemeButton" layoutX="13.0" layoutY="229.0" onAction="#settingsButtonClicked" text="Light" AnchorPane.leftAnchor="0.0">
          <toggleGroup>
             <ToggleGroup fx:id="theme" />
          </toggleGroup>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
       </MFXRadioButton>
-      <MFXRadioButton fx:id="settingsDarkThemeButton" layoutX="14.0" layoutY="257.0" onAction="#settingsButtonClicked" text="Dark" toggleGroup="$theme" />
-      <Label layoutY="204.0" text="The Menu Bar (requires restart">
+      <MFXRadioButton fx:id="settingsDarkThemeButton" layoutX="14.0" layoutY="257.0" onAction="#settingsButtonClicked" text="Dark" toggleGroup="$theme" AnchorPane.leftAnchor="0.0">
+         <padding>
+            <Insets left="20.0" />
+         </padding></MFXRadioButton>
+      <Label layoutY="204.0" text="The Menu Bar (requires restart" AnchorPane.leftAnchor="0.0">
          <font>
             <Font size="16.0" />
          </font>

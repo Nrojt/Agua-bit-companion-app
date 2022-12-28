@@ -103,7 +103,12 @@ public class MenuOverlayController implements Initializable {
         Scene scene2 = new Scene(root1);
         stage2.setTitle("Agua:bit account login");
         stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        String css = null;
+        if(SaveFile.theme == 0) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+        } else if (SaveFile.theme == 1) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+        }
         scene2.getStylesheets().add(css);
         stage2.setScene(scene2);
         stage2.setResizable(false);
@@ -212,7 +217,6 @@ public class MenuOverlayController implements Initializable {
             } catch (IndexOutOfBoundsException ignored) {}
 
             //checking if any of the connected devices is a microbit
-            //TODO figure out a way to support multiple connected microbits, not important
             for (String s : connectedDrivesString) {
                 try {
                     if (s.contains("MICROBIT")) {

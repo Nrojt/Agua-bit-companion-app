@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import saveFile.SaveFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -126,7 +127,12 @@ public class MeasureScreenController implements Initializable {
         Scene scene3 = new Scene(root2);
         stage3.setTitle("Save Measurement");
         stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        String css = null;
+        if(SaveFile.theme == 0) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+        } else if (SaveFile.theme == 1) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+        }
         scene3.getStylesheets().add(css);
         stage3.setScene(scene3);
         stage3.setResizable(false);
@@ -268,7 +274,12 @@ public class MeasureScreenController implements Initializable {
         Scene scene2 = new Scene(root1);
         stage2.setTitle("Measurement Information");
         stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        String css = null;
+        if(SaveFile.theme == 0) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+        } else if (SaveFile.theme == 1) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+        }
         scene2.getStylesheets().add(css);
         stage2.setScene(scene2);
         stage2.setResizable(false);
@@ -283,7 +294,12 @@ public class MeasureScreenController implements Initializable {
         Scene scene3 = new Scene(root2);
         stage3.setTitle("Open saved measurements");
         stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = Objects.requireNonNull(this.getClass().getResource("LoginScreen.css")).toExternalForm();
+        String css = null;
+        if(SaveFile.theme == 0) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+        } else if (SaveFile.theme == 1) {
+            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+        }
         scene3.getStylesheets().add(css);
         stage3.setScene(scene3);
         stage3.setResizable(false);
