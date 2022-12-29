@@ -14,6 +14,7 @@ import java.sql.*;
 public class SaveFile {
     public static boolean menuBarSide = true;
     public static int theme = 0;
+    public static int profilePicture = 1;
     private static final String pathToDocumentsFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     public static final String pathForMeasurements = pathToDocumentsFolder + "/AguaBit/measurements/";
     private static final String pathForSettings = pathToDocumentsFolder + "/AguaBit/settings/";

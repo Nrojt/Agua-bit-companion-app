@@ -18,7 +18,7 @@
       </Label>
       <ImageView fitHeight="64.0" fitWidth="76.0" layoutX="458.0" layoutY="136.0" preserveRatio="true" AnchorPane.leftAnchor="458.0" AnchorPane.rightAnchor="458.0" AnchorPane.topAnchor="125.0">
          <image>
-            <Image url="@images/standardProfilePic.png" />
+            <Image url="@images/profilepictures/standardProfilePic.png" />
          </image>
       </ImageView>
       <Label fx:id="userNameLabel" alignment="CENTER" layoutY="191.0" prefHeight="17.0" prefWidth="980.0" text="User" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0" />

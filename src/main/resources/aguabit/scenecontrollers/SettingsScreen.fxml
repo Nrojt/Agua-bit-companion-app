@@ -4,6 +4,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -55,5 +57,38 @@
             <Insets left="20.0" />
          </padding>
       </Label>
+      <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="781.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/profilepictures/standardProfilePic.png" />
+         </image>
+      </ImageView>
+      <MFXRadioButton layoutX="798.0" layoutY="195.0" text="1">
+         <toggleGroup>
+            <ToggleGroup fx:id="profilePicture" />
+         </toggleGroup>
+      </MFXRadioButton>
+      <Label layoutX="832.0" layoutY="89.0" text="Profile Picture">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="890.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/profilepictures/profilePictureBasic.png" />
+         </image>
+      </ImageView>
+      <MFXRadioButton layoutX="907.0" layoutY="195.0" text="2" toggleGroup="$profilePicture" />
+      <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="781.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/profilepictures/profilePictureRed.png" />
+         </image>
+      </ImageView>
+      <MFXRadioButton layoutX="798.0" layoutY="301.0" text="3" toggleGroup="$profilePicture" />
+      <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="886.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/profilepictures/profilePictureTorquise.png" />
+         </image>
+      </ImageView>
+      <MFXRadioButton layoutX="903.0" layoutY="301.0" text="4" toggleGroup="$profilePicture" />
    </children>
 </AnchorPane>
