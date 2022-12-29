@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: rgba(255, 255, 255, 0.84);
+    -fx-background-color: rgb(255, 255, 255);
     -fx-background-size: contain;
     -fx-background-position: center;
 }
@@ -9,7 +9,7 @@
 }
 
 .menu-bar{
-    -fx-background-color: #6BD6D6;
+    -fx-background-color: rgba(107, 214, 214, 0.3);
 }
 
 .MenuBarButtons{
@@ -17,5 +17,9 @@
 }
 
 #sideMenuBar{
-    -fx-background-color: #6BD6D6;
+    -fx-background-color: rgb(107, 214, 214);
+}
+
+.mfx-button{
+    -fx-background-color: rgba(107, 214, 214, 0.50);
 }

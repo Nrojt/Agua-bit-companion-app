@@ -28,6 +28,14 @@
     -fx-background-color: transparent;
 }
 
+.mfx-radio-button{
+    -fx-text-fill: white;
+}
+
+.text-field{
+    -fx-prompt-text-fill: white;
+}
+
 .MenuBarButtons{
     -fx-background-color: transparent;
     -fx-text-fill: white;

@@ -12,7 +12,10 @@
             -fx-mid-text-color 60%
     );
     -fx-focused-mark-color : -fx-focused-text-base-color ;
+}
 
+.text-field{
+    -fx-prompt-text-fill: white;
 }
 
 .text-input:focused {
@@ -23,4 +26,12 @@
             -fx-dark-text-color  59%,
             -fx-mid-text-color   60%
     );
+}
+
+.mfx-checkbox{
+    -fx-text-fill: white;
+}
+
+.mfx-date-picker{
+    -fx-background-color: #7f878f;
 }

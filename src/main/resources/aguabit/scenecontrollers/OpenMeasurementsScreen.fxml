@@ -17,9 +17,9 @@
       <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="418.0" layoutY="149.0" prefHeight="369.0" prefWidth="368.0" />
       <Label layoutX="164.0" layoutY="132.0" text="Saved locally" />
       <Label layoutX="554.0" layoutY="132.0" text="Saved in database" />
-      <MFXButton fx:id="deleteLocalButton" layoutX="14.0" layoutY="518.0" onAction="#deleteSavedLocal" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton fx:id="openLocalButton" layoutX="334.0" layoutY="518.0" onAction="#openSavedLocal" text="Open" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton fx:id="deleteDatabaseButton" layoutX="418.0" layoutY="518.0" onAction="#deleteSavedDatabase" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton fx:id="openDatabaseButton" layoutX="738.0" layoutY="518.0" onAction="#openSavedDatabase" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="14.0" layoutY="518.0" onAction="#deleteSavedLocal" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="334.0" layoutY="518.0" onAction="#openSavedLocal" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="418.0" layoutY="518.0" onAction="#deleteSavedDatabase" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="738.0" layoutY="518.0" onAction="#openSavedDatabase" text="Open" AnchorPane.bottomAnchor="50.0" />
    </children>
 </AnchorPane>

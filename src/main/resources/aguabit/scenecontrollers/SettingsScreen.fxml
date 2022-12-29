@@ -47,7 +47,7 @@
          <padding>
             <Insets left="20.0" />
          </padding></MFXRadioButton>
-      <Label layoutY="204.0" text="The Menu Bar (requires restart" AnchorPane.leftAnchor="0.0">
+      <Label layoutY="204.0" text="The Menu Bar (requires restart)" AnchorPane.leftAnchor="0.0">
          <font>
             <Font size="16.0" />
          </font>

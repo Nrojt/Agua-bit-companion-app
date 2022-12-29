@@ -1,6 +1,5 @@
 package aguabit.scenecontrollers;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXListView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,28 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//TODO make it so measurements can de deleted
-
 public class OpenMeasurementsScreenController implements Initializable {
     @FXML
     private MFXListView<String> localMeasurementsListView = new MFXListView<>();
     @FXML
     private MFXListView<String> databaseMeasurementsListView = new MFXListView<>();
-    @FXML
-    private MFXButton openLocalButton = new MFXButton();
-    @FXML
-    private MFXButton openDatabaseButton = new MFXButton();
-    @FXML
-    private MFXButton deleteLocalButton = new MFXButton();
-    @FXML
-    private MFXButton deleteDatabaseButton = new MFXButton();
+
+    private final List<String> databaseMeasurements = new ArrayList<>();
+    private final List<Integer> databaseMeasurementsMeasurementId = new ArrayList<>();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //arraylist are like arrays, but the size of arraylists can be extended.
         List<String> localMeasurements = new ArrayList<>();
-        List<String> databaseMeasurements = new ArrayList<>();
 
         //this gets all the files in the Agua:bit folder.
         File[] files = new File(SaveFile.pathForMeasurements).listFiles();
@@ -59,10 +50,10 @@ public class OpenMeasurementsScreenController implements Initializable {
                 ResultSetMetaData rsmd = result.getMetaData();
                 int columnCount = rsmd.getColumnCount();
                 //adding the measurement_id and the measurement_name to an array
-                //TODO find out a way to not show the measurement_id but still have it in the array in case of duplicate measurement_name
                 while (result.next()) {
                     for (int i = 2; i <= columnCount; i += 2) {
-                        databaseMeasurements.add(result.getString(i-1)+". "+result.getString(i));
+                        databaseMeasurementsMeasurementId.add(result.getInt(i-1));
+                        databaseMeasurements.add(result.getString(i));
                     }
                 }
             } catch (SQLException e) {
@@ -82,8 +73,8 @@ public class OpenMeasurementsScreenController implements Initializable {
             databaseMeasurementsListView.getItems().add("User not logged in");
         }
 
-        System.out.println(files.length);
         //getting the names of the locally saved measurements and adding them to the locally saved listview
+        assert files != null; //assert is a keyword that will check the condition. If the condition is not met, the error will automatically be thrown
         if (files.length > 0) {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".txt")) {
@@ -100,11 +91,22 @@ public class OpenMeasurementsScreenController implements Initializable {
     //Listview value is standard empty, once a measurement is selected and the open button is pressed, the window will close
     public void openSavedDatabase(){
         if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            int selectedItemMeasurement = -1;
             Object[] selectedItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
             if (!selectedItem[0].toString().equals("No saved measurements found in database") && !selectedItem[0].toString().equals("User not logged in")) {
-                SaveFile.readMeasurementFromDatabase(Integer.parseInt(selectedItem[0].toString().split("\\. ")[0]));
-                Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-                stage.close(); //closes the window
+                for(int i = 0; i < databaseMeasurements.size(); i++){
+                    System.out.println(databaseMeasurements.get(i).toString());
+                    if (databaseMeasurements.get(i).toString().equals(selectedItem[0])){
+                        selectedItemMeasurement = i;
+                        break;
+                    }
+                }
+                if(selectedItemMeasurement != -1) {
+                    System.out.println(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
+                    SaveFile.readMeasurementFromDatabase(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
+                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                    stage.close(); //closes the window
+                }
             }
         } else{
             System.out.println("Nothing selected");
@@ -137,9 +139,19 @@ public class OpenMeasurementsScreenController implements Initializable {
 
                 //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
                 if(alert.showAndWait().get()== ButtonType.OK) {
-                    SaveFile.deleteMeasurementFromDatabase(Integer.parseInt(selectedItem[0].toString().split("\\. ")[0]));
-                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-                    stage.close(); //closes the window
+                    int selectedItemMeasurement = -1;
+                    for(int i = 0; i < databaseMeasurements.size(); i++){
+                        System.out.println(databaseMeasurements.get(i).toString());
+                        if (databaseMeasurements.get(i).toString().equals(selectedItem[0])){
+                            selectedItemMeasurement = i;
+                            break;
+                        }
+                    }
+                    if(selectedItemMeasurement != -1) {
+                        SaveFile.deleteMeasurementFromDatabase(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
+                        Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                        stage.close(); //closes the window
+                    }
                 }
             }
         } else{

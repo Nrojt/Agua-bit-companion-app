@@ -31,7 +31,7 @@
          </opaqueInsets>
       </TextField>
       <TextField fx:id="newEmailTextfield" layoutX="620.0" layoutY="398.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="New e-mail" AnchorPane.bottomAnchor="216.66666666666669" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="211.0" />
-      <MFXButton layoutX="163.0" layoutY="373.0" onAction="#updatePassword" prefHeight="25.0" prefWidth="142.0" text="Change password" />
+      <MFXButton layoutX="167.0" layoutY="373.0" onAction="#updatePassword" prefHeight="25.0" prefWidth="142.0" text="Change password" />
       <MFXButton layoutX="624.0" layoutY="484.0" onAction="#updateInformation" prefHeight="25.0" prefWidth="142.0" text="Update information" />
       <TextField fx:id="passwordTextfield" layoutX="620.0" layoutY="459.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Password" />
       <TextField fx:id="phoneNumberTextfield" layoutX="620.0" layoutY="373.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Phone Number" />

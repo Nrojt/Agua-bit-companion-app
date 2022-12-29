@@ -130,7 +130,7 @@ public class SaveFile {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                //the settings are saved as settingsname:value, split separates them again
+                //the settings are saved as settingname:value, split separates them again
                 if (line.contains("menubar")) { //could also use line.split("\\:")[0] in stead of contains
                     menuBarSide = Boolean.parseBoolean(line.split("\\:")[1]);
                 } else if (line.contains("theme")) {
@@ -197,6 +197,7 @@ public class SaveFile {
             MeasureScreenController.sensor1ValueString = result.getString(4);
             MeasureScreenController.sensor2ValueString = result.getString(5);
             MeasureScreenController.sensor3ValueString = result.getString(6);
+            connectDB.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -213,7 +214,7 @@ public class SaveFile {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
         String deleteMeasurementQuery = "DELETE FROM measurement WHERE measurement_id = '" + measurementid + "'";
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         try {
             pstmt = connectDB.prepareStatement(deleteMeasurementQuery);
             pstmt.executeUpdate();
