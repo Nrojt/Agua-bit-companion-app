@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import saveFile.SaveFile;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
@@ -86,8 +87,18 @@ public class AccountScreenController implements Initializable {
             newEmailTextfield.setText(email);
         }
 
+        MenuOverlayController.checkIfCustomFileExist = new File(SaveFile.customProfilePicturePath);
+
         switch(SaveFile.profilePicture){
+            case -1:
+                if(!SaveFile.customProfilePicturePath.isBlank() && MenuOverlayController.checkIfCustomFileExist.isFile()) {
+                    profilePictureAccount.setImage(new Image((SaveFile.customProfilePicturePath)));
+                } else{
+                    profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                }
+                break;
             case 1:
+            default:
                 profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
                 break;
             case 2:

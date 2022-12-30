@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import saveFile.SaveFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -63,6 +64,8 @@ public class MenuOverlayController implements Initializable {
     public static USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager();
 
     public static int userId = -1;
+
+    public static File checkIfCustomFileExist = new File(SaveFile.pathForMeasurements);
 
     public MenuOverlayController() throws IOException {
         //this runs every time this controller gets loaded, which should only be once at startup.
@@ -270,8 +273,18 @@ public class MenuOverlayController implements Initializable {
                 }
                 else {AguabitConnectedStatus.setText("Agua:bit not connected");}
 
+                checkIfCustomFileExist = new File(SaveFile.customProfilePicturePath);
+
                 switch(SaveFile.profilePicture){
+                    case -1:
+                        if(!SaveFile.customProfilePicturePath.isBlank() && checkIfCustomFileExist.isFile()) {
+                            profilePicture.setImage(new Image((SaveFile.customProfilePicturePath)));
+                        } else{
+                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                        }
+                        break;
                     case 1:
+                    default:
                         profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
                         break;
                     case 2:

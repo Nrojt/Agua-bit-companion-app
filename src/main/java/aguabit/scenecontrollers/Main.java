@@ -16,6 +16,7 @@ public class Main extends Application {
     private final String lightTheme = "lightmode.css";
     private final String darkTheme = "darkmode.css";
     private String cssfile;
+
     //override gets run after loading in
     @Override
     public void start(Stage stage) throws IOException {

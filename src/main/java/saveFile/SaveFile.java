@@ -16,6 +16,7 @@ public class SaveFile {
     public static boolean menuBarSide = true;
     public static int theme = 0;
     public static int profilePicture = 1;
+    public static String customProfilePicturePath = "";
     private static final String pathToDocumentsFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     public static final String pathForMeasurements = pathToDocumentsFolder + "/AguaBit/measurements/";
     private static final String pathForSettings = pathToDocumentsFolder + "/AguaBit/settings/";
@@ -107,10 +108,11 @@ public class SaveFile {
             throw new RuntimeException(e);
         }
         settings = new PrintStream(settingsOut);
-        settings.append("menubar:").append(String.valueOf(menuBarSide)).append("\n").append("theme:").append(String.valueOf(theme)).append("\n").append("profile picture:").append(String.valueOf(profilePicture));
+        settings.append("menubar:").append(String.valueOf(menuBarSide)).append("\n").append("theme:").append(String.valueOf(theme)).append("\n").append("profile picture:").append(String.valueOf(profilePicture)).append("\n").append("custompfpicpath: '").append(String.valueOf(customProfilePicturePath)).append("'");
         settings.close();
 
-        if(MenuOverlayController.loginStatus){
+        //needed a place to update the profilepicture in the database, here it is convenient
+        if(MenuOverlayController.loginStatus && profilePicture != -1){
             DatabaseConnection connection = new DatabaseConnection();
             Connection connectDB = connection.getDBConnection();
             String updateProfilePictureQuery = "UPDATE user SET profilepicture = '"+ profilePicture + "' WHERE user_id = '" + MenuOverlayController.userId + "'";
@@ -118,7 +120,7 @@ public class SaveFile {
             try {
                 pstmt = connectDB.prepareStatement(updateProfilePictureQuery);
                 pstmt.executeUpdate();
-                connectDB.close();
+                connectDB.close(); //don't forget to close the database connection
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -153,6 +155,9 @@ public class SaveFile {
                     theme = Integer.parseInt(line.split("\\:")[1]);
                 } else if(line.contains("profile picture:")){
                     profilePicture = Integer.parseInt(line.split("\\:")[1]);
+                } else if(line.contains("custompfpicpath")){
+                    customProfilePicturePath = line.split("\\'")[1];
+                    System.out.println(customProfilePicturePath);
                 }
             }
         }

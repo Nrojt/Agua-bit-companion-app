@@ -3,8 +3,10 @@ package aguabit.scenecontrollers;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
 import saveFile.SaveFile;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,6 +29,10 @@ public class SettingsScreenController implements Initializable {
     private MFXRadioButton profilePicture3RadioButton = new MFXRadioButton();
     @FXML
     private MFXRadioButton profilePicture4RadioButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton profilePictureCustomRadioButton = new MFXRadioButton();
+
+    private FileChooser customProfilePictureFileChooser = new FileChooser();
 
     //TODO make this screen look better
     //TODO add the option to pick a profile picture
@@ -42,6 +48,10 @@ public class SettingsScreenController implements Initializable {
 
         //code for having the correct profile picture selected on startup
         switch(profilePicture){
+            case -1:
+                System.out.println("hello");
+                profilePictureCustomRadioButton.setSelected(true);
+                break;
             case 2:
                 profilePicture2RadioButton.setSelected(true);
                 break;
@@ -90,8 +100,24 @@ public class SettingsScreenController implements Initializable {
             profilePicture = 3;
         } else if (profilePicture4RadioButton.isSelected()) {
             profilePicture = 4;
+        } else if (profilePictureCustomRadioButton.isSelected()){
+            profilePicture = -1;
         }
 
         SaveFile.saveSettings();
+    }
+
+    public void customProfilePicturePicker(){
+        FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg");
+        customProfilePictureFileChooser.getExtensionFilters().add(exFilter);
+        File selectedFile = customProfilePictureFileChooser.showOpenDialog(null);
+
+        if(selectedFile != null){
+            profilePicture = -1;
+            SaveFile.customProfilePicturePath = selectedFile.getPath();
+            System.out.println(SaveFile.customProfilePicturePath);
+            settingsButtonClicked();
+        }
+
     }
 }

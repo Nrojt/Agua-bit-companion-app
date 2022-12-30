@@ -20,7 +20,7 @@
          <children>
             <VBox prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
                      <image>
                         <Image url="@images/profilepictures/profilePictureDefault.png" />
                      </image>

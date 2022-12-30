@@ -81,7 +81,10 @@ public class LoginScreenController {
                 //setting the variables in MenuOverlayController to the information from the database
                 MenuOverlayController.userId = result.getInt(1);
                 MenuOverlayController.userName = result.getString(2);
-                SaveFile.profilePicture = result.getInt(3);
+                System.out.println(SaveFile.profilePicture);
+                if(SaveFile.profilePicture != -1) {
+                    SaveFile.profilePicture = result.getInt(3);
+                }
                 MenuOverlayController.loginStatus = true;
                 loginSuccesful = true;
             }
