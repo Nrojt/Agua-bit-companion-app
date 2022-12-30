@@ -70,7 +70,7 @@ public class LoginScreenController {
         boolean loginSuccesful = false;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
-        String checkLoginQuery = "SELECT user_id, username FROM user WHERE email = '"+ email +"' AND password = '"+ password + "'";
+        String checkLoginQuery = "SELECT user_id, username, profilepicture FROM user WHERE email = '"+ email +"' AND password = '"+ password + "'";
         Statement loginStatement;
         ResultSet result; //for getting the query result
 
@@ -81,6 +81,7 @@ public class LoginScreenController {
                 //setting the variables in MenuOverlayController to the information from the database
                 MenuOverlayController.userId = result.getInt(1);
                 MenuOverlayController.userName = result.getString(2);
+                SaveFile.profilePicture = result.getInt(3);
                 MenuOverlayController.loginStatus = true;
                 loginSuccesful = true;
             }

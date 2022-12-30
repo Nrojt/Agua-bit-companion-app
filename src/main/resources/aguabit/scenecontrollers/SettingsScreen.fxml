@@ -59,10 +59,10 @@
       </Label>
       <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="781.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/profilepictures/standardProfilePic.png" />
+            <Image url="@images/profilepictures/profilePictureDefault.png" />
          </image>
       </ImageView>
-      <MFXRadioButton layoutX="798.0" layoutY="195.0" text="1">
+      <MFXRadioButton fx:id="profilePicture1RadioButton" layoutX="798.0" layoutY="195.0" onAction="#settingsButtonClicked" text="1">
          <toggleGroup>
             <ToggleGroup fx:id="profilePicture" />
          </toggleGroup>
@@ -74,21 +74,21 @@
       </Label>
       <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="890.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/profilepictures/profilePictureBasic.png" />
+            <Image url="@images/profilepictures/profilePictureBlue.png" />
          </image>
       </ImageView>
-      <MFXRadioButton layoutX="907.0" layoutY="195.0" text="2" toggleGroup="$profilePicture" />
+      <MFXRadioButton fx:id="profilePicture2RadioButton" layoutX="907.0" layoutY="195.0" onAction="#settingsButtonClicked" text="2" toggleGroup="$profilePicture" />
       <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="781.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/profilepictures/profilePictureRed.png" />
          </image>
       </ImageView>
-      <MFXRadioButton layoutX="798.0" layoutY="301.0" text="3" toggleGroup="$profilePicture" />
+      <MFXRadioButton fx:id="profilePicture3RadioButton" layoutX="798.0" layoutY="301.0" onAction="#settingsButtonClicked" text="3" toggleGroup="$profilePicture" />
       <ImageView fitHeight="68.0" fitWidth="74.0" layoutX="886.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/profilepictures/profilePictureTorquise.png" />
          </image>
       </ImageView>
-      <MFXRadioButton layoutX="903.0" layoutY="301.0" text="4" toggleGroup="$profilePicture" />
+      <MFXRadioButton fx:id="profilePicture4RadioButton" layoutX="903.0" layoutY="301.0" onAction="#settingsButtonClicked" text="4" toggleGroup="$profilePicture" />
    </children>
 </AnchorPane>

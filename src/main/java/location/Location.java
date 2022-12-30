@@ -31,7 +31,7 @@ public class Location {
         //if the ip is blank, it means the user is offline or the server is unreachable. In that case, the lookup of the ip in the database should not happen.
         if(!Objects.requireNonNull(IP).isBlank()) {
             //the geolite2 database is not entirely accurate, but good enough. Getting gps coordinates from windows itself seems impossible
-            String dbLocation = "src/main/resources/database/GeoLite2-City.mmdb";
+            String dbLocation = "src/main/resources/aguabit/scenecontrollers/database/GeoLite2-City.mmdb";
             File database = new File(dbLocation);
             DatabaseReader dbr = new DatabaseReader.Builder(database).build();
             InetAddress IpA = InetAddress.getByName(IP);

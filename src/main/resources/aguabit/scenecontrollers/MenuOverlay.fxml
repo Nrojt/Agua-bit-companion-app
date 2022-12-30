@@ -20,9 +20,9 @@
          <children>
             <VBox prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/profilepictures/standardProfilePic.png" />
+                        <Image url="@images/profilepictures/profilePictureDefault.png" />
                      </image>
                      <VBox.margin>
                         <Insets left="25.0" top="5.0" />
@@ -143,7 +143,7 @@
             </MenuBar>
             <ImageView fx:id="menuToggleThreeLines" fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0">
                <image>
-                  <Image url="@images/menudots.png" />
+                  <Image url="@images/menupictures/menudots.png" />
                </image>
             </ImageView>
             <Button fx:id="menuToggle" layoutX="13.0" layoutY="4.0" mnemonicParsing="false" onAction="#sideMenuToggle" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" />

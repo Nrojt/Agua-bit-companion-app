@@ -3,6 +3,7 @@ package saveFile;
 import aguabit.scenecontrollers.DatabaseConnection;
 import aguabit.scenecontrollers.LoginScreenController;
 import aguabit.scenecontrollers.MeasureScreenController;
+import aguabit.scenecontrollers.MenuOverlayController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -106,8 +107,22 @@ public class SaveFile {
             throw new RuntimeException(e);
         }
         settings = new PrintStream(settingsOut);
-        settings.append("menubar:").append(String.valueOf(menuBarSide)).append("\n").append("theme:").append(String.valueOf(theme));
+        settings.append("menubar:").append(String.valueOf(menuBarSide)).append("\n").append("theme:").append(String.valueOf(theme)).append("\n").append("profile picture:").append(String.valueOf(profilePicture));
         settings.close();
+
+        if(MenuOverlayController.loginStatus){
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectDB = connection.getDBConnection();
+            String updateProfilePictureQuery = "UPDATE user SET profilepicture = '"+ profilePicture + "' WHERE user_id = '" + MenuOverlayController.userId + "'";
+            PreparedStatement pstmt;
+            try {
+                pstmt = connectDB.prepareStatement(updateProfilePictureQuery);
+                pstmt.executeUpdate();
+                connectDB.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     //code for reading in the settings from the settings.txt file
@@ -136,6 +151,8 @@ public class SaveFile {
                     menuBarSide = Boolean.parseBoolean(line.split("\\:")[1]);
                 } else if (line.contains("theme")) {
                     theme = Integer.parseInt(line.split("\\:")[1]);
+                } else if(line.contains("profile picture:")){
+                    profilePicture = Integer.parseInt(line.split("\\:")[1]);
                 }
             }
         }

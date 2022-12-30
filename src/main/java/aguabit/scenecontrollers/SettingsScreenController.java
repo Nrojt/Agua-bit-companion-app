@@ -19,6 +19,14 @@ public class SettingsScreenController implements Initializable {
     private MFXRadioButton settingsLightThemeButton = new MFXRadioButton();
     @FXML
     private MFXRadioButton settingsDarkThemeButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton profilePicture1RadioButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton profilePicture2RadioButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton profilePicture3RadioButton = new MFXRadioButton();
+    @FXML
+    private MFXRadioButton profilePicture4RadioButton = new MFXRadioButton();
 
     //TODO make this screen look better
     //TODO add the option to pick a profile picture
@@ -32,10 +40,31 @@ public class SettingsScreenController implements Initializable {
             settingsTopMenuBarButton.setSelected(true);
         }
 
-        if(theme == 1){
-            settingsDarkThemeButton.setSelected(true);
-        } else if (theme == 0) {
-            settingsLightThemeButton.setSelected(true);
+        //code for having the correct profile picture selected on startup
+        switch(profilePicture){
+            case 2:
+                profilePicture2RadioButton.setSelected(true);
+                break;
+            case 3:
+                profilePicture3RadioButton.setSelected(true);
+                break;
+            case 4:
+                profilePicture4RadioButton.setSelected(true);
+                break;
+            case 1:
+            default:
+                profilePicture1RadioButton.setSelected(true);
+                break;
+        }
+
+        //code for having the correct theme selected on startup
+        switch(theme) {
+            case 0:
+                settingsLightThemeButton.setSelected(true);
+                break;
+            case 1:
+                settingsDarkThemeButton.setSelected(true);
+                break;
         }
     }
 
@@ -52,6 +81,17 @@ public class SettingsScreenController implements Initializable {
         } else if (settingsLightThemeButton.isSelected()) {
             theme = 0;
         }
+
+        if(profilePicture1RadioButton.isSelected()){
+            profilePicture = 1;
+        } else if(profilePicture2RadioButton.isSelected()){
+            profilePicture = 2;
+        } else if(profilePicture3RadioButton.isSelected()){
+            profilePicture = 3;
+        } else if (profilePicture4RadioButton.isSelected()) {
+            profilePicture = 4;
+        }
+
         SaveFile.saveSettings();
     }
 }

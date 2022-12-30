@@ -49,6 +49,8 @@ public class MenuOverlayController implements Initializable {
     private MenuBar topMenuBar = new MenuBar();
     @FXML
     private ImageView menuToggleThreeLines = new ImageView();
+    @FXML
+    private ImageView profilePicture = new ImageView();
 
     public static Thread menuUpdateThread;
     public static final AtomicBoolean menuOverlayUpdateThreadRunning = new AtomicBoolean(false); //AtomicBooleans are recommended when you have to set its value from another thread
@@ -257,7 +259,6 @@ public class MenuOverlayController implements Initializable {
                 }
                 userNameLabel.setText(userName);
 
-
                 if (loginStatus) {
                     loginButton.setText("Logout");
                 } else {
@@ -268,6 +269,22 @@ public class MenuOverlayController implements Initializable {
                     AguabitConnectedStatus.setText("Agua:bit connected");
                 }
                 else {AguabitConnectedStatus.setText("Agua:bit not connected");}
+
+                switch(SaveFile.profilePicture){
+                    case 1:
+                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                        break;
+                    case 2:
+                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
+                        break;
+                    case 3:
+                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
+                        break;
+                    case 4:
+                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
+                        break;
+                }
+
             });
 
             //pausing the thread

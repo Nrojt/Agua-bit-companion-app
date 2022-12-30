@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="498.0" fitWidth="920.0" layoutX="27.0" layoutY="120.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
          <image>
-            <Image url="@images/newstest.png" />
+            <Image url="@images/menupictures/newstest.png" />
          </image>
          <viewport>
             <Rectangle2D minX="577.0" minY="264.0" />

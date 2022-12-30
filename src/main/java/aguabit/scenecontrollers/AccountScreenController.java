@@ -4,9 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import saveFile.SaveFile;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -45,7 +49,9 @@ public class AccountScreenController implements Initializable {
     private String lastName;
     private  String password;
     private String phoneNumber;
-    private int profilePicture;
+
+    @FXML
+    private ImageView profilePictureAccount = new ImageView();
 
     //setting all the labels
     @Override
@@ -53,7 +59,7 @@ public class AccountScreenController implements Initializable {
         if(MenuOverlayController.loginStatus) {
             DatabaseConnection connection = new DatabaseConnection();
             Connection connectDB = connection.getDBConnection();
-            String accountInfoQuery = "SELECT username,email, first_name, last_name, phonenumber, profilepicture, password FROM user WHERE user_id = '"+ MenuOverlayController.userId +"'";
+            String accountInfoQuery = "SELECT username,email, first_name, last_name, phonenumber, password FROM user WHERE user_id = '"+ MenuOverlayController.userId +"'";
             Statement accountInfoStatement;
             ResultSet result;
 
@@ -65,8 +71,7 @@ public class AccountScreenController implements Initializable {
                 firstName = result.getString(3);
                 lastName = result.getString(4);
                 phoneNumber = result.getString(5);
-                profilePicture = result.getInt(6);
-                password = result.getString(7);
+                password = result.getString(6);
                 connectDB.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -79,7 +84,21 @@ public class AccountScreenController implements Initializable {
             userNameTextfield.setText(username);
             phoneNumberTextfield.setText(phoneNumber);
             newEmailTextfield.setText(email);
+        }
 
+        switch(SaveFile.profilePicture){
+            case 1:
+                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                break;
+            case 2:
+                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
+                break;
+            case 3:
+                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
+                break;
+            case 4:
+                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
+                break;
         }
     }
 
