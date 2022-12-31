@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import saveFile.SaveFile;
 
 import java.io.File;
@@ -42,7 +43,7 @@ public class AccountScreenController implements Initializable {
     @FXML
     private TextField phoneNumberTextfield = new TextField();
     @FXML
-    private TextField EmailForPasswordTextfield = new TextField();
+    private TextField emailForPasswordTextfield = new TextField();
 
     private String username = MenuOverlayController.userName;
     private String email;
@@ -87,6 +88,61 @@ public class AccountScreenController implements Initializable {
             newEmailTextfield.setText(email);
         }
 
+        //pressing enter in these fields triggers updatePassword()
+        oldPasswordTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updatePassword();
+            }
+        });
+        newPasswordTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updatePassword();
+            }
+        });
+        emailForPasswordTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updatePassword();
+            }
+        });
+
+        //pressing enter in these fields triggers updateInformation()
+        firstNameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        lastNameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        userNameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        phoneNumberTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        newEmailTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        oldEmailTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+        passwordTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                updateInformation();
+            }
+        });
+
+
         MenuOverlayController.checkIfCustomFileExist = new File(SaveFile.customProfilePicturePath);
 
         switch(SaveFile.profilePicture){
@@ -116,7 +172,7 @@ public class AccountScreenController implements Initializable {
     //code for changing the password in the database
     public void updatePassword(){
         if(MenuOverlayController.loginStatus) {
-            if (oldPasswordTextfield.getText().equals(password) && !newPasswordTextfield.getText().isBlank() && EmailForPasswordTextfield.getText().equals(email)) {
+            if (oldPasswordTextfield.getText().equals(password) && !newPasswordTextfield.getText().isBlank() && emailForPasswordTextfield.getText().equals(email)) {
                 DatabaseConnection connection = new DatabaseConnection();
                 Connection connectDB = connection.getDBConnection();
                 String updatePasswordQuery = "UPDATE user SET password = '" + newPasswordTextfield.getText() + "' WHERE user_id = '" + MenuOverlayController.userId + "'";

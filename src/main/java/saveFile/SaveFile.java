@@ -6,10 +6,13 @@ import aguabit.scenecontrollers.MeasureScreenController;
 import aguabit.scenecontrollers.MenuOverlayController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.*;
 import java.sql.*;
+import java.util.Objects;
 
 //Most of the saving to Agua:bit folder and the database is done in this class.
 public class SaveFile {
@@ -57,6 +60,8 @@ public class SaveFile {
                 alert.setTitle("Exit");
                 alert.setHeaderText("A file with this name already exist.");
                 alert.setContentText("Do you want to overwrite it?");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                alertStage.getIcons().add(new Image(Objects.requireNonNull(SaveFile.class.getResourceAsStream("logo.png"))));
 
                 if (alert.showAndWait().get() == ButtonType.OK) {
                     savingTheFileLocal(measurementName, measurementLocation, sensor1Type, sensor2Type, sensor3Type, sensor1Value, sensor2Value, sensor3Value, measurementFile, date);

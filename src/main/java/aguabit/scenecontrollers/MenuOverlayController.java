@@ -154,6 +154,8 @@ public class MenuOverlayController implements Initializable {
         alert.setTitle("Log out");
         alert.setHeaderText("You're about to log out");
         alert.setContentText("Are you sure you want to logout?");
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
 
         //Showing a prompt when the menu exit button is clicked, to make sure the user wants to quit
         if(alert.showAndWait().get()== ButtonType.OK) {
@@ -174,6 +176,8 @@ public class MenuOverlayController implements Initializable {
         alert.setTitle("Exit");
         alert.setHeaderText("You're about to close the application");
         alert.setContentText("Do you want to exit?");
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
 
         //Showing a prompt when the menu exit button is clicked, to make sure the user wants to quit
         if(alert.showAndWait().get()== ButtonType.OK) {

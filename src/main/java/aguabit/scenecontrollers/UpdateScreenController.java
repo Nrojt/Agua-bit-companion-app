@@ -1,26 +1,18 @@
 package aguabit.scenecontrollers;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import org.apache.commons.io.FileUtils;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.ResourceBundle;
-
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import org.apache.commons.io.*;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.conn.ssl.SSLContextBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.conn.ssl.*;
-
-
-import javax.swing.*;
 
 public class UpdateScreenController implements Initializable {
     private static boolean alreadyDownloading = false;
@@ -79,23 +71,26 @@ public class UpdateScreenController implements Initializable {
     }
     //actual code for downloading the hex file
     private void downloadFiles(){
-        alreadyDownloading = true;
-        try {
-            if(isReachable(urlToFirmware)) {
-                try {
-                    FileUtils.copyURLToFile(new URL(urlToFirmware), new File(pathToFirmware), 5000, 5000);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                if (MenuOverlayController.isAguabitConnected) {
-                    Platform.runLater(() -> informationLabel.setText("Download done, click the button to upload the firmware."));
-                }
+        if(isReachable(urlToFirmware)) {
+            alreadyDownloading = true;
+            //deleting the file if it already exists
+            if (new File(pathToFirmware).isFile()) {
+                new File(pathToFirmware).delete();
             }
-            else {
-                Platform.runLater(() -> {alreadyDownloading = false; informationLabel.setText("Cannot reach the server, check your internet connection and try again later.");});
+            try {
+                FileUtils.copyURLToFile(new URL(urlToFirmware), new File(pathToFirmware), 5000, 5000);
+            } catch (IOException | RuntimeException e) {
+                Platform.runLater(() -> informationLabel.setText("An error has occurred, please try again later"));
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            if (MenuOverlayController.isAguabitConnected) {
+                Platform.runLater(() -> informationLabel.setText("Download done, click the button to upload the firmware."));
+            }
+            else{
+                Platform.runLater(() -> informationLabel.setText("Download done, connect the Agua:bit and reopen this page to upload"));
+            }
+        }
+        else {
+            Platform.runLater(() -> {alreadyDownloading = false; informationLabel.setText("Cannot reach the server, check your internet connection and try again later.");});
         }
     }
 
@@ -137,24 +132,16 @@ public class UpdateScreenController implements Initializable {
             informationLabel.setText("Please connect the Agua:bit and reopen this page to upload.\nPress the download button to (re)download the firmware.");}
     }
 
-    //this code checks if website is reachable (and thus if the user is online), but its old and gives errors, but works for now. Stolen from https://stackoverflow.com/questions/67845222/easy-way-to-check-if-a-link-is-reachable-or-not-from-a-java-aplication
-    //TODO change the ssl to newer version, current one is deprecated
-    public static boolean isReachable(String url) throws IOException{
-        boolean isReachable = true;
-        try (CloseableHttpClient httpClient = HttpClients.custom().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build())
-        {
-            HttpHead request = new HttpHead(url);
-            CloseableHttpResponse response = httpClient.execute(request);
-
-            if (response.getStatusLine().getStatusCode() == 404) {
-                System.out.println("URL " + url + " Not found");
-                isReachable = false;
-            }
-        } catch (Exception e) {
-            //e.printStackTrace();
-            isReachable = false;
+    //this code checks if a website is reachable (and thus if the user and the website are online)
+    public static boolean isReachable(String urlToCheck){
+        try {
+            URL websiteUrl = new URL(urlToCheck);
+            HttpsURLConnection connection = (HttpsURLConnection) websiteUrl.openConnection();
+            connection.setRequestMethod("HEAD");
+            int responsecode = connection.getResponseCode();
+            return responsecode >= 200 && responsecode <= 399;
+        } catch (IOException abc){
+            return false;
         }
-
-        return isReachable;
     }
 }

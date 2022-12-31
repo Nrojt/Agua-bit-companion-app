@@ -3,19 +3,26 @@ package aguabit.scenecontrollers;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import saveFile.SaveFile;
 
 import java.io.IOException;
-import java.sql.*;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 
-public class LoginScreenController {
+public class LoginScreenController implements Initializable{
     @FXML
     MFXCheckbox rememberMeCheckBox = new MFXCheckbox();
     @FXML
@@ -51,6 +58,8 @@ public class LoginScreenController {
                 informationLabel.setText("E-mail or password incorrect");
             }
 
+        } else{
+            informationLabel.setText("Please fill in both fields");
         }
     }
 
@@ -82,6 +91,7 @@ public class LoginScreenController {
                 MenuOverlayController.userId = result.getInt(1);
                 MenuOverlayController.userName = result.getString(2);
                 System.out.println(SaveFile.profilePicture);
+                //to not override the custom local profile picture
                 if(SaveFile.profilePicture != -1) {
                     SaveFile.profilePicture = result.getInt(3);
                 }
@@ -112,5 +122,22 @@ public class LoginScreenController {
     public void screenSwitcher(String fxmlFile) throws IOException{
         AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         fxmlPane.getChildren().setAll(pane);
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //when the user is in these textfields and presses enter, onLoginButtonClick will run
+        emailTextField.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                onLoginButtonClick();
+            }
+        });
+        passwordTextField.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                onLoginButtonClick();
+            }
+        });
+
     }
 }

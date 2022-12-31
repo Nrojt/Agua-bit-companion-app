@@ -7,11 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -58,17 +60,6 @@ public class SignUpScreenController implements Initializable{
                 informationLabel.setText("Not a valid phone number, please only enter numbers.");
             }
 
-            System.out.println(email);
-            /*
-            System.out.println("username " + userName);
-            System.out.println("firstname " + firstName);
-            System.out.println("lastname " + lastName);
-            System.out.println("phone number " + phonenumberTextfield.getText());
-            System.out.println("email " + email);
-            System.out.println("password " + password);
-            System.out.println("date of birth " + dob);
-             */
-
 
             if ((phonenumberTextfield.getText().matches("[0-9]+")) || phonenumberTextfield.getText().isBlank()) { //checking if input is a number, via regex
                 if (Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(email).matches()) { //checking if the input follows how an email should look, via regex
@@ -113,7 +104,39 @@ public class SignUpScreenController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        informationLabel.setText("Information can be changed at a later date");
+        //pressing enter in these fields will trigger the signup code
+        usernameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+        emailTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+        passwordTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+
+        firstnameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+        lastnameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+        phonenumberTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                signUp();
+            }
+        });
+
     }
 
     public boolean checkEmail(String email) throws SQLException {
@@ -144,7 +167,7 @@ public class SignUpScreenController implements Initializable{
 
 
     public void screenSwitcher(String fxmlFile) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource(fxmlFile));
+        AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         fxmlPane.getChildren().setAll(pane);
     }
 }

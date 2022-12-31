@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import saveFile.SaveFile;
 
@@ -13,6 +14,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class OpenMeasurementsScreenController implements Initializable {
@@ -136,6 +138,8 @@ public class OpenMeasurementsScreenController implements Initializable {
                 alert.setTitle("Delete");
                 alert.setHeaderText("You're about to delete "+ selectedItem[0].toString().split("\\. ")[1]);
                 alert.setContentText("Are you sure you want to delete?");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
 
                 //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
                 if(alert.showAndWait().get()== ButtonType.OK) {
@@ -169,6 +173,8 @@ public class OpenMeasurementsScreenController implements Initializable {
                 alert.setTitle("Delete");
                 alert.setHeaderText("You're about to delete "+filename);
                 alert.setContentText("Are you sure you want to delete?");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
 
                 //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
                 if(alert.showAndWait().get()== ButtonType.OK) {

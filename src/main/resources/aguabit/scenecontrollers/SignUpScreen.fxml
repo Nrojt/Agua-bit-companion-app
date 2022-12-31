@@ -31,7 +31,7 @@
          </font></TextField>
       <MFXButton fx:id="signupButton" layoutX="271.0" layoutY="306.0" onAction="#signUp" text="Sign up" />
       <MFXDatePicker fx:id="dobPicker" editable="false" layoutX="329.0" layoutY="229.0" prefHeight="26.0" prefWidth="150.0" promptText="Date of birth" />
-      <Label fx:id="informationLabel" alignment="TOP_LEFT" layoutX="121.0" layoutY="229.0" prefHeight="38.0" prefWidth="149.0" wrapText="true" />
+      <Label fx:id="informationLabel" alignment="TOP_LEFT" layoutX="121.0" layoutY="229.0" prefHeight="38.0" prefWidth="149.0" text="Information can be changed at a later date" wrapText="true" />
       <Label alignment="CENTER" layoutX="121.0" layoutY="96.0" prefHeight="17.0" prefWidth="149.0" text="Required">
          <font>
             <Font size="14.0" />

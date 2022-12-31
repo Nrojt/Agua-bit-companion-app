@@ -90,7 +90,7 @@
          </image>
       </ImageView>
       <MFXRadioButton fx:id="profilePicture4RadioButton" layoutX="903.0" layoutY="301.0" onAction="#settingsButtonClicked" text="4" toggleGroup="$profilePicture" />
-      <MFXRadioButton fx:id="profilePictureCustomRadioButton" layoutX="797.0" layoutY="341.0" onAction="#customProfilePicturePicker" text="Custom" toggleGroup="$profilePicture" />
-      <Label layoutX="677.0" layoutY="359.0" text="Custom profile pictures are not linked to an account" />
+      <MFXRadioButton fx:id="profilePictureCustomRadioButton" layoutX="796.0" layoutY="380.0" onAction="#customProfilePicturePicker" text="Custom" toggleGroup="$profilePicture" />
+      <Label layoutX="796.0" layoutY="335.0" prefHeight="36.0" prefWidth="153.0" text="Custom profile pictures are not linked to an account" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ module com.example.scenecontrollers {
     requires org.apache.httpcomponents.httpcore;
     requires com.google.gson;
     requires com.maxmind.geoip2;
+    requires javafx.web;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
     exports location;

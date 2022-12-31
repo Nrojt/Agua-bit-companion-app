@@ -35,7 +35,6 @@ public class SettingsScreenController implements Initializable {
     private FileChooser customProfilePictureFileChooser = new FileChooser();
 
     //TODO make this screen look better
-    //TODO add the option to pick a profile picture
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,7 +48,6 @@ public class SettingsScreenController implements Initializable {
         //code for having the correct profile picture selected on startup
         switch(profilePicture){
             case -1:
-                System.out.println("hello");
                 profilePictureCustomRadioButton.setSelected(true);
                 break;
             case 2:
@@ -108,7 +106,7 @@ public class SettingsScreenController implements Initializable {
     }
 
     public void customProfilePicturePicker(){
-        FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg");
+        FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp");
         customProfilePictureFileChooser.getExtensionFilters().add(exFilter);
         File selectedFile = customProfilePictureFileChooser.showOpenDialog(null);
 
