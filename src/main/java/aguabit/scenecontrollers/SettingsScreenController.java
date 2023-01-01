@@ -101,6 +101,7 @@ public class SettingsScreenController implements Initializable {
         } else if (profilePictureCustomRadioButton.isSelected()){
             profilePicture = -1;
         }
+        MenuOverlayController.profilePictureChanged = true;
 
         SaveFile.saveSettings();
     }

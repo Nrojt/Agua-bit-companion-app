@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import location.Location;
 import saveFile.SaveFile;
@@ -65,6 +66,17 @@ public class SaveMeasurementScreenController implements Initializable {
         } catch (IOException | GeoIp2Exception e) {
             throw new RuntimeException(e);
         }
+
+        measurementNameTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                saveMeasurement();
+            }
+        });
+        measurementLocationTextfield.setOnKeyPressed(keypress -> {
+            if (keypress.getCode() == KeyCode.ENTER) {
+                saveMeasurement();
+            }
+        });
     }
 
     public void saveMeasurement(){

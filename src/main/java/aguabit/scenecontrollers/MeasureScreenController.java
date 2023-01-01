@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -141,6 +142,7 @@ public class MeasureScreenController implements Initializable {
 
     //code for reading the measurements from the microbit
     private void getMeasurementsFromMicrobit() {
+        boolean measurementError = false;
         port1 = "";
         port2 = "";
         port3 = "";
@@ -148,7 +150,7 @@ public class MeasureScreenController implements Initializable {
         String microbitInput = "";
 
         //opening a port for communicating with the Microbit over usb
-        //System.out.println(SerialPort.getCommPorts());
+        System.out.println(Arrays.toString(SerialPort.getCommPorts()));
         //TODO find a better way to get the serialport of the microbit, if multiple serial ports are connected this current way will cause errors
         SerialPort microBit = SerialPort.getCommPorts()[0];
 
@@ -195,51 +197,64 @@ public class MeasureScreenController implements Initializable {
 
 
         //rounding the input depending on what type of sensor it is
-        switch(sensor1TypeString) {
-            case "PH-Value":
-                port1 = String.valueOf(roundDoubles((Double.parseDouble(port1)/100),2));
-                break;
-            case "Temperature sensor":
-                port1 = String.valueOf(roundDoubles(Double.parseDouble(port1),2));
-            default:
-                break;
-        }
+        try {
+            switch (sensor1TypeString) {
+                case "PH-Value":
+                    port1 = String.valueOf(roundDoubles((Double.parseDouble(port1) / 100), 2));
+                    break;
+                case "Temperature sensor":
+                    port1 = String.valueOf(roundDoubles(Double.parseDouble(port1), 2));
+                default:
+                    break;
+            }
 
-        switch(sensor2TypeString) {
-            case "PH-Value":
-                port2 = String.valueOf(roundDoubles((Double.parseDouble(port2)/100),2));
-                break;
-            case "Temperature sensor":
-                port2 = String.valueOf(roundDoubles(Double.parseDouble(port2),2));
-            default:
-                break;
-        }
+            switch (sensor2TypeString) {
+                case "PH-Value":
+                    port2 = String.valueOf(roundDoubles((Double.parseDouble(port2) / 100), 2));
+                    break;
+                case "Temperature sensor":
+                    port2 = String.valueOf(roundDoubles(Double.parseDouble(port2), 2));
+                default:
+                    break;
+            }
 
-        switch(sensor3TypeString) {
-            case "PH-Value":
-                port3 = String.valueOf(roundDoubles((Double.parseDouble(port3)/100),2));
-                break;
-            case "Temperature sensor":
-                port3 = String.valueOf(roundDoubles(Double.parseDouble(port3),2));
-            default:
-                break;
+            switch (sensor3TypeString) {
+                case "PH-Value":
+                    port3 = String.valueOf(roundDoubles((Double.parseDouble(port3) / 100), 2));
+                    break;
+                case "Temperature sensor":
+                    port3 = String.valueOf(roundDoubles(Double.parseDouble(port3), 2));
+                default:
+                    break;
+            }
+
+        } catch (NumberFormatException abc){
+            measurementError = true;
         }
 
         sensor1ValueString = port1;
         sensor2ValueString = port2;
         sensor3ValueString = port3;
 
-        System.out.println(port1+"\n"+port2+"\n"+port3+"\n");
+        if(port1.contains("Infinity") || port2.contains("Infinity") || port3.contains("Infinity")){
+            measurementError = true;
+        }
 
         noMeasurementGoingOn = true; //making it so the measurement button can be pressed again
 
-        //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
-        Platform.runLater(() -> {
-            sensor1ValueLabel.setText(sensor1ValueString);
-            sensor2ValueLabel.setText(sensor2ValueString);
-            sensor3ValueLabel.setText(sensor3ValueString);
-            informationLabel.setText("Measurement succesful");
-        });
+        if(measurementError){
+            Platform.runLater(() -> {
+                informationLabel.setText("Measurement failed, please make sure the sensors are connected correctly");
+            });
+        } else {
+            //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
+            Platform.runLater(() -> {
+                sensor1ValueLabel.setText(sensor1ValueString);
+                sensor2ValueLabel.setText(sensor2ValueString);
+                sensor3ValueLabel.setText(sensor3ValueString);
+                informationLabel.setText("Measurement succesful");
+            });
+        }
     }
 
     //code to send the correct information to slotInformationScreens()

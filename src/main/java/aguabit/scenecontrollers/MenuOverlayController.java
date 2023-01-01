@@ -67,6 +67,8 @@ public class MenuOverlayController implements Initializable {
 
     public static File checkIfCustomFileExist = new File(SaveFile.pathForMeasurements);
 
+    public static boolean profilePictureChanged = true;
+
     public MenuOverlayController() throws IOException {
         //this runs every time this controller gets loaded, which should only be once at startup.
     }
@@ -279,27 +281,30 @@ public class MenuOverlayController implements Initializable {
 
                 checkIfCustomFileExist = new File(SaveFile.customProfilePicturePath);
 
-                switch(SaveFile.profilePicture){
-                    case -1:
-                        if(!SaveFile.customProfilePicturePath.isBlank() && checkIfCustomFileExist.isFile()) {
-                            profilePicture.setImage(new Image((SaveFile.customProfilePicturePath)));
-                        } else{
+                if(profilePictureChanged) {
+                    switch (SaveFile.profilePicture) {
+                        case -1:
+                            if (!SaveFile.customProfilePicturePath.isBlank() && checkIfCustomFileExist.isFile()) {
+                                profilePicture.setImage(new Image((SaveFile.customProfilePicturePath)));
+                            } else {
+                                profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                            }
+                            break;
+                        case 1:
+                        default:
                             profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
-                        }
-                        break;
-                    case 1:
-                    default:
-                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
-                        break;
-                    case 2:
-                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
-                        break;
-                    case 3:
-                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
-                        break;
-                    case 4:
-                        profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
-                        break;
+                            break;
+                        case 2:
+                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
+                            break;
+                        case 3:
+                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
+                            break;
+                        case 4:
+                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
+                            break;
+                    }
+                    profilePictureChanged = false;
                 }
 
             });

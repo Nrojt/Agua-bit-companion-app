@@ -25,7 +25,11 @@
     );
 }
 .menu-bar{
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(50, 50, 50, 0.75);
+}
+
+#sideMenuBar{
+    -fx-background-color: rgba(50, 50, 50, 0.75);
 }
 
 .mfx-radio-button{

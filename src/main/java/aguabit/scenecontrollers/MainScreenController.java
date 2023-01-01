@@ -3,8 +3,10 @@ package aguabit.scenecontrollers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import saveFile.SaveFile;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +25,11 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userNameLabel.setText("Hello "+ MenuOverlayController.userName);
-        mainPageWebView.setContextMenuEnabled(false);
+        if(SaveFile.theme == 1) {
+            mainPageWebView.setPageFill(Color.rgb(100,100,100, 0.13));
+        } else if (SaveFile.theme == 0){
+            mainPageWebView.setPageFill(Color.rgb(255, 255, 255, 0.75));
+        }
         mainPageWebEngine = mainPageWebView.getEngine();
         mainPageWebEngine.load("https://github.com/Nrojt/Agua-bit-companion-app/");
     }
