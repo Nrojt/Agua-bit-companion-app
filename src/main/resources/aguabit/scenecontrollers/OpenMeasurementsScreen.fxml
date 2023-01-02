@@ -8,18 +8,20 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.OpenMeasurementsScreenController">
    <children>
-      <MFXListView fx:id="localMeasurementsListView" depthLevel="LEVEL1" layoutX="14.0" layoutY="149.0" prefHeight="369.0" prefWidth="368.0" />
+      <MFXListView fx:id="localMeasurementsListView" depthLevel="LEVEL1" layoutX="14.0" layoutY="149.0" prefHeight="369.0" prefWidth="380.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="409.0" />
       <Label alignment="CENTER" layoutX="25.0" layoutY="105.0" prefHeight="36.0" prefWidth="609.0" text="Open saved measurements" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="418.0" layoutY="149.0" prefHeight="369.0" prefWidth="368.0" />
-      <Label layoutX="164.0" layoutY="132.0" text="Saved locally" />
+      <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="400.0" layoutY="149.0" prefHeight="369.0" prefWidth="380.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="15.0" />
+      <Label layoutX="150.0" layoutY="132.0" text="Saved locally" />
       <Label layoutX="554.0" layoutY="132.0" text="Saved in database" />
-      <MFXButton layoutX="14.0" layoutY="518.0" onAction="#deleteSavedLocal" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="334.0" layoutY="518.0" onAction="#openSavedLocal" text="Open" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="418.0" layoutY="518.0" onAction="#deleteSavedDatabase" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="738.0" layoutY="518.0" onAction="#openSavedDatabase" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="323.0" layoutY="524.0" onAction="#deleteSavedLocal" prefHeight="25.0" prefWidth="68.0" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="14.0" layoutY="524.0" onAction="#openSavedLocal" prefHeight="25.0" prefWidth="68.0" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="717.0" layoutY="524.0" onAction="#deleteSavedDatabase" prefHeight="25.0" prefWidth="68.0" text="Delete" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="400.0" layoutY="524.0" onAction="#openSavedDatabase" prefHeight="25.0" prefWidth="68.0" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="169.0" layoutY="524.0" text="Compare" AnchorPane.bottomAnchor="50.66666666666663" />
+      <MFXButton layoutX="568.0" layoutY="524.0" text="Compare" />
    </children>
 </AnchorPane>
