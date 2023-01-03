@@ -22,6 +22,7 @@ public class MainScreenController implements Initializable {
         //okay so this gets run every time a screen loads
     }
 
+    //TODO show something when the user is offline/when the website cant be loaded
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userNameLabel.setText("Hello "+ MenuOverlayController.userName);

@@ -1,10 +1,6 @@
 package saveFile;
 
-import aguabit.scenecontrollers.DatabaseConnection;
-import aguabit.scenecontrollers.LoginScreenController;
-import aguabit.scenecontrollers.MeasureScreenController;
-import aguabit.scenecontrollers.MenuOverlayController;
-import javafx.scene.Scene;
+import aguabit.scenecontrollers.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -203,6 +199,12 @@ public class SaveFile {
                     MeasureScreenController.sensor2ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor3Value")) {
                     MeasureScreenController.sensor3ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("name")) {
+                    MeasureScreenController.measurementNameString = String.valueOf(line.split("\\:")[1]);
+                } else if(line.contains("location")){
+                    MeasureScreenController.measurementLocationString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("date")) {
+                    MeasureScreenController.measurementDateString = String.valueOf(line.split("\\:")[1]);
                 }
             }
         }
@@ -212,7 +214,7 @@ public class SaveFile {
     public static void readMeasurementFromDatabase(int measurementid) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
-        String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value FROM measurement WHERE measurement_id = '" + measurementid + "'";
+        String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, measurement_name, measurement_location, date FROM measurement WHERE measurement_id = '" + measurementid + "'";
         Statement databaseMeasurementsStatement;
         ResultSet result;
 
@@ -226,6 +228,9 @@ public class SaveFile {
             MeasureScreenController.sensor1ValueString = result.getString(4);
             MeasureScreenController.sensor2ValueString = result.getString(5);
             MeasureScreenController.sensor3ValueString = result.getString(6);
+            MeasureScreenController.measurementNameString = result.getString(7);
+            MeasureScreenController.measurementLocationString = result.getString(8);
+            MeasureScreenController.measurementDateString = result.getString(9);
             connectDB.close();
 
         } catch (SQLException e) {
@@ -307,6 +312,133 @@ public class SaveFile {
             }
             LoginScreenController.loginCode(email, password);
         }
+    }
 
+    //For comparing two locally saved measurements
+    public static void compareMeasurementsFromFile(String m1FileName, String m2FileName){
+        File m1File = new File(pathForMeasurements + m1FileName);
+        File m2File = new File(pathForMeasurements + m2FileName);
+
+        if (m1File.exists()) {
+            CompareMeasurementsScreenController.m1NameString = m1FileName.split("\\.")[0];;
+            FileReader measurementFileReader;
+            try {
+                measurementFileReader = new FileReader(m1File);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BufferedReader measurementReader = new BufferedReader(measurementFileReader);
+            String line;
+
+            while (true) {
+                try {
+                    if ((line = measurementReader.readLine()) == null)
+                        break; //if the next line is empty, break the loop
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (line.contains("sensor1Type")) {
+                    CompareMeasurementsScreenController.m1Slot1TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Type")) {
+                    CompareMeasurementsScreenController.m1Slot2TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Type")) {
+                    CompareMeasurementsScreenController.m1Slot3TypeString= String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor1Value")) {
+                    CompareMeasurementsScreenController.m1Slot1ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Value")) {
+                    CompareMeasurementsScreenController.m1Slot2ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Value")) {
+                    CompareMeasurementsScreenController.m1Slot3ValueString = String.valueOf(line.split("\\:")[1]);
+                }else if (line.contains("name")) {
+                    CompareMeasurementsScreenController.m1NameString = String.valueOf(line.split("\\:")[1]);
+                } else if(line.contains("location")){
+                    CompareMeasurementsScreenController.m1LocationString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("date")) {
+                    CompareMeasurementsScreenController.m1DateString = String.valueOf(line.split("\\:")[1]);
+                }
+            }
+        } else{
+            System.out.println("error");
+        }
+        if (m2File.exists()) {
+            CompareMeasurementsScreenController.m2NameString = m2FileName.split("\\.")[0];
+            FileReader measurementFileReader;
+            try {
+                measurementFileReader = new FileReader(m2File);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BufferedReader measurementReader = new BufferedReader(measurementFileReader);
+            String line;
+
+            while (true) {
+                try {
+                    if ((line = measurementReader.readLine()) == null)
+                        break; //if the next line is empty, break the loop
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (line.contains("sensor1Type")) {
+                    CompareMeasurementsScreenController.m2Slot1TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Type")) {
+                    CompareMeasurementsScreenController.m2Slot2TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Type")) {
+                    CompareMeasurementsScreenController.m2Slot3TypeString= String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor1Value")) {
+                    CompareMeasurementsScreenController.m2Slot1ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Value")) {
+                    CompareMeasurementsScreenController.m2Slot2ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Value")) {
+                    CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
+                }else if (line.contains("name")) {
+                    CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
+                } else if(line.contains("location")){
+                    CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("date")) {
+                    CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
+                }
+            }
+        } else{
+            System.out.println("error");
+        }
+    }
+
+    //for comparing 2 measurements from the database
+    public static void compareMeasurementsFromDatabase(int m1MeasurementId, int m2MeasurementId){
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, measurement_name, measurement_location, date FROM measurement WHERE measurement_id = '" + m1MeasurementId + "' or measurement_id = '" + m2MeasurementId + "'";
+        Statement databaseMeasurementsStatement;
+        ResultSet result;
+
+        //ResultSet starts counting at 1 instead of 0
+        try {
+            databaseMeasurementsStatement = connectDB.createStatement();
+            result = databaseMeasurementsStatement.executeQuery(readMeasurementQuery);
+            CompareMeasurementsScreenController.m1Slot1TypeString = result.getString(1);
+            CompareMeasurementsScreenController.m1Slot2TypeString = result.getString(2);
+            CompareMeasurementsScreenController.m1Slot3TypeString = result.getString(3);
+            CompareMeasurementsScreenController.m1Slot1ValueString = result.getString(4);
+            CompareMeasurementsScreenController.m1Slot2ValueString= result.getString(5);
+            CompareMeasurementsScreenController.m1Slot3ValueString = result.getString(6);
+            CompareMeasurementsScreenController.m1NameString = result.getString(7);
+            CompareMeasurementsScreenController.m1LocationString = result.getString(8);
+            CompareMeasurementsScreenController.m1DateString = result.getString(9);
+            result.next(); //for going to the next row, has to be used twice because the first one just puts it on the first row (where it already was)
+            result.next();
+            CompareMeasurementsScreenController.m2Slot1TypeString = result.getString(1);
+            CompareMeasurementsScreenController.m2Slot2TypeString = result.getString(2);
+            CompareMeasurementsScreenController.m2Slot3TypeString = result.getString(3);
+            CompareMeasurementsScreenController.m2Slot1ValueString = result.getString(4);
+            CompareMeasurementsScreenController.m2Slot2ValueString= result.getString(5);
+            CompareMeasurementsScreenController.m2Slot3ValueString = result.getString(6);
+            CompareMeasurementsScreenController.m2NameString = result.getString(7);
+            CompareMeasurementsScreenController.m2LocationString = result.getString(8);
+            CompareMeasurementsScreenController.m2DateString = result.getString(9);
+            connectDB.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

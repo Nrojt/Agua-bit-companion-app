@@ -73,6 +73,17 @@ public class MeasureScreenController implements Initializable {
     @FXML
     private Label sensor3IndicationLabel = new Label();
 
+    @FXML
+    private Label measurementNameLabel = new Label();
+    @FXML
+    private Label measurementLocationLabel = new Label();
+    @FXML
+    private Label measurementDateLabel = new Label();
+
+    public static String measurementNameString = "Measurement name";
+    public static String measurementLocationString = "Location";
+    public static String measurementDateString = "Date";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //setting the sensors to the sensors which were selected in the connect screen.
@@ -331,6 +342,9 @@ public class MeasureScreenController implements Initializable {
                 sensor1TypeLabel.setText(sensor1TypeString);
                 sensor2TypeLabel.setText(sensor2TypeString);
                 sensor3TypeLabel.setText(sensor3TypeString);
+                measurementNameLabel.setText(measurementNameString);
+                measurementLocationLabel.setText(measurementLocationString);
+                measurementDateLabel.setText(measurementDateString);
             });
             try {
                 Thread.sleep(1000);
