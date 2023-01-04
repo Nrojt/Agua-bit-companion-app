@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fxmlPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.CompareMeasurementsScreenController">
+<AnchorPane fx:id="fxmlpane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.CompareMeasurementsScreenController">
    <children>
       <GridPane gridLinesVisible="true" layoutX="132.0" layoutY="147.0" prefHeight="141.0" prefWidth="535.0">
          <columnConstraints>
@@ -33,9 +34,9 @@
             <Label fx:id="m1Slot1ValueLabel" alignment="CENTER" prefHeight="17.0" prefWidth="264.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="m1Slot2ValueLabel" alignment="CENTER" layoutX="10.0" layoutY="89.0" prefHeight="17.0" prefWidth="241.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="m1Slot3ValueLabel" alignment="CENTER" layoutX="119.0" layoutY="89.0" prefHeight="17.0" prefWidth="225.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label fx:id="m1Slot1IndicationLabel" alignment="CENTER" prefHeight="17.0" prefWidth="234.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="m1Slot2IndicationLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="17.0" prefWidth="303.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="m1Slot3IndicationLabel" alignment="CENTER" layoutX="119.0" layoutY="96.0" prefHeight="17.0" prefWidth="239.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="m1Slot1IndicationLabel" alignment="CENTER" onMouseClicked="#m1slot1Information" prefHeight="17.0" prefWidth="234.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="m1Slot2IndicationLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" onMouseClicked="#m1slot2Information" prefHeight="17.0" prefWidth="303.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="m1Slot3IndicationLabel" alignment="CENTER" layoutX="119.0" layoutY="96.0" onMouseClicked="#m1slot3Information" prefHeight="17.0" prefWidth="239.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label prefHeight="20.0" prefWidth="188.0" text="Sensor slot:">
                <font>
                   <Font size="14.0" />
@@ -93,9 +94,9 @@
             <Label fx:id="m2Slot1ValueLabel" alignment="CENTER" prefHeight="17.0" prefWidth="264.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="m2Slot2ValueLabel" alignment="CENTER" layoutX="10.0" layoutY="89.0" prefHeight="17.0" prefWidth="241.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="m2Slot3ValueLabel" alignment="CENTER" layoutX="119.0" layoutY="89.0" prefHeight="17.0" prefWidth="225.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label fx:id="m2Slot1IndicationLabel" alignment="CENTER" prefHeight="17.0" prefWidth="234.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="m2Slot2IndicationLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" prefHeight="17.0" prefWidth="303.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="m2Slot3IndicationLabel" alignment="CENTER" layoutX="119.0" layoutY="96.0" prefHeight="17.0" prefWidth="239.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="m2Slot1IndicationLabel" alignment="CENTER" onMouseClicked="#m2slot1Information" prefHeight="17.0" prefWidth="234.0" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="m2Slot2IndicationLabel" alignment="CENTER" layoutX="10.0" layoutY="96.0" onMouseClicked="#m2slot2Information" prefHeight="17.0" prefWidth="303.0" text="Unknown" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="m2Slot3IndicationLabel" alignment="CENTER" layoutX="119.0" layoutY="96.0" onMouseClicked="#m2slot3Information" prefHeight="17.0" prefWidth="239.0" text="Unknown" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label prefHeight="20.0" prefWidth="188.0" text="Sensor slot:">
                <font>
                   <Font size="14.0" />
@@ -136,5 +137,11 @@
       <Label fx:id="m1LocationLabel" layoutX="132.0" layoutY="129.0" text="Location" />
       <Label fx:id="m2DateLabel" layoutX="132.0" layoutY="349.0" text="Date" />
       <Label fx:id="m2LocationLabel" layoutX="132.0" layoutY="367.0" text="Location" />
+      <Label alignment="CENTER" layoutX="19.0" layoutY="47.0" prefHeight="36.0" prefWidth="600.0" text="Compare Measurements" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <MFXButton layoutX="14.0" layoutY="14.0" onAction="#backToOpenMeasurementsScreen" text="Back" />
    </children>
 </AnchorPane>
