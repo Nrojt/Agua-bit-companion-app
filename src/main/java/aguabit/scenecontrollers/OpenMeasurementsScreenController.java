@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -21,20 +22,21 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class OpenMeasurementsScreenController implements Initializable {
+    //declaring the fxml for the screen
     @FXML
     private AnchorPane fxmlpane = new AnchorPane();
     @FXML
     private MFXListView<String> localMeasurementsListView = new MFXListView<>();
     @FXML
     private MFXListView<String> databaseMeasurementsListView = new MFXListView<>();
+    @FXML
+    private Label informationLabel = new Label();
 
+    //arraylist for storing all the database measurements, cannot be local variables cause they are used in multiple places
     private final List<String> databaseMeasurements = new ArrayList<>();
     private final List<Integer> databaseMeasurementsMeasurementId = new ArrayList<>();
 
 
-    //TODO information label
-    //TODO allow for comparing measurement from database with local one
-    //TODO merge the open and delete buttons
     //TODO make it so the valueindication popup menu's work
 
     @Override
@@ -75,13 +77,14 @@ public class OpenMeasurementsScreenController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            //checking to see if there are any measurements at all
             if (!databaseMeasurements.isEmpty()) {
                 databaseMeasurementsListView.getItems().addAll(databaseMeasurements);
             } else {
                 databaseMeasurementsListView.getItems().add("No saved measurements found in database");
             }
             try {
-                connectDB.close();
+                connectDB.close(); //don't forget to close the database, otherwise it will get locked
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -102,11 +105,25 @@ public class OpenMeasurementsScreenController implements Initializable {
         } else {
             localMeasurementsListView.getItems().add("No locally saved measurements found");
         }
+
+        informationLabel.setText("Use cntrl+left_mouse_button to (de)select");
     }
 
     //Listview value is standard empty, once a measurement is selected and the open button is pressed, the window will close
-    public void openSavedDatabase(){
-        if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+    public void openSavedMeasurements(){
+        if(!localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty() && databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+            if(localMeasurementsListView.getSelectionModel().getSelectedValues().size()  == 1) {
+                Object[] selectedItems = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+                if (!selectedItems[0].toString().equals("No locally saved measurements found")) {
+                    String filename = selectedItems[0].toString() + ".txt";
+                    SaveFile.readMeasurementFromFile(filename);
+                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+                    stage.close(); //closes the window
+                }
+            } else {
+                informationLabel.setText("Too many items selected, use cntrl+left_mouse_button do (de)select");
+            }
+        } else if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty() && localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
             if(databaseMeasurementsListView.getSelectionModel().getSelectedValues().size() ==1) {
                 int selectedItemMeasurement = -1;
                 Object[] selectedItems = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
@@ -118,6 +135,7 @@ public class OpenMeasurementsScreenController implements Initializable {
                             break;
                         }
                     }
+                    //code for getting the measurement id, there is a problem if multiple measurements have the same name
                     if (selectedItemMeasurement != -1) {
                         System.out.println(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
                         SaveFile.readMeasurementFromDatabase(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
@@ -126,38 +144,40 @@ public class OpenMeasurementsScreenController implements Initializable {
                     }
                 }
             } else{
-                System.out.println("too many items selected");
+                informationLabel.setText("Too many items selected, use cntrl+left_mouse_button to (de)select");
             }
         } else{
-            System.out.println("Nothing selected");
+            informationLabel.setText("Select one item, use cntrl+left_mouse_button to (de)select");
         }
     }
 
-    public void openSavedLocal(){
+    //code for deleting (multiple) saved measurements
+    public void deleteSavedMeasurements(){
+        boolean delete = false;
         if(!localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
-            if(localMeasurementsListView.getSelectionModel().getSelectedValues().size()  == 1) {
-                Object[] selectedItems = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-                if (!selectedItems[0].toString().equals("No locally saved measurements found")) {
-                    String filename = selectedItems[0].toString() + ".txt";
-                    System.out.println(filename);
-                    SaveFile.readMeasurementFromFile(filename);
-                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-                    stage.close(); //closes the window
-                }
-            } else {
-                System.out.println("too many items selected");
-            }
-        } else {
-            System.out.println("Nothing selected");
-        }
-    }
+            Object[] selectedItems = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            if(!selectedItems[0].toString().equals("No locally saved measurements found")) {
+                for (int y = 0; y < localMeasurementsListView.getSelectionModel().getSelectedValues().size(); y++) {
+                    String filename = selectedItems[y].toString() + ".txt";
 
-    public void deleteSavedDatabase(){
-        if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("You're about to delete " + filename);
+                    alert.setContentText("Are you sure you want to delete?");
+                    Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+
+                    //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
+                    if (alert.showAndWait().get() == ButtonType.OK) {
+                        System.out.println(filename);
+                        SaveFile.deleteMeasurementFromFile(filename);
+                        delete = true;
+                    }
+                }
+            }
+        } if(!databaseMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
             Object[] selectedItems = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-            System.out.println( databaseMeasurementsListView.getSelectionModel().getSelectedValues().size());
             if (!selectedItems[0].toString().equals("No saved measurements found in database") && !selectedItems[0].toString().equals("User not logged in")) {
-                boolean deleted = false;
                 for(int y = 0; y < databaseMeasurementsListView.getSelectionModel().getSelectedValues().size(); y++) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Delete");
@@ -177,50 +197,18 @@ public class OpenMeasurementsScreenController implements Initializable {
                             }
                         }
                         if (selectedItemMeasurement != -1) {
-                            deleted = true;
+                            delete = true;
                             SaveFile.deleteMeasurementFromDatabase(databaseMeasurementsMeasurementId.get(selectedItemMeasurement));
                         }
                     }
                 }
-                if (deleted) {
-                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-                    stage.close(); //closes the window
-                }
             }
         } else{
-            System.out.println("Nothing selected");
+            informationLabel.setText("Nothing selected, use cntrl+left_mouse_button to (de)select");
         }
-    }
-
-    public void deleteSavedLocal(){
-        if(!localMeasurementsListView.getSelectionModel().getSelectedValues().isEmpty()) {
-            Object[] selectedItems = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
-            if(!selectedItems[0].toString().equals("No locally saved measurements found")) {
-                boolean delete = false;
-                for (int y = 0; y < localMeasurementsListView.getSelectionModel().getSelectedValues().size(); y++) {
-                    String filename = selectedItems[y].toString() + ".txt";
-
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    alert.setHeaderText("You're about to delete " + filename);
-                    alert.setContentText("Are you sure you want to delete?");
-                    Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-
-                    //Showing a prompt when the delete button is clicked, to make sure the user wants to delete
-                    if (alert.showAndWait().get() == ButtonType.OK) {
-                        System.out.println(filename);
-                        SaveFile.deleteMeasurementFromFile(filename);
-                        delete = true;
-                    }
-                }
-                if(delete){
-                    Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
-                    stage.close(); //closes the window
-                }
-            }
-        } else {
-            System.out.println("Nothing selected");
+        if(delete){
+            Stage stage = (Stage) localMeasurementsListView.getScene().getWindow();
+            stage.close(); //closes the window
         }
     }
 
@@ -260,8 +248,22 @@ public class OpenMeasurementsScreenController implements Initializable {
         } else if (localMeasurementsListView.getSelectionModel().getSelectedValues().size() == 1 && databaseMeasurementsListView.getSelectionModel().getSelectedValues().size() == 1) {
             Object[] selectedDatabaseItem = databaseMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
             Object[] selectedLocalItem = localMeasurementsListView.getSelectionModel().getSelectedValues().toArray();
+            String localItem = selectedLocalItem[0].toString() +".txt";
+            int databaseMeasurementId = -1;
+
+            for (int i = 0; i < databaseMeasurements.size(); i++) {
+                System.out.println(databaseMeasurements.get(i));
+                if (databaseMeasurements.get(i).equals(selectedDatabaseItem[0])) {
+                    databaseMeasurementId = i;
+                    break;
+                }
+            }
+
+            SaveFile.compareMeasurementsFromFileAndDatabase(databaseMeasurementsMeasurementId.get(databaseMeasurementId), localItem);
+            AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("CompareMeasurementsScreen.fxml")));
+            fxmlpane.getChildren().setAll(pane);
         } else{
-            System.out.println("Not enough or to many values selected");
+            informationLabel.setText("Not enough or to many values selected, use cntrl+left_mouse_button to (de)select");
         }
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import saveFile.SaveFile;
 
@@ -345,7 +346,9 @@ public class MeasureScreenController implements Initializable {
                 measurementNameLabel.setText(measurementNameString);
                 measurementLocationLabel.setText(measurementLocationString);
                 measurementDateLabel.setText(measurementDateString);
+                sensor1IndicationLabel.setTextFill(Color.rgb(255,2,255)); //for @greed
             });
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ignored) {

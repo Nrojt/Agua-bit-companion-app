@@ -17,10 +17,10 @@
       <MFXListView fx:id="databaseMeasurementsListView" depthLevel="LEVEL1" layoutX="400.0" layoutY="149.0" prefHeight="369.0" prefWidth="380.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="15.0" />
       <Label layoutX="150.0" layoutY="132.0" text="Saved locally" />
       <Label layoutX="554.0" layoutY="132.0" text="Saved in database" />
-      <MFXButton layoutX="323.0" layoutY="524.0" onAction="#deleteSavedLocal" prefHeight="25.0" prefWidth="68.0" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="14.0" layoutY="524.0" onAction="#openSavedLocal" prefHeight="25.0" prefWidth="68.0" text="Open" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="717.0" layoutY="524.0" onAction="#deleteSavedDatabase" prefHeight="25.0" prefWidth="68.0" text="Delete" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="400.0" layoutY="524.0" onAction="#openSavedDatabase" prefHeight="25.0" prefWidth="68.0" text="Open" AnchorPane.bottomAnchor="50.0" />
-      <MFXButton layoutX="169.0" layoutY="524.0" onAction="#compareMeasurements" text="Compare" AnchorPane.bottomAnchor="50.66666666666663" />
+      <MFXButton layoutX="717.0" layoutY="524.0" onAction="#deleteSavedMeasurements" prefHeight="25.0" prefWidth="68.0" text="Delete" AnchorPane.bottomAnchor="50.66666666666663" />
+      <MFXButton layoutX="14.0" layoutY="524.0" onAction="#openSavedMeasurements" prefHeight="25.0" prefWidth="68.0" text="Open" AnchorPane.bottomAnchor="50.0" />
+      <MFXButton layoutX="366.0" layoutY="524.0" onAction="#compareMeasurements" text="Compare" AnchorPane.bottomAnchor="50.66666666666663" AnchorPane.leftAnchor="366.0" AnchorPane.rightAnchor="366.0" />
+      <Label text="Label" />
+      <Label fx:id="informationLabel" alignment="CENTER" layoutX="366.0" layoutY="550.0" prefHeight="17.0" prefWidth="69.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

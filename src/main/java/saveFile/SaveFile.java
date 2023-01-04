@@ -26,25 +26,46 @@ public class SaveFile {
     //TODO replace the creating files with java filestream.io, less code
 
     //code for saving the measurements to the database
-    public static void saveMeasurementDatabase(int userID, String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date) {
-        DatabaseConnection connectionNow = new DatabaseConnection();
-        try (Connection connectDB = connectionNow.getDBConnection();
-             PreparedStatement pstmt = connectDB.prepareStatement(measurementQuery)) {
-            pstmt.setInt(1, userID);
-            pstmt.setString(2, measurementName);
-            pstmt.setString(3, measurementLocation);
-            pstmt.setString(4, sensor1Type);
-            pstmt.setString(5, sensor2Type);
-            pstmt.setString(6, sensor3Type);
-            pstmt.setString(7, sensor1Value);
-            pstmt.setString(8, sensor2Value);
-            pstmt.setString(9, sensor3Value);
-            pstmt.setString(10, date);
-            pstmt.executeUpdate();
+    public static boolean saveMeasurementDatabase(int userID, String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, String date) {
+        boolean noDuplicateName = true;
+        //check to see if a measurement by the given name already exists for the user
+        try {
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectDB = connection.getDBConnection();
+            String checkMeasurementNameQuery = "SELECT measurement_name FROM measurement WHERE measurement_name = '" + measurementName + "' and user_id = '" + userID + "'";
+            Statement measurementNameStatement = connectDB.createStatement();
+            ResultSet result = measurementNameStatement.executeQuery(checkMeasurementNameQuery);
+            connectDB.close();
+            if (result.next()) {
+                noDuplicateName = false;
+            }
         } catch (SQLException z) {
             System.out.println(z.getMessage());
         }
-        System.out.println("Adding measurement successful");
+        if (noDuplicateName) {
+            try {
+                DatabaseConnection connectionNow = new DatabaseConnection();
+                Connection connectDB = connectionNow.getDBConnection();
+                PreparedStatement pstmt = connectDB.prepareStatement(measurementQuery);
+                pstmt.setInt(1, userID);
+                pstmt.setString(2, measurementName);
+                pstmt.setString(3, measurementLocation);
+                pstmt.setString(4, sensor1Type);
+                pstmt.setString(5, sensor2Type);
+                pstmt.setString(6, sensor3Type);
+                pstmt.setString(7, sensor1Value);
+                pstmt.setString(8, sensor2Value);
+                pstmt.setString(9, sensor3Value);
+                pstmt.setString(10, date);
+                pstmt.executeUpdate();
+                connectDB.close();
+                System.out.println("Adding measurement successful");
+            } catch (SQLException z) {
+                System.out.println(z.getMessage());
+            }
+        }
+
+        return noDuplicateName;
     }
 
     //saves measurements in to a .txt file in the AguaBit folder (in documents folder)
@@ -114,10 +135,10 @@ public class SaveFile {
         settings.close();
 
         //needed a place to update the profilepicture in the database, here it is convenient
-        if(MenuOverlayController.loginStatus && profilePicture != -1){
+        if (MenuOverlayController.loginStatus && profilePicture != -1) {
             DatabaseConnection connection = new DatabaseConnection();
             Connection connectDB = connection.getDBConnection();
-            String updateProfilePictureQuery = "UPDATE user SET profilepicture = '"+ profilePicture + "' WHERE user_id = '" + MenuOverlayController.userId + "'";
+            String updateProfilePictureQuery = "UPDATE user SET profilepicture = '" + profilePicture + "' WHERE user_id = '" + MenuOverlayController.userId + "'";
             PreparedStatement pstmt;
             try {
                 pstmt = connectDB.prepareStatement(updateProfilePictureQuery);
@@ -155,9 +176,9 @@ public class SaveFile {
                     menuBarSide = Boolean.parseBoolean(line.split("\\:")[1]);
                 } else if (line.contains("theme")) {
                     theme = Integer.parseInt(line.split("\\:")[1]);
-                } else if(line.contains("profile picture:")){
+                } else if (line.contains("profile picture:")) {
                     profilePicture = Integer.parseInt(line.split("\\:")[1]);
-                } else if(line.contains("custompfpicpath")){
+                } else if (line.contains("custompfpicpath")) {
                     customProfilePicturePath = line.split("\\'")[1];
                     System.out.println(customProfilePicturePath);
                 }
@@ -201,7 +222,7 @@ public class SaveFile {
                     MeasureScreenController.sensor3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     MeasureScreenController.measurementNameString = String.valueOf(line.split("\\:")[1]);
-                } else if(line.contains("location")){
+                } else if (line.contains("location")) {
                     MeasureScreenController.measurementLocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     MeasureScreenController.measurementDateString = String.valueOf(line.split("\\:")[1]);
@@ -239,12 +260,12 @@ public class SaveFile {
 
     }
 
-    public static void deleteMeasurementFromFile(String filename){
+    public static void deleteMeasurementFromFile(String filename) {
         File measurementFile = new File(pathForMeasurements + filename);
         measurementFile.delete();
     }
 
-    public static void deleteMeasurementFromDatabase(int measurementid){
+    public static void deleteMeasurementFromDatabase(int measurementid) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
         String deleteMeasurementQuery = "DELETE FROM measurement WHERE measurement_id = '" + measurementid + "'";
@@ -304,7 +325,7 @@ public class SaveFile {
                     throw new RuntimeException(e);
                 }
                 if (line.contains("email")) {
-                    email= String.valueOf(line.split("\\:")[1]);
+                    email = String.valueOf(line.split("\\:")[1]);
 
                 } else if (line.contains("password")) {
                     password = String.valueOf(line.split("\\:")[1]);
@@ -315,12 +336,12 @@ public class SaveFile {
     }
 
     //For comparing two locally saved measurements
-    public static void compareMeasurementsFromFile(String m1FileName, String m2FileName){
+    public static void compareMeasurementsFromFile(String m1FileName, String m2FileName) {
         File m1File = new File(pathForMeasurements + m1FileName);
         File m2File = new File(pathForMeasurements + m2FileName);
 
         if (m1File.exists()) {
-            CompareMeasurementsScreenController.m1NameString = m1FileName.split("\\.")[0];;
+            CompareMeasurementsScreenController.m1NameString = m1FileName.split("\\.")[0];
             FileReader measurementFileReader;
             try {
                 measurementFileReader = new FileReader(m1File);
@@ -342,22 +363,22 @@ public class SaveFile {
                 } else if (line.contains("sensor2Type")) {
                     CompareMeasurementsScreenController.m1Slot2TypeString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor3Type")) {
-                    CompareMeasurementsScreenController.m1Slot3TypeString= String.valueOf(line.split("\\:")[1]);
+                    CompareMeasurementsScreenController.m1Slot3TypeString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor1Value")) {
                     CompareMeasurementsScreenController.m1Slot1ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor2Value")) {
                     CompareMeasurementsScreenController.m1Slot2ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor3Value")) {
                     CompareMeasurementsScreenController.m1Slot3ValueString = String.valueOf(line.split("\\:")[1]);
-                }else if (line.contains("name")) {
+                } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m1NameString = String.valueOf(line.split("\\:")[1]);
-                } else if(line.contains("location")){
+                } else if (line.contains("location")) {
                     CompareMeasurementsScreenController.m1LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m1DateString = String.valueOf(line.split("\\:")[1]);
                 }
             }
-        } else{
+        } else {
             System.out.println("error");
         }
         if (m2File.exists()) {
@@ -383,28 +404,28 @@ public class SaveFile {
                 } else if (line.contains("sensor2Type")) {
                     CompareMeasurementsScreenController.m2Slot2TypeString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor3Type")) {
-                    CompareMeasurementsScreenController.m2Slot3TypeString= String.valueOf(line.split("\\:")[1]);
+                    CompareMeasurementsScreenController.m2Slot3TypeString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor1Value")) {
                     CompareMeasurementsScreenController.m2Slot1ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor2Value")) {
                     CompareMeasurementsScreenController.m2Slot2ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("sensor3Value")) {
                     CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
-                }else if (line.contains("name")) {
+                } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
-                } else if(line.contains("location")){
+                } else if (line.contains("location")) {
                     CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
                 }
             }
-        } else{
+        } else {
             System.out.println("error");
         }
     }
 
     //for comparing 2 measurements from the database
-    public static void compareMeasurementsFromDatabase(int m1MeasurementId, int m2MeasurementId){
+    public static void compareMeasurementsFromDatabase(int m1MeasurementId, int m2MeasurementId) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDB = connection.getDBConnection();
         String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, measurement_name, measurement_location, date FROM measurement WHERE measurement_id = '" + m1MeasurementId + "' or measurement_id = '" + m2MeasurementId + "'";
@@ -419,7 +440,7 @@ public class SaveFile {
             CompareMeasurementsScreenController.m1Slot2TypeString = result.getString(2);
             CompareMeasurementsScreenController.m1Slot3TypeString = result.getString(3);
             CompareMeasurementsScreenController.m1Slot1ValueString = result.getString(4);
-            CompareMeasurementsScreenController.m1Slot2ValueString= result.getString(5);
+            CompareMeasurementsScreenController.m1Slot2ValueString = result.getString(5);
             CompareMeasurementsScreenController.m1Slot3ValueString = result.getString(6);
             CompareMeasurementsScreenController.m1NameString = result.getString(7);
             CompareMeasurementsScreenController.m1LocationString = result.getString(8);
@@ -430,7 +451,7 @@ public class SaveFile {
             CompareMeasurementsScreenController.m2Slot2TypeString = result.getString(2);
             CompareMeasurementsScreenController.m2Slot3TypeString = result.getString(3);
             CompareMeasurementsScreenController.m2Slot1ValueString = result.getString(4);
-            CompareMeasurementsScreenController.m2Slot2ValueString= result.getString(5);
+            CompareMeasurementsScreenController.m2Slot2ValueString = result.getString(5);
             CompareMeasurementsScreenController.m2Slot3ValueString = result.getString(6);
             CompareMeasurementsScreenController.m2NameString = result.getString(7);
             CompareMeasurementsScreenController.m2LocationString = result.getString(8);
@@ -439,6 +460,75 @@ public class SaveFile {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void compareMeasurementsFromFileAndDatabase(int databaseMeasurementId, String localItem) {
+        File localFile = new File(pathForMeasurements + localItem);
+
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectDB = connection.getDBConnection();
+        String readMeasurementQuery = "SELECT slot1Type, slot2Type, slot3Type, slot1Value, slot2Value, slot3Value, measurement_name, measurement_location, date FROM measurement WHERE measurement_id = '" + databaseMeasurementId + "'";
+        Statement databaseMeasurementsStatement;
+        ResultSet result;
+
+        //getting the database measurement
+        try {
+            databaseMeasurementsStatement = connectDB.createStatement();
+            result = databaseMeasurementsStatement.executeQuery(readMeasurementQuery);
+            CompareMeasurementsScreenController.m1Slot1TypeString = result.getString(1);
+            CompareMeasurementsScreenController.m1Slot2TypeString = result.getString(2);
+            CompareMeasurementsScreenController.m1Slot3TypeString = result.getString(3);
+            CompareMeasurementsScreenController.m1Slot1ValueString = result.getString(4);
+            CompareMeasurementsScreenController.m1Slot2ValueString = result.getString(5);
+            CompareMeasurementsScreenController.m1Slot3ValueString = result.getString(6);
+            CompareMeasurementsScreenController.m1NameString = result.getString(7);
+            CompareMeasurementsScreenController.m1LocationString = result.getString(8);
+            CompareMeasurementsScreenController.m1DateString = result.getString(9);
+            connectDB.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        //getting the local measurement
+        if (localFile.exists()) {
+            CompareMeasurementsScreenController.m2NameString = localItem.split("\\.")[0];
+            FileReader measurementFileReader;
+            try {
+                measurementFileReader = new FileReader(localFile);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BufferedReader measurementReader = new BufferedReader(measurementFileReader);
+            String line;
+
+            while (true) {
+                try {
+                    if ((line = measurementReader.readLine()) == null)
+                        break; //if the next line is empty, break the loop
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (line.contains("sensor1Type")) {
+                    CompareMeasurementsScreenController.m2Slot1TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Type")) {
+                    CompareMeasurementsScreenController.m2Slot2TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Type")) {
+                    CompareMeasurementsScreenController.m2Slot3TypeString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor1Value")) {
+                    CompareMeasurementsScreenController.m2Slot1ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor2Value")) {
+                    CompareMeasurementsScreenController.m2Slot2ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("sensor3Value")) {
+                    CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("name")) {
+                    CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("location")) {
+                    CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
+                } else if (line.contains("date")) {
+                    CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
+                }
+            }
         }
     }
 }
