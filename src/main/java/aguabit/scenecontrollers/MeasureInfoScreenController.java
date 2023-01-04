@@ -5,11 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import javax.swing.*;
-import java.awt.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Set;
+
 
 public class MeasureInfoScreenController implements Initializable {
     public static int slotNumber;
