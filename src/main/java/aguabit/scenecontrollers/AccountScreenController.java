@@ -1,15 +1,21 @@
 package aguabit.scenecontrollers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import saveFile.SaveFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
@@ -44,6 +50,15 @@ public class AccountScreenController implements Initializable {
     private TextField phoneNumberTextfield = new TextField();
     @FXML
     private TextField emailForPasswordTextfield = new TextField();
+    @FXML
+    private TextField passwordForDeleteTextfield = new TextField();
+    @FXML
+    private TextField emailForDeleteTextfield = new TextField();
+
+    @FXML
+    private AnchorPane accountPane = new AnchorPane();
+    @FXML
+    private Label informationLabel = new Label();
 
     private String username = MenuOverlayController.userName;
     private String email;
@@ -54,6 +69,7 @@ public class AccountScreenController implements Initializable {
 
     @FXML
     private ImageView profilePictureAccount = new ImageView();
+
 
     //setting all the labels
     @Override
@@ -185,37 +201,81 @@ public class AccountScreenController implements Initializable {
                     System.out.println(z.getMessage());
                 }
             } else {
-                System.out.println("Filled in information for changing password is not correct");
+                informationLabel.setText("Account information incorrect");
             }
         } else{
-            System.out.println("User not logged in");
+            informationLabel.setText("User not logged in");
         }
     }
 
     //code for updating the other user information in the database
     public void updateInformation(){
         if(MenuOverlayController.loginStatus) {
-            if (oldEmailTextfield.getText().equals(email) && passwordTextfield.getText().equals(password) && !newEmailTextfield.getText().isBlank() && Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(newEmailTextfield.getText()).matches()) {
+            if (oldEmailTextfield.getText().equals(email) && passwordTextfield.getText().equals(password) && !newEmailTextfield.getText().isBlank()) {
                 String phoneNumberCheck = null;
+                String emailCheck = null;
+                if(Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(newEmailTextfield.getText()).matches()){
+                    emailCheck = newEmailTextfield.getText();
+                } else {
+                    informationLabel.setText("Not a valid e-mail adress");
+                }
                 if (!phoneNumberTextfield.getText().isBlank() && phoneNumberTextfield.getText().matches("[0-9]+")) {
                     phoneNumberCheck = phoneNumberTextfield.getText();
                 } else {
                     phoneNumberTextfield.setText(phoneNumber);
-                    System.out.println("Not a valid phone number, please only enter numbers.");
+                    informationLabel.setText("Not a valid phone number, please only enter numbers.");
                 }
-                DatabaseConnection connection = new DatabaseConnection();
-                Connection connectDB = connection.getDBConnection();
-                String updateInformationQuery = "UPDATE user SET first_name = '"+ firstNameTextfield.getText() + "', last_name = '"+lastNameTextfield.getText()+"', username = '"+userNameTextfield.getText()+"', phonenumber = '"+phoneNumberCheck+"', email = '"+newEmailTextfield.getText()+"' WHERE user_id = '"+MenuOverlayController.userId+"'";
-                try {
-                    PreparedStatement pstmt = connectDB.prepareStatement(updateInformationQuery);
-                    pstmt.executeUpdate();
-                    connectDB.close();
-                } catch (SQLException z) {
-                    System.out.println(z.getMessage());
+                if((phoneNumberTextfield.getText().isBlank() || phoneNumberCheck != null) && emailCheck != null) {
+                    DatabaseConnection connection = new DatabaseConnection();
+                    Connection connectDB = connection.getDBConnection();
+                    String updateInformationQuery = "UPDATE user SET first_name = '" + firstNameTextfield.getText() + "', last_name = '" + lastNameTextfield.getText() + "', username = '" + userNameTextfield.getText() + "', phonenumber = '" + phoneNumberCheck + "', email = '" + emailCheck + "' WHERE user_id = '" + MenuOverlayController.userId + "'";
+                    try {
+                        PreparedStatement pstmt = connectDB.prepareStatement(updateInformationQuery);
+                        pstmt.executeUpdate();
+                        connectDB.close();
+                    } catch (SQLException z) {
+                        System.out.println(z.getMessage());
+                    }
                 }
             }
         } else {
-            System.out.println("User not logged in");
+            informationLabel.setText("User not logged in");
+        }
+    }
+
+    //for deleting an account
+    public void deleteAccount(){
+        if (passwordForDeleteTextfield.getText().equals(password) && emailForDeleteTextfield.getText().equals(email)) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete account");
+            alert.setHeaderText("You're about to delete your account");
+            alert.setContentText("Are you sure you want to delete this account?");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            alertStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+
+            //Showing a prompt when the menu exit button is clicked, to make sure the user wants to quit
+            if(alert.showAndWait().get()== ButtonType.OK) {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectDB = connection.getDBConnection();
+                String deletePasswordQuery = "DELETE FROM user WHERE user_id = '" + MenuOverlayController.userId + "'";
+
+                try {
+                    PreparedStatement pstmt = connectDB.prepareStatement(deletePasswordQuery);
+                    pstmt.executeUpdate();
+                    connectDB.close();
+                    MenuOverlayController.loginStatus = false;
+                    MenuOverlayController.userId = -1;
+                    MenuOverlayController.userName = "User";
+                    AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AccountScreen.fxml")));
+                    accountPane.getChildren().setAll(pane);
+                } catch (SQLException z) {
+                    System.out.println(z.getMessage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            informationLabel.setText("Account information incorrect");
         }
     }
 }
