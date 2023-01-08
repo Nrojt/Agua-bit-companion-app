@@ -358,7 +358,7 @@ public class MeasureScreenController implements Initializable {
 
     public void openLocationMap() throws IOException {
         if(!measurementLocationString.equals("Location")){
-            LocationMapScreenController.locationMapCoordinates = measurementLocationString.split("\\,")[0]+"+"+measurementLocationString.split("\\,")[1];
+            LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
