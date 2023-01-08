@@ -81,7 +81,7 @@
       <MFXButton layoutX="808.0" layoutY="550.0" onAction="#openMeasurementsButton" prefHeight="25.0" prefWidth="130.0" text="Open measurement" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="45.0" />
       <Label fx:id="informationLabel" alignment="CENTER" layoutX="205.0" layoutY="485.0" prefHeight="17.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Label fx:id="measurementNameLabel" layoutX="45.0" layoutY="200.0" text="Measurement Name" />
-      <Label fx:id="measurementLocationLabel" layoutX="45.0" layoutY="236.0" text="Location" />
+      <Label fx:id="measurementLocationLabel" layoutX="45.0" layoutY="236.0" onMouseClicked="#openLocationMap" text="Location" />
       <Label fx:id="measurementDateLabel" layoutX="45.0" layoutY="218.0" text="Date" />
    </children>
 </AnchorPane>

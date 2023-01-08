@@ -88,16 +88,18 @@ public class OpenMeasurementsScreenController implements Initializable {
 
         //getting the names of the locally saved measurements and adding them to the locally saved listview
         assert files != null; //assert is a keyword that will check the condition. If the condition is not met, the error will automatically be thrown
-        if (files.length > 0) {
-            for (File file : files) {
-                if (file.isFile() && file.getName().endsWith(".txt")) {
-                    localMeasurements.add(file.getName().split("\\.")[0]);
+        if(files != null) {
+            if (files.length > 0) {
+                for (File file : files) {
+                    if (file.isFile() && file.getName().endsWith(".txt")) {
+                        localMeasurements.add(file.getName().split("\\.")[0]);
+                    }
                 }
+                System.out.println(localMeasurements);
+                localMeasurementsListView.getItems().addAll(localMeasurements);
+            } else {
+                localMeasurementsListView.getItems().add("No locally saved measurements found");
             }
-            System.out.println(localMeasurements);
-            localMeasurementsListView.getItems().addAll(localMeasurements);
-        } else {
-            localMeasurementsListView.getItems().add("No locally saved measurements found");
         }
 
         informationLabel.setText("Use cntrl+left_mouse_button to (de)select");

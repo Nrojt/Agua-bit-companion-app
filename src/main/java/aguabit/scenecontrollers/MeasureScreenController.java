@@ -355,4 +355,26 @@ public class MeasureScreenController implements Initializable {
             }
         }
     }
+
+    public void openLocationMap() throws IOException {
+        if(!measurementLocationString.equals("Location")){
+            LocationMapScreenController.locationMapCoordinates = measurementLocationString.split("\\,")[0]+"+"+measurementLocationString.split("\\,")[1];
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setTitle("Measurement Information");
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+            String css = null;
+            if(SaveFile.theme == 0) {
+                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+            } else if (SaveFile.theme == 1) {
+                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+            }
+            scene.getStylesheets().add(css);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }
+    }
 }
