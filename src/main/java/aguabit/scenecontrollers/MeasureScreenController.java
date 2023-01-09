@@ -213,12 +213,9 @@ public class MeasureScreenController implements Initializable {
             switch (sensor1TypeString) {
                 case "PH-Sensor":
                     double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
-                    System.out.println("slope: "+ slope);
                     double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
-                    System.out.println("intercept: "+intercept);
-                    double _phValue = slope*((Double.parseDouble(port1)/1240*5000)-1500.0)/3.0+intercept;
-                    System.out.println("phvalue: "+_phValue);
-                    port1 = String.valueOf(roundDoubles(_phValue,2));
+                    double _phValue = slope*((Double.parseDouble(port1)/1240*5000))/(3.0+intercept);
+                    port1 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
                     break;
                 case "Temperature sensor":
                     port1 = String.valueOf(roundDoubles(Double.parseDouble(port1), 2));
@@ -228,10 +225,10 @@ public class MeasureScreenController implements Initializable {
 
             switch (sensor2TypeString) {
                 case "PH-Sensor":
-                    double slope = (7.0-4.0)/((1500.0-1500.0)/3.0 - (2032.44-1500.0)/3.0);
-                    double intercept = 7.0 - slope*(1500.0-1500.0)/3.0;
-                    double _phValue = slope*(Double.parseDouble(port2)-1500.0)/3.0+intercept;
-                    port2 = String.valueOf(roundDoubles(_phValue,2));
+                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
+                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
+                    double _phValue = slope*((Double.parseDouble(port2)/1240*5000))/(3.0+intercept);
+                    port2 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
                 case "Temperature sensor":
                     port2 = String.valueOf(roundDoubles(Double.parseDouble(port2), 2));
                 default:
@@ -240,10 +237,10 @@ public class MeasureScreenController implements Initializable {
 
             switch (sensor3TypeString) {
                 case "PH-Sensor":
-                    double slope = (7.0-4.0)/((1500.0-1500.0)/3.0 - (2032.44-1500.0)/3.0);
-                    double intercept = 7.0 - slope*(1500.0-1500.0)/3.0;
-                    double _phValue = slope*(Double.parseDouble(port3)-1500.0)/3.0+intercept;
-                    port3 = String.valueOf(roundDoubles(_phValue,2));
+                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
+                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
+                    double _phValue = slope*((Double.parseDouble(port3)/1240*5000))/(3.0+intercept);
+                    port3 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
                 case "Temperature sensor":
                     port3 = String.valueOf(roundDoubles(Double.parseDouble(port3), 2));
                 default:
