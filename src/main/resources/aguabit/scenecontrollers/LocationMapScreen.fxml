@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.LocationMapScreenController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aguabit.scenecontrollers.LocationMapScreenController">
    <children>
-      <WebView fx:id="locationMapWebView" layoutX="26.0" layoutY="39.0" prefHeight="330.0" prefWidth="559.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0" />
+      <WebView fx:id="locationMapWebView" layoutX="26.0" layoutY="39.0" prefHeight="330.0" prefWidth="559.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
+      <Label alignment="CENTER" layoutX="25.0" layoutY="105.0" prefHeight="36.0" prefWidth="609.0" text="Location" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="17.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <MFXButton layoutX="5.0" layoutY="550.0" onAction="#openInBrowser" text="Open in browser" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" />
+      <MFXButton fx:id="mapsProviderSwitchButton" layoutX="649.0" layoutY="550.0" onAction="#switchMapProvider" text="Switch to Google Maps" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="5.0" />
    </children>
 </AnchorPane>

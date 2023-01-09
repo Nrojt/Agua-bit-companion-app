@@ -202,17 +202,23 @@ public class MeasureScreenController implements Initializable {
         microBit.flushIOBuffers();
         microBit.closePort();
 
-        //the microbit sends the values with | in between, split seperates those again
+        //the microbit sends the values with | in between, split separates those again
         port1 = microbitInput.split("\\|")[0];
         port2 = microbitInput.split("\\|")[1];
         port3 = microbitInput.split("\\|")[2];
 
-
+        System.out.println(sensor1TypeString);
         //rounding the input depending on what type of sensor it is
         try {
             switch (sensor1TypeString) {
-                case "PH-Value":
-                    port1 = String.valueOf(roundDoubles((Double.parseDouble(port1) / 100), 2));
+                case "PH-Sensor":
+                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
+                    System.out.println("slope: "+ slope);
+                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
+                    System.out.println("intercept: "+intercept);
+                    double _phValue = slope*((Double.parseDouble(port1)/1240*5000)-1500.0)/3.0+intercept;
+                    System.out.println("phvalue: "+_phValue);
+                    port1 = String.valueOf(roundDoubles(_phValue,2));
                     break;
                 case "Temperature sensor":
                     port1 = String.valueOf(roundDoubles(Double.parseDouble(port1), 2));
@@ -221,9 +227,11 @@ public class MeasureScreenController implements Initializable {
             }
 
             switch (sensor2TypeString) {
-                case "PH-Value":
-                    port2 = String.valueOf(roundDoubles((Double.parseDouble(port2) / 100), 2));
-                    break;
+                case "PH-Sensor":
+                    double slope = (7.0-4.0)/((1500.0-1500.0)/3.0 - (2032.44-1500.0)/3.0);
+                    double intercept = 7.0 - slope*(1500.0-1500.0)/3.0;
+                    double _phValue = slope*(Double.parseDouble(port2)-1500.0)/3.0+intercept;
+                    port2 = String.valueOf(roundDoubles(_phValue,2));
                 case "Temperature sensor":
                     port2 = String.valueOf(roundDoubles(Double.parseDouble(port2), 2));
                 default:
@@ -231,9 +239,11 @@ public class MeasureScreenController implements Initializable {
             }
 
             switch (sensor3TypeString) {
-                case "PH-Value":
-                    port3 = String.valueOf(roundDoubles((Double.parseDouble(port3) / 100), 2));
-                    break;
+                case "PH-Sensor":
+                    double slope = (7.0-4.0)/((1500.0-1500.0)/3.0 - (2032.44-1500.0)/3.0);
+                    double intercept = 7.0 - slope*(1500.0-1500.0)/3.0;
+                    double _phValue = slope*(Double.parseDouble(port3)-1500.0)/3.0+intercept;
+                    port3 = String.valueOf(roundDoubles(_phValue,2));
                 case "Temperature sensor":
                     port3 = String.valueOf(roundDoubles(Double.parseDouble(port3), 2));
                 default:
@@ -357,13 +367,13 @@ public class MeasureScreenController implements Initializable {
     }
 
     public void openLocationMap() throws IOException {
-        if(!measurementLocationString.equals("Location")){
+        if(!measurementLocationString.equals("Location") && !measurementLocationString.equals("null")){
             LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
-            stage.setTitle("Measurement Information");
+            stage.setTitle("Measurement Location");
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
             String css = null;
             if(SaveFile.theme == 0) {

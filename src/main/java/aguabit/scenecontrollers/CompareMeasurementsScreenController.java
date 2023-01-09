@@ -179,4 +179,34 @@ public class CompareMeasurementsScreenController implements Initializable {
         }
 
     }
+
+    public void m1OpenLocationMap() throws IOException {
+        openLocationMap(m1LocationString);
+    }
+
+    public void m2OpenLocationMap() throws IOException {
+        openLocationMap(m2LocationString);
+    }
+
+    private void openLocationMap(String measurementLocationString) throws IOException {
+        if(!measurementLocationString.equals("Location") && !measurementLocationString.equals("null")){
+            LocationMapScreenController.locationMapCoordinates = measurementLocationString;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setTitle("Measurement Location");
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+            String css = null;
+            if(SaveFile.theme == 0) {
+                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
+            } else if (SaveFile.theme == 1) {
+                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
+            }
+            scene.getStylesheets().add(css);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }
+    }
 }

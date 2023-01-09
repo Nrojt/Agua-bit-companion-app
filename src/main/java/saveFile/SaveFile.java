@@ -104,6 +104,9 @@ public class SaveFile {
 
     //The code for actually saving the file to the AguaBit folder, separate because it needs to be called multiple times
     private static void savingTheFileLocal(String measurementName, String measurementLocation, String sensor1Type, String sensor2Type, String sensor3Type, String sensor1Value, String sensor2Value, String sensor3Value, File measurementFile, String date) throws FileNotFoundException {
+        if(measurementLocation.isBlank()){
+            measurementLocation = "null";
+        }
         FileOutputStream out;
         PrintStream p;
         out = new FileOutputStream(measurementFile);
