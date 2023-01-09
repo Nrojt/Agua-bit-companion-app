@@ -25,7 +25,7 @@ public class UpdateScreenController implements Initializable {
     //These Strings are placed here, so they can be easily updated if required
     private final String pathToDocumentFolder = new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
     private final String pathToFirmware = pathToDocumentFolder + "/AguaBit/firmware/Aguabit-firmware.hex";
-    private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.5.0/Aguabit-firmware.hex";
+    private final String urlToFirmware = "https://github.com/Nrojt/AguaBit-firmware/releases/download/v1.6.0/Aguabit-firmware.hex";
     @FXML
     private Label informationLabel = new Label();
 
