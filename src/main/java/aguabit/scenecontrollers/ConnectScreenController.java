@@ -46,6 +46,8 @@ public class ConnectScreenController implements Initializable {
     public void sendToProduct() {
         if (slot1SensorChoice.getSelectionModel().isEmpty() || slot2SensorChoice.getSelectionModel().isEmpty() || slot3SensorChoice.getSelectionModel().isEmpty()){
             informationLabel.setText("Please make a selection for each slot");
+        } else if (slot1SensorChoice.getValue().equals("Empty") && slot2SensorChoice.getValue().equals("Empty") && slot3SensorChoice.getValue().equals("Empty")) {
+            informationLabel.setText("Please select and connect at least one sensor");
         } else {
             if (MenuOverlayController.isAguabitConnected) { //this checks if the Microbit is detected or not
                 //Getting the slot types from the choice boxes

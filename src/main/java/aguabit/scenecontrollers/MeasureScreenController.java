@@ -154,125 +154,129 @@ public class MeasureScreenController implements Initializable {
 
     //code for reading the measurements from the microbit
     private void getMeasurementsFromMicrobit() {
-        boolean measurementError = false;
-        port1 = "";
-        port2 = "";
-        port3 = "";
+        if(!sensor1TypeString.equals("Unknown") && !sensor2TypeString.equals("Unknown") && !sensor3TypeString.equals("Unknown")) {
+            boolean measurementError = false;
+            port1 = "";
+            port2 = "";
+            port3 = "";
 
-        String microbitInput = "";
+            String microbitInput = "";
 
-        //opening a port for communicating with the Microbit over usb
-        System.out.println(Arrays.toString(SerialPort.getCommPorts()));
-        //TODO find a better way to get the serialport of the microbit, if multiple serial ports are connected this current way will cause errors
-        SerialPort microBit = SerialPort.getCommPorts()[0];
+            //opening a port for communicating with the Microbit over usb
+            System.out.println(Arrays.toString(SerialPort.getCommPorts()));
+            //TODO find a better way to get the serialport of the microbit, if multiple serial ports are connected this current way will cause errors
+            SerialPort microBit = SerialPort.getCommPorts()[0];
 
-        microBit.openPort();
-        microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-        microBit.setBaudRate(115200); //the speed of communication
-        OutputStream sendToMicroBit = microBit.getOutputStream();
-        InputStream readFromMicroBit = microBit.getInputStream();
+            microBit.openPort();
+            microBit.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+            microBit.setBaudRate(115200); //the speed of communication
+            OutputStream sendToMicroBit = microBit.getOutputStream();
+            InputStream readFromMicroBit = microBit.getInputStream();
 
-        //code for getting the measurement reading from the microbit
-        try {
-            sendToMicroBit.write('M'); //when the microbit receives 'M', it will enter the measurement state.
-
-            //giving the microbit time to receive the 'M' and send the measurements over serial
+            //code for getting the measurement reading from the microbit
             try {
-                Thread.sleep(500);
-            } catch (InterruptedException ignored) {
-            }
+                sendToMicroBit.write('M'); //when the microbit receives 'M', it will enter the measurement state.
 
-            //actually reading the input, the input cannot be longer then 50 characters. This is just as a failsafe
-            for(int i = 0; i< 50; i++){
-                char input = (char) readFromMicroBit.read();
-                if(input == '!' || String.valueOf(input).isBlank()){
-                    break;
-                }else{
-                    microbitInput += input;
+                //giving the microbit time to receive the 'M' and send the measurements over serial
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignored) {
                 }
+
+                //actually reading the input, the input cannot be longer then 50 characters. This is just as a failsafe
+                for (int i = 0; i < 50; i++) {
+                    char input = (char) readFromMicroBit.read();
+                    if (input == '!' || String.valueOf(input).isBlank()) {
+                        break;
+                    } else {
+                        microbitInput += input;
+                    }
+                }
+
+            } catch (SerialPortIOException ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (SerialPortIOException ignored) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            System.out.println(microbitInput);
+            //for emptying the connection, prevents problems with doing another measurement
+            microBit.flushIOBuffers();
+            microBit.closePort();
 
-        System.out.println(microbitInput);
-        //for emptying the connection, prevents problems with doing another measurement
-        microBit.flushIOBuffers();
-        microBit.closePort();
+            //the microbit sends the values with | in between, split separates those again
+            port1 = microbitInput.split("\\|")[0];
+            port2 = microbitInput.split("\\|")[1];
+            port3 = microbitInput.split("\\|")[2];
 
-        //the microbit sends the values with | in between, split separates those again
-        port1 = microbitInput.split("\\|")[0];
-        port2 = microbitInput.split("\\|")[1];
-        port3 = microbitInput.split("\\|")[2];
+            System.out.println(sensor1TypeString);
+            //rounding the input depending on what type of sensor it is
+            try {
+                switch (sensor1TypeString) {
+                    case "PH-Sensor":
+                        double slope = (7.0 - 4.0) / ((1513.67 - 1500.0) / 3.0 - (2011.72 - 1500.0) / 3.0);
+                        double intercept = 7.0 - slope * (1513.67 - 1500.0) / 3.0;
+                        double _phValue = slope * ((Double.parseDouble(port1) / 1240 * 5000)) / (3.0 + intercept);
+                        port1 = String.valueOf(Math.abs(roundDoubles(_phValue, 2)));
+                        break;
+                    case "Temperature sensor":
+                        port1 = String.valueOf(roundDoubles(Double.parseDouble(port1), 2));
+                    default:
+                        break;
+                }
 
-        System.out.println(sensor1TypeString);
-        //rounding the input depending on what type of sensor it is
-        try {
-            switch (sensor1TypeString) {
-                case "PH-Sensor":
-                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
-                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
-                    double _phValue = slope*((Double.parseDouble(port1)/1240*5000))/(3.0+intercept);
-                    port1 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
-                    break;
-                case "Temperature sensor":
-                    port1 = String.valueOf(roundDoubles(Double.parseDouble(port1), 2));
-                default:
-                    break;
+                switch (sensor2TypeString) {
+                    case "PH-Sensor":
+                        double slope = (7.0 - 4.0) / ((1513.67 - 1500.0) / 3.0 - (2011.72 - 1500.0) / 3.0);
+                        double intercept = 7.0 - slope * (1513.67 - 1500.0) / 3.0;
+                        double _phValue = slope * ((Double.parseDouble(port2) / 1240 * 5000)) / (3.0 + intercept);
+                        port2 = String.valueOf(Math.abs(roundDoubles(_phValue, 2)));
+                    case "Temperature sensor":
+                        port2 = String.valueOf(roundDoubles(Double.parseDouble(port2), 2));
+                    default:
+                        break;
+                }
+
+                switch (sensor3TypeString) {
+                    case "PH-Sensor":
+                        double slope = (7.0 - 4.0) / ((1513.67 - 1500.0) / 3.0 - (2011.72 - 1500.0) / 3.0);
+                        double intercept = 7.0 - slope * (1513.67 - 1500.0) / 3.0;
+                        double _phValue = slope * ((Double.parseDouble(port3) / 1240 * 5000)) / (3.0 + intercept);
+                        port3 = String.valueOf(Math.abs(roundDoubles(_phValue, 2)));
+                    case "Temperature sensor":
+                        port3 = String.valueOf(roundDoubles(Double.parseDouble(port3), 2));
+                    default:
+                        break;
+                }
+
+            } catch (NumberFormatException abc) {
+                measurementError = true;
             }
 
-            switch (sensor2TypeString) {
-                case "PH-Sensor":
-                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
-                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
-                    double _phValue = slope*((Double.parseDouble(port2)/1240*5000))/(3.0+intercept);
-                    port2 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
-                case "Temperature sensor":
-                    port2 = String.valueOf(roundDoubles(Double.parseDouble(port2), 2));
-                default:
-                    break;
+            sensor1ValueString = port1;
+            sensor2ValueString = port2;
+            sensor3ValueString = port3;
+
+            if (port1.contains("Infinity") || port2.contains("Infinity") || port3.contains("Infinity")) {
+                measurementError = true;
             }
 
-            switch (sensor3TypeString) {
-                case "PH-Sensor":
-                    double slope = (7.0-4.0)/((1513.67 -1500.0)/3.0 - (2011.72 -1500.0)/3.0);
-                    double intercept = 7.0 - slope*(1513.67-1500.0)/3.0;
-                    double _phValue = slope*((Double.parseDouble(port3)/1240*5000))/(3.0+intercept);
-                    port3 = String.valueOf(Math.abs(roundDoubles(_phValue,2)));
-                case "Temperature sensor":
-                    port3 = String.valueOf(roundDoubles(Double.parseDouble(port3), 2));
-                default:
-                    break;
+            noMeasurementGoingOn = true; //making it so the measurement button can be pressed again
+
+            if (measurementError) {
+                Platform.runLater(() -> {
+                    informationLabel.setText("Measurement failed, please make sure the sensors are connected correctly");
+                });
+            } else {
+                //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
+                Platform.runLater(() -> {
+                    sensor1ValueLabel.setText(sensor1ValueString);
+                    sensor2ValueLabel.setText(sensor2ValueString);
+                    sensor3ValueLabel.setText(sensor3ValueString);
+                    informationLabel.setText("Measurement succesful");
+                });
             }
-
-        } catch (NumberFormatException abc){
-            measurementError = true;
-        }
-
-        sensor1ValueString = port1;
-        sensor2ValueString = port2;
-        sensor3ValueString = port3;
-
-        if(port1.contains("Infinity") || port2.contains("Infinity") || port3.contains("Infinity")){
-            measurementError = true;
-        }
-
-        noMeasurementGoingOn = true; //making it so the measurement button can be pressed again
-
-        if(measurementError){
-            Platform.runLater(() -> {
-                informationLabel.setText("Measurement failed, please make sure the sensors are connected correctly");
-            });
         } else {
-            //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
-            Platform.runLater(() -> {
-                sensor1ValueLabel.setText(sensor1ValueString);
-                sensor2ValueLabel.setText(sensor2ValueString);
-                sensor3ValueLabel.setText(sensor3ValueString);
-                informationLabel.setText("Measurement succesful");
-            });
+            informationLabel.setText("Please make a selection for each slot on the Connect screen");
         }
     }
 
@@ -350,10 +354,17 @@ public class MeasureScreenController implements Initializable {
                 sensor1TypeLabel.setText(sensor1TypeString);
                 sensor2TypeLabel.setText(sensor2TypeString);
                 sensor3TypeLabel.setText(sensor3TypeString);
+                sensor1IndicationLabel.setText(sensor1IndicationString);
+                sensor2IndicationLabel.setText(sensor2IndicationString);
+                sensor3IndicationLabel.setText(sensor3IndicationString);
                 measurementNameLabel.setText(measurementNameString);
                 measurementLocationLabel.setText(measurementLocationString);
                 measurementDateLabel.setText(measurementDateString);
-                sensor1IndicationLabel.setTextFill(Color.rgb(255,2,255)); //for @greed
+
+                if(sensor1TypeString.equals("PH-Sensor") && Double.parseDouble(sensor2ValueString) > 7){
+                    sensor1IndicationString = "Good";
+                    sensor1IndicationLabel.setTextFill(Color.rgb(255,2,255)); //for @greed
+                }
             });
 
             try {
