@@ -377,8 +377,8 @@ public class MeasureScreenController implements Initializable {
                         sensor1IndicationString = "Safe";
                         sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
                     }else if (Double.parseDouble(sensor1ValueString) > 70 && Double.parseDouble(sensor1ValueString) <= 100) {
-                        sensor1IndicationString = "Unsafe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                        sensor1IndicationString = "Warning";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
                     } else if(Double.parseDouble(sensor1ValueString) > 20 && Double.parseDouble(sensor1ValueString) <=70){
                         sensor1IndicationString = "Unsafe";
                         sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
@@ -407,8 +407,8 @@ public class MeasureScreenController implements Initializable {
                         sensor2IndicationString = "Safe";
                         sensor2IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
                     }else if (Double.parseDouble(sensor2ValueString) > 70 && Double.parseDouble(sensor2ValueString) <= 100) {
-                        sensor2IndicationString = "Unsafe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                        sensor2IndicationString = "Warning";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
                     } else if(Double.parseDouble(sensor2ValueString) > 20 && Double.parseDouble(sensor2ValueString) <=70){
                         sensor2IndicationString = "Unsafe";
                         sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
@@ -437,8 +437,8 @@ public class MeasureScreenController implements Initializable {
                         sensor3IndicationString = "Safe";
                         sensor3IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
                     }else if (Double.parseDouble(sensor3ValueString) > 70 && Double.parseDouble(sensor3ValueString) <= 100) {
-                        sensor3IndicationString = "Unsafe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                        sensor3IndicationString = "Warning";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
                     } else if(Double.parseDouble(sensor3ValueString) > 20 && Double.parseDouble(sensor3ValueString) <=70){
                         sensor3IndicationString = "Unsafe";
                         sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
