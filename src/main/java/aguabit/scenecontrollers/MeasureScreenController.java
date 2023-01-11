@@ -361,34 +361,96 @@ public class MeasureScreenController implements Initializable {
                 measurementLocationLabel.setText(measurementLocationString);
                 measurementDateLabel.setText(measurementDateString);
 
-                if (sensor1TypeString.equals("PH-Sensor") && (Double.parseDouble(sensor2ValueString) > 6.5) && (Double.parseDouble(sensor2ValueString) <= 8)) {
-                    sensor1IndicationString = "Safe.";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2)); //for @greed
+                if (sensor1TypeString.equals("PH-Sensor")){
+                    if(Double.parseDouble(sensor1ValueString) > 6.5 && Double.parseDouble(sensor1ValueString) <= 8){
+                        sensor1IndicationString = "Safe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    } else if (Double.parseDouble(sensor1ValueString) > 8) {
+                        sensor1IndicationString = "Warning";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
+                    } else if(Double.parseDouble(sensor1ValueString) <= 6.5){
+                        sensor1IndicationString = "Safe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                }else if(sensor1TypeString.equals("Temperature sensor")){
+                    if(Double.parseDouble(sensor1ValueString)> 10 && Double.parseDouble(sensor1ValueString) <= 20){
+                        sensor1IndicationString = "Safe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    }else if (Double.parseDouble(sensor1ValueString) > 70 && Double.parseDouble(sensor1ValueString) <= 100) {
+                        sensor1IndicationString = "Unsafe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor1ValueString) > 20 && Double.parseDouble(sensor1ValueString) <=70){
+                        sensor1IndicationString = "Unsafe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor1ValueString) <= 10){
+                        sensor1IndicationString = "Unsafe";
+                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                } else{
+                    sensor1IndicationLabel.setText("Unknown");
+                    sensor1IndicationLabel.setTextFill(Color.rgb(0,0,0));
                 }
-                if (sensor1TypeString.equals("PH-Sensor") && (Double.parseDouble(sensor2ValueString) > 8) && (Double.parseDouble(sensor2ValueString) <= 14)) {
-                    sensor1IndicationString = "WARNING!";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
+
+                if (sensor2TypeString.equals("PH-Sensor")){
+                    if(Double.parseDouble(sensor2ValueString) > 6.5 && Double.parseDouble(sensor2ValueString) <= 8){
+                        sensor2IndicationString = "Safe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    } else if (Double.parseDouble(sensor2ValueString) > 8) {
+                        sensor2IndicationString = "Warning";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
+                    } else if(Double.parseDouble(sensor2ValueString) <= 6.5){
+                        sensor2IndicationString = "Safe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                }else if(sensor2TypeString.equals("Temperature sensor")){
+                    if(Double.parseDouble(sensor2ValueString)> 10 && Double.parseDouble(sensor2ValueString) <= 20){
+                        sensor2IndicationString = "Safe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    }else if (Double.parseDouble(sensor2ValueString) > 70 && Double.parseDouble(sensor2ValueString) <= 100) {
+                        sensor2IndicationString = "Unsafe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor2ValueString) > 20 && Double.parseDouble(sensor2ValueString) <=70){
+                        sensor2IndicationString = "Unsafe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor2ValueString) <= 10){
+                        sensor2IndicationString = "Unsafe";
+                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                } else{
+                    sensor2IndicationLabel.setText("Unknown");
+                    sensor2IndicationLabel.setTextFill(Color.rgb(0,0,0));
                 }
-                if (sensor1TypeString.equals("PH-Sensor") && (Double.parseDouble(sensor2ValueString) > 0) && (Double.parseDouble(sensor2ValueString) <= 6.5)) {
-                    sensor1IndicationString = "UNSAFE!";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+
+                if (sensor3TypeString.equals("PH-Sensor")){
+                    if(Double.parseDouble(sensor3ValueString) > 6.5 && Double.parseDouble(sensor3ValueString) <= 8){
+                        sensor3IndicationString = "Safe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    } else if (Double.parseDouble(sensor3ValueString) > 8) {
+                        sensor3IndicationString = "Warning";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
+                    } else if(Double.parseDouble(sensor3ValueString) <= 6.5){
+                        sensor3IndicationString = "Safe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                }else if(sensor3TypeString.equals("Temperature sensor")){
+                    if(Double.parseDouble(sensor3ValueString)> 10 && Double.parseDouble(sensor3ValueString) <= 20){
+                        sensor3IndicationString = "Safe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
+                    }else if (Double.parseDouble(sensor3ValueString) > 70 && Double.parseDouble(sensor3ValueString) <= 100) {
+                        sensor3IndicationString = "Unsafe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor3ValueString) > 20 && Double.parseDouble(sensor3ValueString) <=70){
+                        sensor3IndicationString = "Unsafe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    } else if(Double.parseDouble(sensor3ValueString) <= 10){
+                        sensor3IndicationString = "Unsafe";
+                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
+                    }
+                } else{
+                    sensor3IndicationLabel.setText("Unknown");
+                    sensor3IndicationLabel.setTextFill(Color.rgb(0,0,0));
                 }
-                if (sensor1TypeString.equals("Temperature sensor") && (Double.parseDouble(sensor2ValueString) > 10) && (Double.parseDouble(sensor2ValueString) <= 20)) {
-                    sensor1IndicationString = "Safe.";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                }
-                if (sensor1TypeString.equals("Temperature sensor") && (Double.parseDouble(sensor2ValueString) > 70) && (Double.parseDouble(sensor2ValueString) <= 100)) {
-                    sensor1IndicationString = "Caution.";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                }
-                if (sensor1TypeString.equals("Temperature sensor") && (Double.parseDouble(sensor2ValueString) > 20) && (Double.parseDouble(sensor2ValueString) <= 70)) {
-                    sensor1IndicationString = "UNSAFE!";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                }
-                if (sensor1TypeString.equals("Temperature sensor") && (Double.parseDouble(sensor2ValueString) <= 10)) {
-                    sensor1IndicationString = "WATCH OUT!";
-                    sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                }
+
             }
 
             );
