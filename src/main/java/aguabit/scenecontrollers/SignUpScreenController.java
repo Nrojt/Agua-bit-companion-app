@@ -104,7 +104,7 @@ public class SignUpScreenController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //pressing enter in these fields will trigger the signup code
+        //pressing enter within these fields will trigger the signup code
         usernameTextfield.setOnKeyPressed(keypress -> {
             if (keypress.getCode() == KeyCode.ENTER) {
                 signUp();

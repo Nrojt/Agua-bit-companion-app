@@ -4,13 +4,13 @@ import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static saveFile.SaveFile.*;
+import static aguabit.savefile.SaveFile.*;
 
 public class SettingsScreenController implements Initializable {
     @FXML
@@ -32,7 +32,7 @@ public class SettingsScreenController implements Initializable {
     @FXML
     private MFXRadioButton profilePictureCustomRadioButton = new MFXRadioButton();
 
-    private FileChooser customProfilePictureFileChooser = new FileChooser();
+    private final FileChooser customProfilePictureFileChooser = new FileChooser();
 
     //TODO make this screen look better
 
@@ -46,33 +46,18 @@ public class SettingsScreenController implements Initializable {
         }
 
         //code for having the correct profile picture selected on startup
-        switch(profilePicture){
-            case -1:
-                profilePictureCustomRadioButton.setSelected(true);
-                break;
-            case 2:
-                profilePicture2RadioButton.setSelected(true);
-                break;
-            case 3:
-                profilePicture3RadioButton.setSelected(true);
-                break;
-            case 4:
-                profilePicture4RadioButton.setSelected(true);
-                break;
-            case 1:
-            default:
-                profilePicture1RadioButton.setSelected(true);
-                break;
+        switch (profilePicture) {
+            case -1 -> profilePictureCustomRadioButton.setSelected(true);
+            case 2 -> profilePicture2RadioButton.setSelected(true);
+            case 3 -> profilePicture3RadioButton.setSelected(true);
+            case 4 -> profilePicture4RadioButton.setSelected(true);
+            default -> profilePicture1RadioButton.setSelected(true);
         }
 
         //code for having the correct theme selected on startup
-        switch(theme) {
-            case 0:
-                settingsLightThemeButton.setSelected(true);
-                break;
-            case 1:
-                settingsDarkThemeButton.setSelected(true);
-                break;
+        switch (theme) {
+            case 0 -> settingsLightThemeButton.setSelected(true);
+            case 1 -> settingsDarkThemeButton.setSelected(true);
         }
     }
 

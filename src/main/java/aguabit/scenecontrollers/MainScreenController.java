@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.net.URL;
 import java.util.ResourceBundle;

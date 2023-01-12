@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Agua:Bit Companion App" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="aguabit.launcher.Launcher" />
+    <module name="Agua-bit-companion-app" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

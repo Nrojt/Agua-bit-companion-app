@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class OpenMeasurementsScreenController implements Initializable {
     @FXML
     private Label informationLabel = new Label();
 
-    //arraylist for storing all the database measurements, cannot be local variables cause they are used in multiple places
+    //arraylist for storing all the database measurements, cannot be local variables because they are used in multiple places
     private final List<String> databaseMeasurements = new ArrayList<>();
     private final List<Integer> databaseMeasurementsMeasurementId = new ArrayList<>();
 

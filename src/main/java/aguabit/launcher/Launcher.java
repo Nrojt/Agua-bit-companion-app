@@ -1,4 +1,4 @@
-package Launcher;
+package aguabit.launcher;
 
 import aguabit.scenecontrollers.Main;
 

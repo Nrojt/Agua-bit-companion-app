@@ -11,8 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import location.Location;
-import saveFile.SaveFile;
+import aguabit.location.Location;
+import aguabit.savefile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;

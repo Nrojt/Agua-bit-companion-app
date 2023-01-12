@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,21 +105,21 @@ public class MenuOverlayController implements Initializable {
     //ActionEvent event needs to stay here
     public void loginScreen(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
-        Parent root1 = fxmlLoader.load();
-        Stage stage2 = new Stage();
-        Scene scene2 = new Scene(root1);
-        stage2.setTitle("Agua:bit account login");
-        stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Agua:bit account login");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         String css = null;
         if(SaveFile.theme == 0) {
             css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
         } else if (SaveFile.theme == 1) {
             css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
         }
-        scene2.getStylesheets().add(css);
-        stage2.setScene(scene2);
-        stage2.setResizable(false);
-        stage2.show();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     //code for all the clickable buttons
@@ -283,26 +283,21 @@ public class MenuOverlayController implements Initializable {
 
                 if(profilePictureChanged) {
                     switch (SaveFile.profilePicture) {
-                        case -1:
+                        case -1 -> {
                             if (!SaveFile.customProfilePicturePath.isBlank() && checkIfCustomFileExist.isFile()) {
                                 profilePicture.setImage(new Image((SaveFile.customProfilePicturePath)));
                             } else {
                                 profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
                             }
-                            break;
-                        case 1:
-                        default:
-                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
-                            break;
-                        case 2:
-                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
-                            break;
-                        case 3:
-                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
-                            break;
-                        case 4:
-                            profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
-                            break;
+                        }
+                        default ->
+                                profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+                        case 2 ->
+                                profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
+                        case 3 ->
+                                profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
+                        case 4 ->
+                                profilePicture.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
                     }
                     profilePictureChanged = false;
                 }

@@ -1,5 +1,6 @@
 package aguabit.scenecontrollers;
 
+import aguabit.helpscripts.MeasurementIndications;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortIOException;
 import javafx.application.Platform;
@@ -10,9 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -135,21 +136,26 @@ public class MeasureScreenController implements Initializable {
     //code for opening the saveMeasurement screen
     public void saveMeasurement() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SaveMeasurementScreen.fxml"));
-        Parent root2 = fxmlLoader.load();
-        Stage stage3 = new Stage();
-        Scene scene3 = new Scene(root2);
-        stage3.setTitle("Save Measurement");
-        stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Save Measurement");
+        openStage(stage, scene);
+    }
+
+    //This opens a new stage (window)
+    private void openStage(Stage stage, Scene scene) {
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         String css = null;
         if(SaveFile.theme == 0) {
             css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
         } else if (SaveFile.theme == 1) {
             css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
         }
-        scene3.getStylesheets().add(css);
-        stage3.setScene(scene3);
-        stage3.setResizable(false);
-        stage3.show();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     //code for reading the measurements from the microbit
@@ -184,21 +190,22 @@ public class MeasureScreenController implements Initializable {
                 }
 
                 //actually reading the input, the input cannot be longer then 50 characters. This is just as a failsafe
+                StringBuilder microbitInputBuilder = new StringBuilder();
                 for (int i = 0; i < 50; i++) {
                     char input = (char) readFromMicroBit.read();
                     if (input == '!' || String.valueOf(input).isBlank()) {
                         break;
                     } else {
-                        microbitInput += input;
+                        microbitInputBuilder.append(input);
                     }
                 }
+                microbitInput = microbitInputBuilder.toString();
 
             } catch (SerialPortIOException ignored) {
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            System.out.println(microbitInput);
             //for emptying the connection, prevents problems with doing another measurement
             microBit.flushIOBuffers();
             microBit.closePort();
@@ -208,7 +215,25 @@ public class MeasureScreenController implements Initializable {
             port2 = microbitInput.split("\\|")[1];
             port3 = microbitInput.split("\\|")[2];
 
-            System.out.println(sensor1TypeString);
+            /*
+                #Explanation for the calculation of the ph sensor:
+
+                The Micro:Bit reads voltage levels and outputs that in a value between 0 and 1024.
+                DF robot provides the following calculation for turning the voltage level to the ph value (taken from DFRobot_PH.py in the DFRobot_PH-master library for the arduino ide):
+                    global _acidVoltage
+                    global _neutralVoltage
+                    slope     = (7.0-4.0)/((_neutralVoltage-1500.0)/3.0 - (_acidVoltage-1500.0)/3.0)
+                    intercept = 7.0 - slope*(_neutralVoltage-1500.0)/3.0
+                    _phValue  = slope*(voltage-1500.0)/3.0+intercept
+                    round(_phValue,2)
+                    return _phValue
+
+                 _acidVoltage and _neutralVoltage are stored on the ph sensor board and can be read after calibrating the ph sensor:
+                    this->_acidVoltage    = 2032.44;    //buffer solution 4.0 at 25C
+                    this->_neutralVoltage = 1500.0;     //buffer solution 7.0 at 25C
+             */
+
+
             //rounding the input depending on what type of sensor it is
             try {
                 switch (sensor1TypeString) {
@@ -263,11 +288,9 @@ public class MeasureScreenController implements Initializable {
             noMeasurementGoingOn = true; //making it so the measurement button can be pressed again
 
             if (measurementError) {
-                Platform.runLater(() -> {
-                    informationLabel.setText("Measurement failed, please make sure the sensors are connected correctly");
-                });
+                Platform.runLater(() -> informationLabel.setText("Measurement failed, please make sure the sensors are connected correctly"));
             } else {
-                //updating the labels in the gui, runlater so it gets updated in the gui thread instead of this thread (measureThread)
+                //updating the labels in the gui, runlater makes sure it gets updated in the gui thread instead of this thread (measureThread)
                 Platform.runLater(() -> {
                     sensor1ValueLabel.setText(sensor1ValueString);
                     sensor2ValueLabel.setText(sensor2ValueString);
@@ -302,46 +325,25 @@ public class MeasureScreenController implements Initializable {
 
     //code for opening the information screens when clicking on the indications
     private void slotInformationScreens(int slot, String Type, String Value) throws IOException {
-        System.out.println(slot + " "+ Type);
         MeasureInfoScreenController.slotNumber = slot;
         MeasureInfoScreenController.sensorValue = Value;
         MeasureInfoScreenController.sensorType = Type;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MeasureInfoScreen.fxml"));
-        Parent root1 = fxmlLoader.load();
-        Stage stage2 = new Stage();
-        Scene scene2 = new Scene(root1);
-        stage2.setTitle("Measurement Information");
-        stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = null;
-        if(SaveFile.theme == 0) {
-            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
-        } else if (SaveFile.theme == 1) {
-            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
-        }
-        scene2.getStylesheets().add(css);
-        stage2.setScene(scene2);
-        stage2.setResizable(false);
-        stage2.show();
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Measurement Information");
+        openStage(stage, scene);
     }
 
     //this opens the screen that displays the saved measurements
     public void openMeasurementsButton() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OpenMeasurementsScreen.fxml"));
-        Parent root2 = fxmlLoader.load();
-        Stage stage3 = new Stage();
-        Scene scene3 = new Scene(root2);
-        stage3.setTitle("Open saved measurements");
-        stage3.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-        String css = null;
-        if(SaveFile.theme == 0) {
-            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
-        } else if (SaveFile.theme == 1) {
-            css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
-        }
-        scene3.getStylesheets().add(css);
-        stage3.setScene(scene3);
-        stage3.setResizable(false);
-        stage3.show();
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Open saved measurements");
+        openStage(stage, scene);
     }
 
     //code for updating the labels on screen
@@ -354,133 +356,42 @@ public class MeasureScreenController implements Initializable {
                 sensor1TypeLabel.setText(sensor1TypeString);
                 sensor2TypeLabel.setText(sensor2TypeString);
                 sensor3TypeLabel.setText(sensor3TypeString);
-                sensor1IndicationLabel.setText(sensor1IndicationString);
-                sensor2IndicationLabel.setText(sensor2IndicationString);
-                sensor3IndicationLabel.setText(sensor3IndicationString);
                 measurementNameLabel.setText(measurementNameString);
                 measurementLocationLabel.setText(measurementLocationString);
                 measurementDateLabel.setText(measurementDateString);
 
-                if (sensor1TypeString.equals("PH-Sensor")){
-                    if(Double.parseDouble(sensor1ValueString) > 6.5 && Double.parseDouble(sensor1ValueString) <= 8){
-                        sensor1IndicationString = "Safe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    } else if (Double.parseDouble(sensor1ValueString) > 8) {
-                        sensor1IndicationString = "Warning";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor1ValueString) <= 6.5){
-                        sensor1IndicationString = "Safe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                }else if(sensor1TypeString.equals("Temperature sensor")){
-                    if(Double.parseDouble(sensor1ValueString)> 10 && Double.parseDouble(sensor1ValueString) <= 20){
-                        sensor1IndicationString = "Safe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    }else if (Double.parseDouble(sensor1ValueString) > 70 && Double.parseDouble(sensor1ValueString) <= 100) {
-                        sensor1IndicationString = "Warning";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor1ValueString) > 20 && Double.parseDouble(sensor1ValueString) <=70){
-                        sensor1IndicationString = "Unsafe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    } else if(Double.parseDouble(sensor1ValueString) <= 10){
-                        sensor1IndicationString = "Unsafe";
-                        sensor1IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                } else{
-                    sensor1IndicationLabel.setText("Unknown");
-                    sensor1IndicationLabel.setTextFill(Color.rgb(0,0,0));
-                }
+                //Setting the indication labels
+                String sensor1Indication = MeasurementIndications.getMeasurementIndication(sensor1TypeString, sensor1ValueString);
+                sensor1IndicationLabel.setText(sensor1Indication.split("\\:")[0]);
+                sensor1IndicationLabel.setTextFill(Paint.valueOf(sensor1Indication.split("\\:")[1]));
 
-                if (sensor2TypeString.equals("PH-Sensor")){
-                    if(Double.parseDouble(sensor2ValueString) > 6.5 && Double.parseDouble(sensor2ValueString) <= 8){
-                        sensor2IndicationString = "Safe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    } else if (Double.parseDouble(sensor2ValueString) > 8) {
-                        sensor2IndicationString = "Warning";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor2ValueString) <= 6.5){
-                        sensor2IndicationString = "Safe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                }else if(sensor2TypeString.equals("Temperature sensor")){
-                    if(Double.parseDouble(sensor2ValueString)> 10 && Double.parseDouble(sensor2ValueString) <= 20){
-                        sensor2IndicationString = "Safe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    }else if (Double.parseDouble(sensor2ValueString) > 70 && Double.parseDouble(sensor2ValueString) <= 100) {
-                        sensor2IndicationString = "Warning";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor2ValueString) > 20 && Double.parseDouble(sensor2ValueString) <=70){
-                        sensor2IndicationString = "Unsafe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    } else if(Double.parseDouble(sensor2ValueString) <= 10){
-                        sensor2IndicationString = "Unsafe";
-                        sensor2IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                } else{
-                    sensor2IndicationLabel.setText("Unknown");
-                    sensor2IndicationLabel.setTextFill(Color.rgb(0,0,0));
-                }
+                String sensor2Indication = MeasurementIndications.getMeasurementIndication(sensor2TypeString, sensor2ValueString);
+                sensor2IndicationLabel.setText(sensor2Indication.split("\\:")[0]);
+                sensor2IndicationLabel.setTextFill(Paint.valueOf(sensor2Indication.split("\\:")[1]));
 
-                if (sensor3TypeString.equals("PH-Sensor")){
-                    if(Double.parseDouble(sensor3ValueString) > 6.5 && Double.parseDouble(sensor3ValueString) <= 8){
-                        sensor3IndicationString = "Safe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    } else if (Double.parseDouble(sensor3ValueString) > 8) {
-                        sensor3IndicationString = "Warning";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor3ValueString) <= 6.5){
-                        sensor3IndicationString = "Safe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                }else if(sensor3TypeString.equals("Temperature sensor")){
-                    if(Double.parseDouble(sensor3ValueString)> 10 && Double.parseDouble(sensor3ValueString) <= 20){
-                        sensor3IndicationString = "Safe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(19, 255, 2));
-                    }else if (Double.parseDouble(sensor3ValueString) > 70 && Double.parseDouble(sensor3ValueString) <= 100) {
-                        sensor3IndicationString = "Warning";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 234, 2));
-                    } else if(Double.parseDouble(sensor3ValueString) > 20 && Double.parseDouble(sensor3ValueString) <=70){
-                        sensor3IndicationString = "Unsafe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    } else if(Double.parseDouble(sensor3ValueString) <= 10){
-                        sensor3IndicationString = "Unsafe";
-                        sensor3IndicationLabel.setTextFill(Color.rgb(255, 2, 2));
-                    }
-                } else{
-                    sensor3IndicationLabel.setText("Unknown");
-                    sensor3IndicationLabel.setTextFill(Color.rgb(0,0,0));
-                }
+                String sensor3Indication = MeasurementIndications.getMeasurementIndication(sensor3TypeString, sensor3ValueString);
+                sensor3IndicationLabel.setText(sensor3Indication.split("\\:")[0]);
+                sensor3IndicationLabel.setTextFill(Paint.valueOf(sensor3Indication.split("\\:")[1]));
 
             }
-
             );
-
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException ignored) {
             }
         }
     }
 
+    //code for opening the locationMap screen
     public void openLocationMap() throws IOException {
-        if(!measurementLocationString.equals("Location") && !measurementLocationString.equals("null")){
+        if(measurementLocationString.contains(",")){
             LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.setTitle("Measurement Location");
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-            String css = null;
-            if(SaveFile.theme == 0) {
-                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
-            } else if (SaveFile.theme == 1) {
-                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
-            }
-            scene.getStylesheets().add(css);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            openStage(stage, scene);
         }
     }
 }

@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConnectScreenController implements Initializable {
     //variables for selecting the different slots

@@ -1,5 +1,6 @@
 package aguabit.scenecontrollers;
 
+import aguabit.helpscripts.MeasurementIndications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,8 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -87,15 +89,6 @@ public class CompareMeasurementsScreenController implements Initializable {
     public static String m2Slot2ValueString;
     public static String m2Slot3ValueString;
 
-    /*
-    public static String m1Slot1IndicationString;
-    public static String m1Slot2IndicationString;
-    public static String m1Slot3IndicationString;
-    public static String m2Slot1IndicationString;
-    public static String m2Slot2IndicationString;
-    public static String m2Slot3IndicationString;
-     */
-
     public static String m1NameString = "Measurement 1";
     public static String m1LocationString = "Location";
     public static String m1DateString = "Date";
@@ -126,6 +119,31 @@ public class CompareMeasurementsScreenController implements Initializable {
         m2DateLabel.setText(m2DateString);
         m1LocationLabel.setText(m1LocationString);
         m2LocationLabel.setText(m2LocationString);
+
+        String getM1Slot1Indication = MeasurementIndications.getMeasurementIndication(m1Slot1TypeString, m1Slot1ValueString);
+        m1Slot1IndicationLabel.setText(getM1Slot1Indication.split("\\:")[0]);
+        m1Slot1IndicationLabel.setTextFill(Paint.valueOf(getM1Slot1Indication.split("\\:")[1]));
+
+        String getM1Slot2Indication = MeasurementIndications.getMeasurementIndication(m1Slot2TypeString, m1Slot2ValueString);
+        m1Slot2IndicationLabel.setText(getM1Slot2Indication.split("\\:")[0]);
+        m1Slot2IndicationLabel.setTextFill(Paint.valueOf(getM1Slot2Indication.split("\\:")[1]));
+
+        String getM1Slot3Indication = MeasurementIndications.getMeasurementIndication(m1Slot3TypeString, m1Slot3ValueString);
+        m1Slot3IndicationLabel.setText(getM1Slot3Indication.split("\\:")[0]);
+        m1Slot3IndicationLabel.setTextFill(Paint.valueOf(getM1Slot3Indication.split("\\:")[1]));
+
+        String getM2Slot1Indication = MeasurementIndications.getMeasurementIndication(m2Slot1TypeString, m2Slot1ValueString);
+        m2Slot1IndicationLabel.setText(getM2Slot1Indication.split("\\:")[0]);
+        m2Slot1IndicationLabel.setTextFill(Paint.valueOf(getM2Slot1Indication.split("\\:")[1]));
+
+        String getM2Slot2Indication = MeasurementIndications.getMeasurementIndication(m2Slot2TypeString, m2Slot2ValueString);
+        m2Slot2IndicationLabel.setText(getM2Slot2Indication.split("\\:")[0]);
+        m2Slot2IndicationLabel.setTextFill(Paint.valueOf(getM2Slot2Indication.split("\\:")[1]));
+
+        String getM2Slot3Indication = MeasurementIndications.getMeasurementIndication(m2Slot3TypeString, m2Slot3ValueString);
+        m2Slot3IndicationLabel.setText(getM2Slot3Indication.split("\\:")[0]);
+        m2Slot3IndicationLabel.setTextFill(Paint.valueOf(getM2Slot3Indication.split("\\:")[1]));
+
     }
 
     //code to send the correct information to slotInformationScreens()
@@ -157,6 +175,11 @@ public class CompareMeasurementsScreenController implements Initializable {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Measurement Information");
+        openStage(stage, scene);
+    }
+
+    //This opens a new stage (window)
+    private void openStage(Stage stage, Scene scene) {
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         String css = null;
         if(SaveFile.theme == 0) {
@@ -189,24 +212,14 @@ public class CompareMeasurementsScreenController implements Initializable {
     }
 
     private void openLocationMap(String measurementLocationString) throws IOException {
-        if(!measurementLocationString.equals("Location") && !measurementLocationString.equals("null")){
+        if(measurementLocationString.contains(",")){
             LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.setTitle("Measurement Location");
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
-            String css = null;
-            if(SaveFile.theme == 0) {
-                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuLight.css")).toExternalForm();
-            } else if (SaveFile.theme == 1) {
-                css = Objects.requireNonNull(this.getClass().getResource("PopupMenuDark.css")).toExternalForm();
-            }
-            scene.getStylesheets().add(css);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            openStage(stage, scene);
         }
     }
 }

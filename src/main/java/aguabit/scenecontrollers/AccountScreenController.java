@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,10 +60,7 @@ public class AccountScreenController implements Initializable {
     @FXML
     private Label informationLabel = new Label();
 
-    private String username = MenuOverlayController.userName;
     private String email;
-    private String firstName;
-    private String lastName;
     private  String password;
     private String phoneNumber;
 
@@ -81,6 +78,9 @@ public class AccountScreenController implements Initializable {
             Statement accountInfoStatement;
             ResultSet result;
 
+            String username;
+            String firstName;
+            String lastName;
             try {
                 accountInfoStatement = connectDB.createStatement();
                 result = accountInfoStatement.executeQuery(accountInfoQuery);
@@ -104,7 +104,7 @@ public class AccountScreenController implements Initializable {
             newEmailTextfield.setText(email);
         }
 
-        //pressing enter in these fields triggers updatePassword()
+        //pressing enter within these fields triggers updatePassword()
         oldPasswordTextfield.setOnKeyPressed(keypress -> {
             if (keypress.getCode() == KeyCode.ENTER) {
                 updatePassword();
@@ -121,7 +121,7 @@ public class AccountScreenController implements Initializable {
             }
         });
 
-        //pressing enter in these fields triggers updateInformation()
+        //pressing enter within these fields triggers updateInformation()
         firstNameTextfield.setOnKeyPressed(keypress -> {
             if (keypress.getCode() == KeyCode.ENTER) {
                 updateInformation();
@@ -161,27 +161,22 @@ public class AccountScreenController implements Initializable {
 
         MenuOverlayController.checkIfCustomFileExist = new File(SaveFile.customProfilePicturePath);
 
-        switch(SaveFile.profilePicture){
-            case -1:
-                if(!SaveFile.customProfilePicturePath.isBlank() && MenuOverlayController.checkIfCustomFileExist.isFile()) {
+        switch (SaveFile.profilePicture) {
+            case -1 -> {
+                if (!SaveFile.customProfilePicturePath.isBlank() && MenuOverlayController.checkIfCustomFileExist.isFile()) {
                     profilePictureAccount.setImage(new Image((SaveFile.customProfilePicturePath)));
-                } else{
+                } else {
                     profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
                 }
-                break;
-            case 1:
-            default:
-                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
-                break;
-            case 2:
-                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
-                break;
-            case 3:
-                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
-                break;
-            case 4:
-                profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
-                break;
+            }
+            default ->
+                    profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureDefault.png"))));
+            case 2 ->
+                    profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureBlue.png"))));
+            case 3 ->
+                    profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureRed.png"))));
+            case 4 ->
+                    profilePictureAccount.setImage(new Image(Objects.requireNonNull(MenuOverlayController.class.getResourceAsStream("images/profilepictures/profilePictureTorquise.png"))));
         }
     }
 

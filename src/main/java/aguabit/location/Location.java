@@ -1,4 +1,4 @@
-package location;
+package aguabit.location;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;

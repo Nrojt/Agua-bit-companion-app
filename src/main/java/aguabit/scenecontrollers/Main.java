@@ -6,15 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
     static Scene scene;
-    private final String lightTheme = "lightmode.css";
-    private final String darkTheme = "darkmode.css";
     private String cssfile;
 
     //override gets run after loading in
@@ -25,9 +23,9 @@ public class Main extends Application {
 
         //code for setting either the dark or light theme.
         if(SaveFile.theme == 1){
-            cssfile = darkTheme;
+            cssfile = "darkmode.css";
         }else if (SaveFile.theme == 0){
-            cssfile = lightTheme;
+            cssfile = "lightmode.css";
         }
 
         //code for loading in the fxml and css file for running the application.

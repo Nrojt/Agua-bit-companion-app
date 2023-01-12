@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import saveFile.SaveFile;
+import aguabit.savefile.SaveFile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,7 +90,6 @@ public class LoginScreenController implements Initializable{
                 //setting the variables in MenuOverlayController to the information from the database
                 MenuOverlayController.userId = result.getInt(1);
                 MenuOverlayController.userName = result.getString(2);
-                System.out.println(SaveFile.profilePicture);
                 //to not override the custom local profile picture
                 if(SaveFile.profilePicture != -1) {
                     SaveFile.profilePicture = result.getInt(3);

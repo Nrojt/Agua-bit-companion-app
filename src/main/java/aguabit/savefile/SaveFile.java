@@ -1,4 +1,4 @@
-package saveFile;
+package aguabit.savefile;
 
 import aguabit.scenecontrollers.*;
 import javafx.scene.control.Alert;
@@ -59,7 +59,6 @@ public class SaveFile {
                 pstmt.setString(10, date);
                 pstmt.executeUpdate();
                 connectDB.close();
-                System.out.println("Adding measurement successful");
             } catch (SQLException z) {
                 System.out.println(z.getMessage());
             }
@@ -113,7 +112,6 @@ public class SaveFile {
         p = new PrintStream(out);
         p.append("name:").append(measurementName).append("\nlocation:").append(measurementLocation).append("\nsensor1Type:").append(sensor1Type).append("\nsensor2Type:").append(sensor2Type).append("\nsensor3Type:").append(sensor3Type).append("\nsensor1Value:").append(sensor1Value).append("\nsensor2Value:").append(sensor2Value).append("\nsensor3Value:").append(sensor3Value).append("\ndate:").append(date);
         p.close();
-        System.out.println("File successfully created");
     }
 
     //code for saving the settings to the AguaBit folder
@@ -183,7 +181,6 @@ public class SaveFile {
                     profilePicture = Integer.parseInt(line.split("\\:")[1]);
                 } else if (line.contains("custompfpicpath")) {
                     customProfilePicturePath = line.split("\\'")[1];
-                    System.out.println(customProfilePicturePath);
                 }
             }
         }
@@ -225,7 +222,7 @@ public class SaveFile {
                     MeasureScreenController.sensor3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     MeasureScreenController.measurementNameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("location")) {
+                } else if (line.contains("aguabit/location")) {
                     MeasureScreenController.measurementLocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     MeasureScreenController.measurementDateString = String.valueOf(line.split("\\:")[1]);
@@ -284,7 +281,6 @@ public class SaveFile {
 
     //code for saving the email and password to a textfile in the document folder when the remember me button is checked
     public static void rememberMe(String email, String password) {
-        System.out.println("remember me");
         File rememberMeFile = new File(pathForRememberMe + "account" + ".txt");
         rememberMeFile.getParentFile().mkdirs(); //creating parent directories if they don't exist yet
         try {
@@ -375,7 +371,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m1Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m1NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("location")) {
+                } else if (line.contains("aguabit/location")) {
                     CompareMeasurementsScreenController.m1LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m1DateString = String.valueOf(line.split("\\:")[1]);
@@ -416,7 +412,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("location")) {
+                } else if (line.contains("aguabit/location")) {
                     CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
@@ -466,6 +462,7 @@ public class SaveFile {
         }
     }
 
+    //Code for comparing a locally saved measurement with a measurement saved in the database
     public static void compareMeasurementsFromFileAndDatabase(int databaseMeasurementId, String localItem) {
         File localFile = new File(pathForMeasurements + localItem);
 
@@ -526,7 +523,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("location")) {
+                } else if (line.contains("aguabit/location")) {
                     CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);

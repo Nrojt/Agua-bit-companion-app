@@ -14,7 +14,7 @@ After unpacking your Agua:Bit and installing the latest release, plug the Agua:B
 Plug the required sensors into the slots on the Agua:Bit and make sure they are firmly seated. When connecting the sensors, be careful, too much pressure can break the sensor or the connector on the Agua:Bit.
 
 ## YOUR FIRST MEASUREMENT
-Select the sensors you connected to the Agua: Bit from the connect tab. Make sure to select the correct slots and the corresponding options. The slot numbers are ordered from left to right. After your selection, press the “Send to Agua:Bit” button and wait until the confirmation message appears.
+Select the sensors you connected to the Agua:Bit from the connect tab. Make sure to select the correct slots and the corresponding options. The slot numbers are ordered from left to right. After your selection, press the “Send to Agua:Bit” button and wait until the confirmation message appears.
 
 Put the sensors into the water, for more information about the correct use of each sensor see our website, but make sure the Agua:Bit and its connection points stays dry. To make a measurement, go to the Measure tab and click “Measure”. The measured values will now appear on the screen. To get additional information about the measured values, click on the measurement indications.
 
