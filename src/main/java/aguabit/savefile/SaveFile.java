@@ -222,7 +222,7 @@ public class SaveFile {
                     MeasureScreenController.sensor3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     MeasureScreenController.measurementNameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("aguabit/location")) {
+                } else if (line.contains("location")) {
                     MeasureScreenController.measurementLocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     MeasureScreenController.measurementDateString = String.valueOf(line.split("\\:")[1]);
@@ -371,7 +371,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m1Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m1NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("aguabit/location")) {
+                } else if (line.contains("location")) {
                     CompareMeasurementsScreenController.m1LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m1DateString = String.valueOf(line.split("\\:")[1]);
@@ -412,7 +412,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("aguabit/location")) {
+                } else if (line.contains("location")) {
                     CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
@@ -523,7 +523,7 @@ public class SaveFile {
                     CompareMeasurementsScreenController.m2Slot3ValueString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("name")) {
                     CompareMeasurementsScreenController.m2NameString = String.valueOf(line.split("\\:")[1]);
-                } else if (line.contains("aguabit/location")) {
+                } else if (line.contains("location")) {
                     CompareMeasurementsScreenController.m2LocationString = String.valueOf(line.split("\\:")[1]);
                 } else if (line.contains("date")) {
                     CompareMeasurementsScreenController.m2DateString = String.valueOf(line.split("\\:")[1]);
