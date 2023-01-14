@@ -67,7 +67,6 @@ public class MeasureScreenController implements Initializable {
     @FXML
     private Label sensor3ValueLabel = new Label();
 
-    //TODO measurement indications, use these labels
     @FXML
     private Label sensor1IndicationLabel = new Label();
     @FXML

@@ -34,7 +34,6 @@ public class SettingsScreenController implements Initializable {
 
     private final FileChooser customProfilePictureFileChooser = new FileChooser();
 
-    //TODO make this screen look better
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
