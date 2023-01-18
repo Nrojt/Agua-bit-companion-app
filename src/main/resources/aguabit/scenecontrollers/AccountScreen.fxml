@@ -21,8 +21,8 @@
             <Image url="@images/profilepictures/profilePictureDefault.png" />
          </image>
       </ImageView>
-      <Label fx:id="userNameLabel" alignment="CENTER" layoutY="191.0" prefHeight="17.0" prefWidth="980.0" text="User" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="230.0" />
-      <Label fx:id="emailLabel" alignment="CENTER" layoutY="208.0" prefHeight="17.0" prefWidth="836.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="208.0" />
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutY="254.0" prefHeight="17.0" prefWidth="980.0" text="User" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="254.0" />
+      <Label fx:id="emailLabel" alignment="CENTER" layoutY="237.0" prefHeight="17.0" prefWidth="836.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="237.0" />
       <TextField fx:id="oldEmailTextfield" layoutX="620.0" layoutY="434.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="(Old) E-mail" AnchorPane.bottomAnchor="181.0" AnchorPane.rightAnchor="163.0" />
       <TextField fx:id="oldPasswordTextfield" layoutX="163.0" layoutY="294.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="Old password" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="754.0" />
       <TextField fx:id="newPasswordTextfield" layoutX="163.0" layoutY="320.0" minHeight="25.0" minWidth="142.0" prefHeight="25.0" prefWidth="149.0" promptText="New password" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="754.0">

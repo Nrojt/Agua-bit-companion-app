@@ -233,12 +233,15 @@ public class MenuOverlayController implements Initializable {
                     if (s.contains("MICROBIT")) {
                         isAguabitConnected = true;
                         driveLetter = s.charAt(31);
-                    }
-                    else{
+                    } else{
                         isAguabitConnected = false;
                     }
-                } catch (NullPointerException ignored) {
+                } catch (NullPointerException exc) {
+                    isAguabitConnected = false;
                 }
+            }
+            if(connectedDrivesString.length == 0){
+                isAguabitConnected = false;
             }
 
             //platform.runlater makes the code in it run on the same thread as the menu (gui thread), not on the newly made thread

@@ -98,7 +98,7 @@ public class SettingsScreenController implements Initializable {
         if(selectedFile != null){
             profilePicture = -1;
             SaveFile.customProfilePicturePath = selectedFile.getPath();
-            System.out.println(SaveFile.customProfilePicturePath);
+            MenuOverlayController.profilePictureChanged = true;
             settingsButtonClicked();
         }
 

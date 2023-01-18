@@ -40,7 +40,7 @@ public class MeasureInfoScreenController implements Initializable {
             }
         }
         //Adding information about the value if it is a ph value
-        else if (sensorType.equals("PH-Value")) {
+        else if (sensorType.equals("PH-Sensor")) {
             if (Double.parseDouble(sensorValue) >= 0 && Double.parseDouble(sensorValue) <= 6.5) {
                 textForInformationArea += ("\n" + "Below the PH value of 6,5 the water will be too acidic to consume. It is also bad for your teeth and body to drink water below a pH value of 6,5. to solve this you can add a few PH drops or tablets to neutralize the acid.");
             } else if (Double.parseDouble(sensorValue) >= 6.5 && Double.parseDouble(sensorValue) <= 8) {
@@ -51,7 +51,7 @@ public class MeasureInfoScreenController implements Initializable {
         }
         //Showing something if the sensor is empty
         else{
-            textForInformationArea += ("\n"+ "This is because no sensor was connected and/or selected for this slot.");
+            textForInformationArea += ("\n"+ "There is no other information available because there was no sensor connected and/or selected for this slot.");
         }
 
             informationArea.setText(textForInformationArea);
