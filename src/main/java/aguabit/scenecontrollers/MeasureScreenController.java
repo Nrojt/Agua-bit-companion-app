@@ -383,7 +383,7 @@ public class MeasureScreenController implements Initializable {
 
     //code for opening the locationMap screen
     public void openLocationMap() throws IOException {
-        if(measurementLocationString.contains(",")){
+        if(measurementLocationString.contains(",") && measurementLocationString.matches("^[0-9,.]*$")){
             LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();

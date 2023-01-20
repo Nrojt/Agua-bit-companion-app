@@ -9,7 +9,8 @@ public class DatabaseConnection {
 
     public Connection getDBConnection() {
 
-        String url = "jdbc:sqlite:src/main/resources/aguabit/scenecontrollers/database/aguabit.db";
+        String url = "jdbc:sqlite::resource:aguabit.db";
+        //src/main/resources/aguabit/scenecontrollers/database/aguabit.db
 
         try {
             databaseLink = DriverManager.getConnection(url);

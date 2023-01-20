@@ -212,7 +212,7 @@ public class CompareMeasurementsScreenController implements Initializable {
     }
 
     private void openLocationMap(String measurementLocationString) throws IOException {
-        if(measurementLocationString.contains(",")){
+        if(measurementLocationString.contains(",") && measurementLocationString.matches("^[0-9,.]*$")){
             LocationMapScreenController.locationMapCoordinates = measurementLocationString;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocationMapScreen.fxml"));
             Parent root = fxmlLoader.load();

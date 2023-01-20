@@ -9,6 +9,7 @@ module com.example.scenecontrollers {
     requires java.sql;
     requires com.maxmind.geoip2;
     requires javafx.web;
+    requires com.google.gson;
     opens aguabit.scenecontrollers to javafx.fxml;
     exports aguabit.scenecontrollers;
     exports aguabit.location;

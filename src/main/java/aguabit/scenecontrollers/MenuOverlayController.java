@@ -228,20 +228,21 @@ public class MenuOverlayController implements Initializable {
             } catch (IndexOutOfBoundsException ignored) {}
 
             //checking if any of the connected devices is a microbit
-            for (String s : connectedDrivesString) {
-                try {
-                    if (s.contains("MICROBIT")) {
-                        isAguabitConnected = true;
-                        driveLetter = s.charAt(31);
-                    } else{
-                        isAguabitConnected = false;
-                    }
-                } catch (NullPointerException exc) {
-                    isAguabitConnected = false;
-                }
-            }
             if(connectedDrivesString.length == 0){
                 isAguabitConnected = false;
+            } else {
+                for (String s : connectedDrivesString) {
+                    try {
+                        if (s.contains("MICROBIT")) {
+                            isAguabitConnected = true;
+                            driveLetter = s.charAt(31);
+                        } else {
+                            isAguabitConnected = false;
+                        }
+                    } catch (NullPointerException exc) {
+                        isAguabitConnected = false;
+                    }
+                }
             }
 
             //platform.runlater makes the code in it run on the same thread as the menu (gui thread), not on the newly made thread
