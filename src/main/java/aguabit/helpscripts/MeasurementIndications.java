@@ -3,7 +3,7 @@ package aguabit.helpscripts;
 import javafx.scene.paint.Color;
 
 public class MeasurementIndications {
-    //this code gives an indication of the inserted measurement values
+    //this code gives an indication of the measurement values
     public static String getMeasurementIndication(String sensorType, String sensorValue){
         String indication = "";
         Color colour = Color.BLACK;

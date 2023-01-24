@@ -99,6 +99,7 @@ public class CompareMeasurementsScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //setting all the labels on screen
         m1Slot1TypeLabel.setText(m1Slot1TypeString);
         m1Slot2TypeLabel.setText(m1Slot2TypeString);
         m1Slot3TypeLabel.setText(m1Slot3TypeString);
@@ -193,6 +194,7 @@ public class CompareMeasurementsScreenController implements Initializable {
         stage.show();
     }
 
+    //a button for going back to the OpenMeasurementScreen
     public void backToOpenMeasurementsScreen(){
         try {
             AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("OpenMeasurementsScreen.fxml")));
@@ -203,6 +205,7 @@ public class CompareMeasurementsScreenController implements Initializable {
 
     }
 
+    //opening the screen that shows a map with the location of the measurement
     public void m1OpenLocationMap() throws IOException {
         openLocationMap(m1LocationString);
     }

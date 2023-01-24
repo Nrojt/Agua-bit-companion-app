@@ -55,23 +55,25 @@ public class AccountScreenController implements Initializable {
     @FXML
     private TextField emailForDeleteTextfield = new TextField();
 
+    //variables for on screen items that need to be changed while running
     @FXML
     private AnchorPane accountPane = new AnchorPane();
     @FXML
     private Label informationLabel = new Label();
-
-    private String email;
-    private  String password;
-    private String phoneNumber;
-
     @FXML
     private ImageView profilePictureAccount = new ImageView();
+
+    // strings
+    private String email;
+    private String password;
+    private String phoneNumber;
 
 
     //setting all the labels
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(MenuOverlayController.loginStatus) {
+            //getting the user information from the database
             DatabaseConnection connection = new DatabaseConnection();
             Connection connectDB = connection.getDBConnection();
             String accountInfoQuery = "SELECT username,email, first_name, last_name, phonenumber, password FROM user WHERE user_id = '"+ MenuOverlayController.userId +"'";

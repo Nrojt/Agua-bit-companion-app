@@ -49,7 +49,7 @@ public class Location {
                     http.setRequestProperty("Accept", "application/json");
 
                     //checking to see if the website is available
-                    if (100 <= http.getResponseCode() && http.getResponseCode() <= 399) {
+                    if (http.getResponseCode() >= 100 && http.getResponseCode() <= 399) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(http.getInputStream()));
                         String resultFromWebpage = br.readLine();
                         JsonObject jsonObject = new JsonParser().parse(resultFromWebpage).getAsJsonObject();
